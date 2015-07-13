@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09EAAE081B505A5E002E1411 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EAAE071B505A5E002E1411 /* AppDelegate.swift */; };
-		09EAAE0A1B505A5E002E1411 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EAAE091B505A5E002E1411 /* ViewController.swift */; };
+		09EAAE0A1B505A5E002E1411 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EAAE091B505A5E002E1411 /* AlarmViewController.swift */; };
 		09EAAE0D1B505A5E002E1411 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09EAAE0B1B505A5E002E1411 /* Main.storyboard */; };
 		09EAAE0F1B505A5E002E1411 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09EAAE0E1B505A5E002E1411 /* Images.xcassets */; };
 		09EAAE121B505A5E002E1411 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09EAAE101B505A5E002E1411 /* LaunchScreen.xib */; };
@@ -29,7 +29,7 @@
 		09EAAE021B505A5E002E1411 /* AlarmPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlarmPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09EAAE061B505A5E002E1411 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09EAAE071B505A5E002E1411 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		09EAAE091B505A5E002E1411 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		09EAAE091B505A5E002E1411 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		09EAAE0C1B505A5E002E1411 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		09EAAE0E1B505A5E002E1411 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		09EAAE111B505A5E002E1411 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -56,6 +56,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09D4BA761B53F2A800C3CCC1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		09D4BA771B53F2A800C3CCC1 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				09EAAE091B505A5E002E1411 /* AlarmViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		09D4BA781B53F2A800C3CCC1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		09EAADF91B505A5E002E1411 = {
 			isa = PBXGroup;
 			children = (
@@ -77,8 +99,10 @@
 		09EAAE041B505A5E002E1411 /* AlarmPet */ = {
 			isa = PBXGroup;
 			children = (
+				09D4BA761B53F2A800C3CCC1 /* Models */,
+				09D4BA771B53F2A800C3CCC1 /* ViewControllers */,
+				09D4BA781B53F2A800C3CCC1 /* Views */,
 				09EAAE071B505A5E002E1411 /* AppDelegate.swift */,
-				09EAAE091B505A5E002E1411 /* ViewController.swift */,
 				09EAAE0B1B505A5E002E1411 /* Main.storyboard */,
 				09EAAE0E1B505A5E002E1411 /* Images.xcassets */,
 				09EAAE101B505A5E002E1411 /* LaunchScreen.xib */,
@@ -212,7 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09EAAE0A1B505A5E002E1411 /* ViewController.swift in Sources */,
+				09EAAE0A1B505A5E002E1411 /* AlarmViewController.swift in Sources */,
 				09EAAE081B505A5E002E1411 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,6 +435,7 @@
 				09EAAE231B505A5E002E1411 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		09EAAE241B505A5E002E1411 /* Build configuration list for PBXNativeTarget "AlarmPetTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +444,7 @@
 				09EAAE261B505A5E002E1411 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
