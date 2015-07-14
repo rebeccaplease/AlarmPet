@@ -15,7 +15,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let openAction = UIMutableUserNotificationAction()
+        openAction.identifier = "COMPLETE_OPEN" // the unique identifier for this action
+        openAction.title = "Defend" // title for the action button
+        //openAction.activationMode = .Background // UIUserNotificationActivationMode.Background - don't bring app to foreground
+        openAction.authenticationRequired = false // don't require unlocking before performing action
+        openAction.destructive = false // display action in blue
+        openAction.activationMode = UIUserNotificationActivationMode.Background
+        
+        
+        let snoozeAction = UIMutableUserNotificationAction()
+        snoozeAction.identifier = "COMPLETE_SNOOZE" // the unique identifier for this action
+        snoozeAction.title = "Snooze" // title for the action button
+        //openAction.activationMode = .Background // UIUserNotificationActivationMode.Background - don't bring app to foreground
+        snoozeAction.authenticationRequired = false // don't require unlocking before performing action
+        snoozeAction.destructive = true // display action in red
+        snoozeAction.activationMode = UIUserNotificationActivationMode.Background
+        
+        
+        let optionsCategory = UIMutableUserNotificationCategory() // notification categories allow us to create groups of actions that we can associate with a notification
+        optionsCategory.identifier = "CATEGORY"
+        optionsCategory.setActions([snoozeAction, openAction], forContext: UIUserNotificationActionContext.Default) // UIUserNotificationActionContext.Default (4 actions max)
+        optionsCategory.setActions([snoozeAction, openAction], forContext: UIUserNotificationActionContext.Minimal) // UIUserNotificationActionContext.Minimal - for when space is limited (2 actions max)
+        
+        var categories = Set([optionsCategory])
+        
+        //register for local notifications. ask for user permission (move later)
+        var types: UIUserNotificationType = UIUserNotificationType.Badge |
+            UIUserNotificationType.Alert |
+            UIUserNotificationType.Sound
+        
+        var settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: categories )
+        
+        application.registerUserNotificationSettings(settings)
         return true
     }
 
