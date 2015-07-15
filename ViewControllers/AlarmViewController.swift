@@ -91,6 +91,7 @@ class AlarmViewController: UIViewController {
         let currentDate = NSDate()
         //default to current time
         datePicker.date = currentDate
+         navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     override func didReceiveMemoryWarning() {
