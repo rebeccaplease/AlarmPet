@@ -33,7 +33,9 @@ class AlarmViewController: UIViewController {
     @IBOutlet weak var savedTime: UILabel!
     
     @IBAction func saveButtonPressed(sender: AnyObject) {
-        
+        //set default seconds to zero
+        //if time is before today, set to next day
+        //on and off alarms
     
      //   var seconds = Double( NSDateComponents().second )
         
@@ -43,30 +45,25 @@ class AlarmViewController: UIViewController {
         
         savedTime.text = AlarmViewController.dateFormatter.stringFromDate(saveAlarmTime)
         
-        scheduleNotification()
+        //loop and schedule 5 notifications, 30 seconds each
+        scheduleNotification(id: 1)
     }
     
-    func scheduleNotification(){
+    func scheduleNotification(#id: Int){
         println(saveAlarmTime)
         
-        /*
+        var notification = UILocalNotification()
         
-        var notification = UILocalNotification()
-        notification.alertBody = "Todo Item \"\(item.title)\" Is Overdue" // text that will be displayed in the notification
-        notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
-        notification.fireDate = item.deadline // todo item due date (when notification will be fired)
-        notification.soundName = UILocalNotificationDefaultSoundName // play default sound
-        notification.userInfo = ["UUID": item.UUID, ] // assign a unique identifier to the notification so that we can retrieve it later
-        notification.category = "TODO_CATEGORY"
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-*/
-        var notification = UILocalNotification()
+        //when notif will appear
         notification.fireDate = saveAlarmTime
         notification.timeZone  = NSTimeZone.defaultTimeZone()
         notification.alertBody = "Virtual pet in danger!"
         notification.alertAction = "open"
-        notification.soundName = UILocalNotificationDefaultSoundName // play default sound
+        //notification.soundName = UILocalNotificationDefaultSoundName // play default sound
+        notification.soundName = "Assets/ShipBell.wav"
         notification.category = "CATEGORY"
+        
+        //notification.userInfo = ["UUID": item.UUID, ] // assign a unique identifier to the notification so that we can retrieve it later
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
@@ -78,9 +75,6 @@ class AlarmViewController: UIViewController {
         return formatter
         }()
     
-    //@IBAction func saveDayOfWeek(sender: AnyObject) {
-      //  if
-    //}
     
     //MARK: View functions
     override func viewDidLoad() {
@@ -91,14 +85,13 @@ class AlarmViewController: UIViewController {
         let currentDate = NSDate()
         //default to current time
         datePicker.date = currentDate
-         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 

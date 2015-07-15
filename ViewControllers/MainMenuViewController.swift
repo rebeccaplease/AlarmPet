@@ -32,11 +32,11 @@ class MainMenuViewController: UIViewController {
         // Get the new View Controller using segue.destinationViewController.
         // Pass the selected object to the new View Controller.
         
-        if (segue.identifier == "Alarm") {
+        /*if (segue.identifier == "Alarm") {
         
             let alarmViewController = segue.destinationViewController as! AlarmViewController
             
-        }
+        } */
     }
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         println("unwinding")

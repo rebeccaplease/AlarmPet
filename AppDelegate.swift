@@ -13,26 +13,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        //if launchOptions is not nil, check for launch from push notification (when app is closed/in background)
-        
-        //navigationController = UINavigationController(rootViewController: self.window!.rootViewController!)
-        
-        
+        //if launchOptions is not nil (starting from a push notif), then open PetViewControler
         if let launchOptions = launchOptions {
             println("launchOptions")
+            //also check specifially for local notifications?
             //if let notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] as? [NSObject : AnyObject] {
                 setPetView()
             //}
-            
         }
         else {
-            //if first launch
-            println("nil")
+            println("not coming from push")
             registerNotification(application)
         }
-        
-       
         
         return true
     }
@@ -61,31 +55,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    //if app is open and notification is recieved
+    //if app is open and notification is recieved, open PetViewController
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        //if app is launched from a push notification (swipe right), open the PetViewController
-        //        let petViewController = PetViewController()
-        //        self.window?.rootViewController = petViewController
-        
+      
         setPetView()
-        
-        
     }
-    //if a custom button is chosen from push notification
+    
+    //if a custom button is chosen from push notification (from swiping left)
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
-        //from swipe left
         /*if identifier.equals("SNOOZE") {
-        //cancel local notifications and play them in 10 minutes
+        //dismiss upcoming local notifications
+        //create another set of notifications
+        //play them in 10 minutes
         }
-        else {
-        //open app to pet page
+        else { //for DEFEND
+        setPetView()
         }
         */
-        println("custom button here")
+        println("custom button pressed")
         setPetView()
         completionHandler()
     }
     
+    //set up custom notification buttons and register user settings permission (if first launch)
     func registerNotification(application: UIApplication) {
         
         let openAction = UIMutableUserNotificationAction()
@@ -122,20 +114,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerUserNotificationSettings(settings)
     }
+    
+    //open view to PetViewController
     func setPetView () {
         var rootViewController = self.window!.rootViewController
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         var petViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PetViewController") as! PetViewController
-        //var mainMenuViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainMenuViewController") as! MainMenuViewController
-        
-        //var navigationController = UINavigationController(rootViewController: mainMenuViewController)
-        //rootViewController?.navigationController?.pushViewController(setViewController, animated: false)
-        //rootViewController?.performSegueWithIdentifier("Pet", sender: rootViewController)
-        
-        //rootViewController?.navigationController?.popToRootViewControllerAnimated(false)
+      
         rootViewController?.presentViewController(petViewController, animated: true, completion: nil)
-
     }
-    
 }
 
