@@ -36,37 +36,11 @@ class AlarmViewController: UIViewController {
         //set default seconds to zero
         //if time is before today, set to next day
         //on and off alarms
-    
-     //   var seconds = Double( NSDateComponents().second )
         
-       // saveAlarmTime = datePicker.date.dateByAddingTimeInterval(-seconds)
-        
-        saveAlarmTime = datePicker.date
-        
+        NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0)
         savedTime.text = AlarmViewController.dateFormatter.stringFromDate(saveAlarmTime)
-        
-        //loop and schedule 5 notifications, 30 seconds each
-        scheduleNotification(id: 1)
     }
-    
-    func scheduleNotification(#id: Int){
-        println(saveAlarmTime)
-        
-        var notification = UILocalNotification()
-        
-        //when notif will appear
-        notification.fireDate = saveAlarmTime
-        notification.timeZone  = NSTimeZone.defaultTimeZone()
-        notification.alertBody = "Virtual pet in danger!"
-        notification.alertAction = "open"
-        //notification.soundName = UILocalNotificationDefaultSoundName // play default sound
-        notification.soundName = "Assets/ShipBell.wav"
-        notification.category = "CATEGORY"
-        
-        //notification.userInfo = ["UUID": item.UUID, ] // assign a unique identifier to the notification so that we can retrieve it later
-        
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-    }
+
     
     static var dateFormatter: NSDateFormatter = {
         var formatter = NSDateFormatter()

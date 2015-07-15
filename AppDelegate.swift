@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             println("launchOptions")
             //also check specifially for local notifications?
             //if let notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] as? [NSObject : AnyObject] {
-                setPetView()
+            setPetView()
             //}
         }
         else {
@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    
+        
     }
     
     
@@ -57,21 +57,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //if app is open and notification is recieved, open PetViewController
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-      
+        
         setPetView()
     }
     
     //if a custom button is chosen from push notification (from swiping left)
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
-        /*if identifier.equals("SNOOZE") {
-        //dismiss upcoming local notifications
-        //create another set of notifications
-        //play them in 10 minutes
+        if identifier == "SNOOZE" {
+            //dismiss upcoming local notifications
+            //create another set of notifications
+            //play them in 2 minutes from the current time
+            application.cancelAllLocalNotifications()
+            
+            NotificationHelper.handleScheduling(NSDate(),numOfNotifications: 3, delayInSeconds: 120)
         }
         else { //for DEFEND
-        setPetView()
+            setPetView()
         }
-        */
+        
         println("custom button pressed")
         setPetView()
         completionHandler()
@@ -120,8 +123,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var rootViewController = self.window!.rootViewController
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         var petViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PetViewController") as! PetViewController
-      
-        rootViewController?.presentViewController(petViewController, animated: true, completion: nil)
+        
+        rootViewController?.presentViewController(petViewController, animated: false, completion: nil)
     }
 }
 
