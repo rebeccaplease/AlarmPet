@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="bb2-qd-rWO">
-                                <rect key="frame" x="16" y="100" width="568" height="162"/>
+                                <rect key="frame" x="16" y="200" width="568" height="162"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="600" id="4Qa-0C-VMn"/>
                                     <constraint firstAttribute="height" constant="162" id="dJP-cI-kCh"/>
@@ -87,7 +87,7 @@
                             <constraint firstItem="bb2-qd-rWO" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Pqq-7L-41Q"/>
                             <constraint firstItem="rtq-WI-7mu" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="-5" id="bCF-iR-kmb"/>
                             <constraint firstAttribute="centerX" secondItem="i1B-he-C1H" secondAttribute="centerX" id="lh4-l4-vRG"/>
-                            <constraint firstItem="bb2-qd-rWO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="100" id="mi4-Eo-JfF"/>
+                            <constraint firstItem="bb2-qd-rWO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="200" id="mi4-Eo-JfF"/>
                             <constraint firstItem="i1B-he-C1H" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="20" id="ncB-V2-ZaX"/>
                         </constraints>
                     </view>
@@ -122,7 +122,7 @@
                                     <constraint firstAttribute="height" constant="22" id="ULj-3I-N9o"/>
                                     <constraint firstAttribute="height" constant="44" id="a1p-In-97w"/>
                                 </constraints>
-                                <state key="normal" image="Alarm"/>
+                                <state key="normal" image="Clock"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="4pH-3U-Kdp"/>
@@ -140,22 +140,43 @@
                                     <constraint firstAttribute="width" constant="100" id="ooN-3f-DWp"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO">
-                                <rect key="frame" x="479" y="80" width="96" height="23"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO">
+                                <rect key="frame" x="504" y="80" width="71" height="23"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfv-kQ-UIg">
+                                <rect key="frame" x="478" y="25" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="f7X-kf-GuI"/>
+                                    <constraint firstAttribute="height" constant="44" id="w4F-0w-psF"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="AlarmOn">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="AlarmOff"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="v5q-EZ-jC9" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="10" id="7ti-bG-Se3"/>
+                            <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="5" id="B8Z-cv-wGx"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="8" id="S3W-pc-oGV"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="trailing" secondItem="Z2h-hD-wyP" secondAttribute="trailingMargin" constant="-8" id="Tnd-Be-VoU"/>
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="v5q-EZ-jC9" secondAttribute="bottom" constant="8" id="WD3-r4-Edq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="10" id="YsO-1C-9Tm"/>
                             <constraint firstAttribute="centerY" secondItem="N3i-po-e5j" secondAttribute="centerY" id="dg9-ST-qR6"/>
                             <constraint firstAttribute="centerX" secondItem="N3i-po-e5j" secondAttribute="centerX" id="fzJ-D2-9b8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WF0-tT-cZO" secondAttribute="trailing" constant="9" id="hbb-n4-o2V"/>
+                            <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="Z2h-hD-wyP" secondAttribute="topMargin" constant="8" id="oUB-FI-xim"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="YsO-1C-9Tm"/>
+                                <exclude reference="oUB-FI-xim"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="qVf-dA-xQ0"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -166,7 +187,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Alarm" width="100" height="100"/>
+        <image name="AlarmOff" width="100" height="100"/>
+        <image name="AlarmOn" width="100" height="100"/>
+        <image name="Clock" width="100" height="100"/>
         <image name="Pet" width="100" height="100"/>
     </resources>
 </document>

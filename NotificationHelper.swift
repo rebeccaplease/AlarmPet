@@ -35,6 +35,12 @@ class NotificationHelper {
     static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int) {
         var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: dateToFix)
         
+        //check current day and time. if the time today already passed, set alarm for next day
+        let currentTime = NSDate()
+        if currentTime.isEqualToDate(currentTime.laterDate(dateToFix)) {
+            dateComponents.day += 1
+            println("Set for next day")
+        }
         //normally zero. if snoozing - some value
         dateComponents.second = delayInSeconds
         
@@ -52,7 +58,6 @@ class NotificationHelper {
             fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         }
         //return saveAlarmTime
-        
     }
     
     //set up custom notification buttons and register user settings permission (if first launch)
