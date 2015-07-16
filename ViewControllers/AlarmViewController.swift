@@ -17,20 +17,12 @@ class AlarmViewController: UIViewController {
     
     
     //MARK: Date functions
-    @IBOutlet weak var sunday: UIButton!
-    @IBOutlet weak var monday: UIButton!
- 
-    @IBOutlet weak var tuesday: UIButton!
-    @IBOutlet weak var wednesday: UIButton!
-    @IBOutlet weak var thursday: UIButton!
-    @IBOutlet weak var friday: UIButton!
-    @IBOutlet weak var saturday: UIButton!
     
     @IBOutlet weak var datePicker: UIDatePicker!
     
     @IBOutlet weak var saveButton: UIButton!
     
-    @IBOutlet weak var savedTime: UILabel!
+    //@IBOutlet weak var savedTime: UILabel!
     
     @IBAction func saveButtonPressed(sender: AnyObject) {
         //set default seconds to zero
@@ -38,7 +30,7 @@ class AlarmViewController: UIViewController {
         //on and off alarms
         
         NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0)
-        savedTime.text = AlarmViewController.dateFormatter.stringFromDate(saveAlarmTime)
+        //savedTime.text = AlarmViewController.dateFormatter.stringFromDate(saveAlarmTime)
     }
 
     
