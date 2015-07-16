@@ -9,8 +9,8 @@
 import UIKit
 
 class PetViewController: UIViewController {
-
-  
+    
+    
     
     @IBOutlet weak var alarmTime: UILabel!
     
@@ -18,11 +18,11 @@ class PetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
-         navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -31,14 +31,26 @@ class PetViewController: UIViewController {
     
     @IBAction func alarmToggle(sender: AnyObject) {
         
-        alarmTime.hidden = !alarmTime.hidden
-        alarmToggle.selected = !alarmToggle.selected
+        //alarmTime.hidden = !alarmTime.hidden
+        //alarmToggle.selected = !alarmToggle.selected
+        if(!Alarm.sharedInstance.isSet) {
+            alarmTime.hidden = false
+            alarmToggle.selected = false
         
-        
+            NotificationHelper.handleScheduling(Alarm.sharedInstance.time, numOfNotifications: 3, delayInSeconds: 0)
+            Alarm.sharedInstance.isSet = true
+            alarmTime.text = Alarm.sharedInstance.dateFormatter.stringFromDate(Alarm.sharedInstance.time)
+        }
+        else {
+            alarmTime.hidden = true
+            alarmToggle.selected = true
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            Alarm.sharedInstance.isSet = false
+        }
     }
-
+    
     // MARK: - Navigation
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new View Controller using segue.destinationViewController.
         // Pass the selected object to the new View Controller.
@@ -52,5 +64,5 @@ class PetViewController: UIViewController {
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         println("unwinding")
     }
-
+    
 }

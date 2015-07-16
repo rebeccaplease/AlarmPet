@@ -34,6 +34,8 @@ class AlarmViewController: UIViewController {
     }
 
     
+    
+    
     //MARK: View functions
     override func viewDidLoad() {
         super.viewDidLoad()

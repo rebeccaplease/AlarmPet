@@ -15,7 +15,7 @@ class Alarm {
     
     var isSet: Bool = true
 
-    static var dateFormatter: NSDateFormatter = {
+    var dateFormatter: NSDateFormatter = {
         var formatter = NSDateFormatter()
         formatter.timeStyle = NSDateFormatterStyle.ShortStyle
         
