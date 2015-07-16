@@ -34,14 +34,6 @@ class AlarmViewController: UIViewController {
     }
 
     
-    static var dateFormatter: NSDateFormatter = {
-        var formatter = NSDateFormatter()
-        formatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        
-        return formatter
-        }()
-    
-    
     //MARK: View functions
     override func viewDidLoad() {
         super.viewDidLoad()

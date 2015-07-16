@@ -7,3 +7,19 @@
 //
 
 import Foundation
+
+class Alarm {
+    //Singleton
+    static let sharedInstance = Alarm()
+    var time: NSDate = NSDate()
+    
+    var isSet: Bool = true
+
+    static var dateFormatter: NSDateFormatter = {
+        var formatter = NSDateFormatter()
+        formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        
+        return formatter
+        }()
+   
+}

@@ -156,6 +156,9 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="selected" image="AlarmOff"/>
+                                <connections>
+                                    <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="GKc-Sf-wPL"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
@@ -180,6 +183,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="qVf-dA-xQ0"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="alarmTime" destination="WF0-tT-cZO" id="Yjl-hm-6b8"/>
+                        <outlet property="alarmToggle" destination="Bfv-kQ-UIg" id="Jqg-vW-vYG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VB-5f-Stk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -10,6 +10,12 @@ import UIKit
 
 class PetViewController: UIViewController {
 
+  
+    
+    @IBOutlet weak var alarmTime: UILabel!
+    
+    @IBOutlet weak var alarmToggle: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +28,14 @@ class PetViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func alarmToggle(sender: AnyObject) {
+        
+        alarmTime.hidden = !alarmTime.hidden
+        alarmToggle.selected = !alarmToggle.selected
+        
+        
+    }
 
     // MARK: - Navigation
 

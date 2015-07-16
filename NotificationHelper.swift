@@ -27,7 +27,6 @@ class NotificationHelper {
         notification.category = "CATEGORY"
         
         //notification.userInfo = ["UUID": item.UUID, ] // assign a unique identifier to the notification so that we can retrieve it later
-        
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
@@ -41,13 +40,15 @@ class NotificationHelper {
             dateComponents.day += 1
             println("Set for next day")
         }
+        
         //normally zero. if snoozing - some value
         dateComponents.second = delayInSeconds
         
         var fixedDate: NSDate! = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         
-        //zero seconds
-        var saveAlarmTime = fixedDate
+        //zero seconds and save to Alarm
+        Alarm.sharedInstance.time = fixedDate
+        Alarm.sharedInstance.isSet = true
         
         for index in 1...numOfNotifications {
             //loop and schedule numOfNotifications notifications, 30 seconds apart
@@ -84,7 +85,6 @@ class NotificationHelper {
         optionsCategory.identifier = "CATEGORY"
         optionsCategory.setActions([snoozeAction, openAction], forContext: UIUserNotificationActionContext.Default) // UIUserNotificationActionContext.Default (4 actions max)
         optionsCategory.setActions([snoozeAction, openAction], forContext: UIUserNotificationActionContext.Minimal) // UIUserNotificationActionContext.Minimal - for when space is limited (2 actions max)
-        
         
         
         var categories = Set([optionsCategory])
