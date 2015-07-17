@@ -12,30 +12,28 @@ class AlarmViewController: UIViewController {
 
     var saveAlarmTime: NSDate = NSDate()
     
-    //The date and time when the system should deliver the notification.
-    //@NSCopying var fireDate: NSDate?
-    
-    
     //MARK: Date functions
     
     @IBOutlet weak var datePicker: UIDatePicker!
     
     @IBOutlet weak var saveButton: UIButton!
     
-    //@IBOutlet weak var savedTime: UILabel!
-    
     @IBAction func saveButtonPressed(sender: AnyObject) {
         //set default seconds to zero
         //if time is before today, set to next day
         //on and off alarms
-        
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
         NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0)
         //savedTime.text = AlarmViewController.dateFormatter.stringFromDate(saveAlarmTime)
+    self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     
-    
-    
+    @IBAction func cancelUnwindSegue(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+
     //MARK: View functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +44,7 @@ class AlarmViewController: UIViewController {
         //default to current time
         datePicker.date = currentDate
         
-        navigationController?.setNavigationBarHidden(true, animated: false)
+       // navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
     override func didReceiveMemoryWarning() {

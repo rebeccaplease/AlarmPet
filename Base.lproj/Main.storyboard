@@ -29,25 +29,10 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" opaque="NO" alpha="0.5" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.5" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="bb2-qd-rWO">
-                                <rect key="frame" x="16" y="200" width="568" height="162"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="600" id="4Qa-0C-VMn"/>
-                                    <constraint firstAttribute="height" constant="162" id="dJP-cI-kCh"/>
-                                </constraints>
-                                <date key="date" timeIntervalSinceReferenceDate="458252159.20873201">
-                                    <!--2015-07-10 20:15:59 +0000-->
-                                </date>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="4Qa-0C-VMn"/>
-                                    </mask>
-                                </variation>
-                            </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rtq-WI-7mu">
                                 <rect key="frame" x="545" y="20" width="34" height="30"/>
                                 <constraints>
@@ -59,7 +44,7 @@
                                 </state>
                                 <connections>
                                     <action selector="saveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GEO-wu-aD1"/>
-                                    <segue destination="EBm-nG-J3p" kind="unwind" identifier="Cancel" unwindAction="unwindToSegue:" id="RsX-YL-cGX"/>
+                                    <segue destination="EBm-nG-J3p" kind="unwind" unwindAction="unwindToSegue:" id="lrr-D9-wsm"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9XE-oc-aJU">
@@ -68,7 +53,8 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="EBm-nG-J3p" kind="unwind" identifier="Save" unwindAction="unwindToSegue:" id="vqS-2V-Z1Z"/>
+                                    <action selector="cancelUnwindSegue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cSn-pp-0HR"/>
+                                    <segue destination="EBm-nG-J3p" kind="unwind" unwindAction="unwindToSegue:" id="dLY-5m-t3Q"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1B-he-C1H">
@@ -77,19 +63,67 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view opaque="NO" alpha="0.69999999999999973" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pYy-dr-dSf">
+                                <rect key="frame" x="16" y="220" width="568" height="162"/>
+                                <subviews>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="bb2-qd-rWO">
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="162"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="600" id="4Qa-0C-VMn"/>
+                                            <constraint firstAttribute="height" constant="162" id="dJP-cI-kCh"/>
+                                        </constraints>
+                                        <date key="date" timeIntervalSinceReferenceDate="458252159.20873201">
+                                            <!--2015-07-10 20:15:59 +0000-->
+                                        </date>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="4Qa-0C-VMn"/>
+                                            </mask>
+                                        </variation>
+                                    </datePicker>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="bb2-qd-rWO" firstAttribute="leading" secondItem="pYy-dr-dSf" secondAttribute="leading" id="0ua-tA-jgV"/>
+                                    <constraint firstAttribute="height" constant="162" id="IbM-wY-vJI"/>
+                                    <constraint firstAttribute="trailing" secondItem="bb2-qd-rWO" secondAttribute="trailing" id="LyR-hZ-XGx"/>
+                                    <constraint firstAttribute="trailing" secondItem="bb2-qd-rWO" secondAttribute="trailing" id="Up4-Fa-xE7"/>
+                                    <constraint firstItem="bb2-qd-rWO" firstAttribute="top" secondItem="pYy-dr-dSf" secondAttribute="top" id="qkE-tV-BFk"/>
+                                    <constraint firstItem="bb2-qd-rWO" firstAttribute="top" secondItem="pYy-dr-dSf" secondAttribute="top" id="qui-aP-Rnm"/>
+                                    <constraint firstItem="bb2-qd-rWO" firstAttribute="leading" secondItem="pYy-dr-dSf" secondAttribute="leading" id="sbI-Kw-i4h"/>
+                                    <constraint firstAttribute="bottom" secondItem="bb2-qd-rWO" secondAttribute="bottom" id="ua3-1c-beG"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="0ua-tA-jgV"/>
+                                        <exclude reference="LyR-hZ-XGx"/>
+                                        <exclude reference="qkE-tV-BFk"/>
+                                        <exclude reference="ua3-1c-beG"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="9XE-oc-aJU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="631-xa-8fe"/>
                             <constraint firstItem="rtq-WI-7mu" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="70a-iZ-bCE"/>
+                            <constraint firstItem="pYy-dr-dSf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Eok-Tg-DgA"/>
+                            <constraint firstItem="pYy-dr-dSf" firstAttribute="leading" secondItem="9XE-oc-aJU" secondAttribute="trailing" id="G5l-B1-5yD"/>
                             <constraint firstItem="9XE-oc-aJU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="IQj-Qs-Mq2"/>
-                            <constraint firstItem="bb2-qd-rWO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="MXN-I1-3jj"/>
-                            <constraint firstItem="bb2-qd-rWO" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Pqq-7L-41Q"/>
+                            <constraint firstItem="rtq-WI-7mu" firstAttribute="leading" secondItem="pYy-dr-dSf" secondAttribute="trailing" id="Zjb-Nl-4dc"/>
                             <constraint firstItem="rtq-WI-7mu" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="-5" id="bCF-iR-kmb"/>
                             <constraint firstAttribute="centerX" secondItem="i1B-he-C1H" secondAttribute="centerX" id="lh4-l4-vRG"/>
-                            <constraint firstItem="bb2-qd-rWO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="200" id="mi4-Eo-JfF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pYy-dr-dSf" secondAttribute="trailing" id="nEe-E6-ckI"/>
                             <constraint firstItem="i1B-he-C1H" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="20" id="ncB-V2-ZaX"/>
+                            <constraint firstItem="pYy-dr-dSf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="200" id="vqv-6Z-vsx"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="G5l-B1-5yD"/>
+                                <exclude reference="Zjb-Nl-4dc"/>
+                            </mask>
+                        </variation>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
@@ -116,6 +150,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5q-EZ-jC9">
                                 <rect key="frame" x="532" y="28" width="44" height="44"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="22" id="4pH-3U-Kdp"/>
                                     <constraint firstAttribute="width" constant="44" id="IEX-Uc-qef"/>
@@ -130,7 +165,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="17O-VI-bDD"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="overCurrentContext" id="17O-VI-bDD"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pet" translatesAutoresizingMaskIntoConstraints="NO" id="N3i-po-e5j">
@@ -160,11 +195,20 @@
                                     <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="GKc-Sf-wPL"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ghost" translatesAutoresizingMaskIntoConstraints="NO" id="lHE-0j-wVq">
+                                <rect key="frame" x="462" y="163" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="4TM-fW-wYn"/>
+                                    <constraint firstAttribute="width" constant="50" id="cVZ-Yp-SWb"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="10" id="7ti-bG-Se3"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="5" id="B8Z-cv-wGx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lHE-0j-wVq" secondAttribute="trailing" constant="72" id="GzZ-9F-rSO"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="8" id="S3W-pc-oGV"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="trailing" secondItem="Z2h-hD-wyP" secondAttribute="trailingMargin" constant="-8" id="Tnd-Be-VoU"/>
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="v5q-EZ-jC9" secondAttribute="bottom" constant="8" id="WD3-r4-Edq"/>
@@ -173,6 +217,7 @@
                             <constraint firstAttribute="centerX" secondItem="N3i-po-e5j" secondAttribute="centerX" id="fzJ-D2-9b8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WF0-tT-cZO" secondAttribute="trailing" constant="9" id="hbb-n4-o2V"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="Z2h-hD-wyP" secondAttribute="topMargin" constant="8" id="oUB-FI-xim"/>
+                            <constraint firstItem="lHE-0j-wVq" firstAttribute="top" secondItem="WF0-tT-cZO" secondAttribute="bottom" constant="60" id="uDM-pL-7dM"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -197,6 +242,7 @@
         <image name="AlarmOff" width="100" height="100"/>
         <image name="AlarmOn" width="100" height="100"/>
         <image name="Clock" width="100" height="100"/>
+        <image name="Ghost" width="100" height="100"/>
         <image name="Pet" width="100" height="100"/>
     </resources>
 </document>

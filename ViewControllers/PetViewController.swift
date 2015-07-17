@@ -20,6 +20,7 @@ class PetViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -60,7 +61,24 @@ class PetViewController: UIViewController {
         let alarmViewController = segue.destinationViewController as! AlarmViewController
         
         } */
+        /*
+        var contributeViewController: UIViewController = UIViewController()
+        var blurEffect: UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        var beView: UIVisualEffectView = UIVisualEffectView(effect: blurEffect)
+        beView.frame = self.view.bounds
+        
+        contributeViewController.view.frame = self.view.bounds;
+        contributeViewController.view.backgroundColor = UIColor.clearColor()
+        contributeViewController.view.insertSubview(beView, atIndex: 0)
+        contributeViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        
+        self.presentViewController(contributeViewController, animated: true, completion: nil)
+   */
+        
+        
+        
     }
+    
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         println("unwinding")
     }
