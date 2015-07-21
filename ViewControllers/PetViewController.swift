@@ -10,11 +10,23 @@ import UIKit
 
 class PetViewController: UIViewController {
     
-    
-    
     @IBOutlet weak var alarmTime: UILabel!
     
     @IBOutlet weak var alarmToggle: UIButton!
+    
+    @IBOutlet weak var ghost: UIImageView!
+    
+    var ghostArray:[(Ghost, UIImageView, UIGestureRecognizer)]? = nil
+    
+    //var ghostImageArray: [UIImageView]? = nil
+    
+    enum State {
+        case Defend //alarm going off
+        case Play
+    }
+    var currentState = State.Play
+    
+    //let tapRecognizer = UITapGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +34,74 @@ class PetViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        //bind label and button to Alarm?
+        if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
+            alarmToggle.selected = true
+            alarmTime.hidden = true
+        }
+        else {
+            alarmToggle.selected = false
+            alarmTime.hidden = false
+            alarmTime.text = Alarm.sharedInstance.dateFormatter.stringFromDate(Alarm.sharedInstance.time)
+        }
+        
+        
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //called every time view appears
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        switch currentState {
+        case .Defend:
+            
+            ghostArray = [ (Ghost, UIImageView, UIGestureRecognizer) ]()
+            
+            for index in 1...10 {
+                //ghostArray = [Ghost]()
+                //ghostArray!.append(Ghost())
+                
+                //ghostImageArray = [UIImageView]()
+                //UIImageView
+                
+                var temp = [(ghost: Ghost(), imageView: UIImageView(image: UIImage(named: "Ghost.png")), gesture: UITapGestureRecognizer() as UIGestureRecognizer)]
+                
+                temp[0].gesture.addTarget(self, action: "tappedGhost")
+                
+                ghostArray! += temp
+                
+            }
+            /*
+            tapRecognizer.addTarget(self, action: "tappedGhost")
+            ***ghost.addGestureRecognizer(tapRecognizer)
+            ghost.userInteractionEnabled = true
+            */
+            
+        case .Play:
+            ghostArray = nil
+            //ghostImageArray = nil
+            //clear screen of ghosts
+            
+            println("playing")
+        }
+        
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        switch currentState {
+        case .Defend:
+            println("defending")
+        case .Play:
+            println("playing")
+        }
+        
     }
     
+    func tappedGhost() {
+        ghost.hidden = true
+        
+    }
     
     @IBAction func alarmToggle(sender: AnyObject) {
         
@@ -37,7 +110,7 @@ class PetViewController: UIViewController {
         if(!Alarm.sharedInstance.isSet) {
             alarmTime.hidden = false
             alarmToggle.selected = false
-        
+            
             NotificationHelper.handleScheduling(Alarm.sharedInstance.time, numOfNotifications: 3, delayInSeconds: 0)
             Alarm.sharedInstance.isSet = true
             alarmTime.text = Alarm.sharedInstance.dateFormatter.stringFromDate(Alarm.sharedInstance.time)
@@ -73,7 +146,7 @@ class PetViewController: UIViewController {
         contributeViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         
         self.presentViewController(contributeViewController, animated: true, completion: nil)
-   */
+        */
         
         
         

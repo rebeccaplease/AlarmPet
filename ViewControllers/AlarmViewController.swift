@@ -25,7 +25,7 @@ class AlarmViewController: UIViewController {
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0)
         //savedTime.text = AlarmViewController.dateFormatter.stringFromDate(saveAlarmTime)
-    self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     

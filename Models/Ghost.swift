@@ -7,3 +7,18 @@
 //
 
 import Foundation
+import UIKit
+
+class Ghost {
+    /*
+    var currentLocation: CGRect
+    func move() -> CGRect {
+        
+        return
+    }
+*/
+    init() {
+        
+        
+    }
+}

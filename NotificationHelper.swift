@@ -22,7 +22,6 @@ class NotificationHelper {
         notification.timeZone  = NSTimeZone.defaultTimeZone()
         notification.alertBody = "Virtual pet in danger!"
         notification.alertAction = "open"
-        //notification.soundName = UILocalNotificationDefaultSoundName // play default sound
         notification.soundName = "ShipBell.wav"
         notification.category = "CATEGORY"
         
@@ -34,12 +33,15 @@ class NotificationHelper {
     static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int) {
         var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: dateToFix)
         
-        //check current day and time. if the time today already passed, set alarm for next day
+        //check current day and time. if the time today already passed, set alarm for next day 
+        //(fix for snoozing)
+        /*
         let currentTime = NSDate()
         if currentTime.isEqualToDate(currentTime.laterDate(dateToFix)) {
             dateComponents.day += 1
             println("Set for next day")
         }
+*/
         
         //normally zero. if snoozing - some value
         dateComponents.second = delayInSeconds
@@ -70,7 +72,7 @@ class NotificationHelper {
         //openAction.activationMode = .Background // UIUserNotificationActivationMode.Background - don't bring app to foreground
         openAction.authenticationRequired = true // don't require unlocking before performing action
         openAction.destructive = false // display action in blue
-        openAction.activationMode = UIUserNotificationActivationMode.Foreground //launch app
+        openAction.activationMode = .Foreground //launch app
         
         
         let snoozeAction = UIMutableUserNotificationAction()
@@ -78,7 +80,7 @@ class NotificationHelper {
         snoozeAction.title = "Snooze" // title for the action button
         snoozeAction.authenticationRequired = false // don't require unlocking before performing action
         snoozeAction.destructive = false // display action in red
-        snoozeAction.activationMode = UIUserNotificationActivationMode.Background //don't launch app
+        snoozeAction.activationMode = .Background //don't launch app
         
         
         let optionsCategory = UIMutableUserNotificationCategory() // notification categories allow us to create groups of actions that we can associate with a notification
@@ -87,7 +89,7 @@ class NotificationHelper {
         optionsCategory.setActions([snoozeAction, openAction], forContext: UIUserNotificationActionContext.Minimal) // UIUserNotificationActionContext.Minimal - for when space is limited (2 actions max)
         
         
-        var categories = Set([optionsCategory])
+        var categories = Set(arrayLiteral: optionsCategory)
         
         //register for local notifications. ask for user permission (move later)
         var requestedTypes: UIUserNotificationType = UIUserNotificationType.Badge |
@@ -97,5 +99,6 @@ class NotificationHelper {
         var settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: requestedTypes, categories: categories )
         
         application.registerUserNotificationSettings(settings)
+        
     }
 }

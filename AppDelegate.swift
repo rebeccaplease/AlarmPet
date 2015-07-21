@@ -70,37 +70,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         println("handleActionWithIdentifier")
         
-        if identifier == "SNOOZE" {
-            //dismiss upcoming local notifications
-            //create another set of notifications
-            //play them in 2 minutes from the current time
-            application.cancelAllLocalNotifications()
-            
-            println("zzzz snoozing")
-    
-            NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120)
-            
-            completionHandler()
-        }
-        else { //for DEFEND
-            //setPetView()
-            completionHandler()
+        if let identifier = identifier {
+            switch identifier {
+            case "SNOOZE":
+                //dismiss upcoming local notifications
+                //create another set of notifications
+                //play them in 2 minutes from the current time
+                application.cancelAllLocalNotifications()
+                
+                println("zzzz snoozing")
+                
+                NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120)
+            default: //for DEFEND
+                //setPetView()
+                //completionHandler()
+                println("defense")
+            }
         }
         
         //setPetView()
-        //completionHandler()
+        completionHandler()
     }
     
     
     //open view to PetViewController
     /*func setPetView () {
-        var rootViewController = self.window!.rootViewController
-        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        var petViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PetViewController") as! PetViewController
-        
-        rootViewController?.presentViewController(petViewController, animated: false, completion: nil)
+    var rootViewController = self.window!.rootViewController
+    let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    var petViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PetViewController") as! PetViewController
+    
+    rootViewController?.presentViewController(petViewController, animated: false, completion: nil)
     }
-*/
+    */
     func setPetView() {
         
     }
