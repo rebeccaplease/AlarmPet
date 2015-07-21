@@ -13,6 +13,7 @@ class NotificationHelper {
     
     //schedule one notification with ID and alarm time
     static func scheduleNotification(#id: Int, alarm: NSDate){
+        
         println(alarm)
         
         var notification = UILocalNotification()
@@ -25,25 +26,27 @@ class NotificationHelper {
         notification.soundName = "ShipBell.wav"
         notification.category = "CATEGORY"
         
-        //notification.userInfo = ["UUID": item.UUID, ] // assign a unique identifier to the notification so that we can retrieve it later
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
+        //UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
     //zero seconds and schedule number of notifications
     static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int) {
         var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: dateToFix)
         
-        //check current day and time. if the time today already passed, set alarm for next day 
-        //(fix for snoozing)
-        /*
-        let currentTime = NSDate()
-        if currentTime.isEqualToDate(currentTime.laterDate(dateToFix)) {
-            dateComponents.day += 1
-            println("Set for next day")
-        }
-*/
+        //check current day and time. if the time today already passed, set alarm for next day
+        //if snoozing, then don't set for next day
         
-        //normally zero. if snoozing - some value
+        if delayInSeconds != 0 {
+            let currentTime = NSDate()
+            if currentTime.isEqualToDate(currentTime.laterDate(dateToFix)) {
+                dateComponents.day += 1
+                println("Set for next day")
+            }
+        }
+        
+        
+        //normally zero. if snoozing = some value
         dateComponents.second = delayInSeconds
         
         var fixedDate: NSDate! = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
@@ -57,7 +60,7 @@ class NotificationHelper {
             
             scheduleNotification(id: index, alarm: fixedDate)
             
-            dateComponents.second = 30*index
+            dateComponents.second += 30*index
             fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         }
         //return saveAlarmTime

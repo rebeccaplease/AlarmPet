@@ -14,6 +14,14 @@ class Alarm {
     var time: NSDate = NSDate()
     
     var isSet: Bool = true
+    
+    enum State {
+        case Defend //alarm going off
+        case Play
+    }
+    
+    var currentState = State.Play
+    
 
     var dateFormatter: NSDateFormatter = {
         var formatter = NSDateFormatter()

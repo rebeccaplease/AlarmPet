@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class PetViewController: UIViewController {
     
@@ -20,13 +21,8 @@ class PetViewController: UIViewController {
     
     //var ghostImageArray: [UIImageView]? = nil
     
-    enum State {
-        case Defend //alarm going off
-        case Play
-    }
-    var currentState = State.Play
-    
     //let tapRecognizer = UITapGestureRecognizer()
+    var alarm = Alarm.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,17 +39,18 @@ class PetViewController: UIViewController {
         else {
             alarmToggle.selected = false
             alarmTime.hidden = false
-            alarmTime.text = Alarm.sharedInstance.dateFormatter.stringFromDate(Alarm.sharedInstance.time)
+            alarmTime.text = alarm.dateFormatter.stringFromDate(alarm.time)
         }
         
-        
+        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
+
     }
     
     //called every time view appears
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        switch currentState {
-        case .Defend:
+        switch alarm.currentState {
+        case Alarm.State.Defend:
             
             ghostArray = [ (Ghost, UIImageView, UIGestureRecognizer) ]()
             
@@ -77,7 +74,7 @@ class PetViewController: UIViewController {
             ghost.userInteractionEnabled = true
             */
             
-        case .Play:
+        case Alarm.State.Play:
             ghostArray = nil
             //ghostImageArray = nil
             //clear screen of ghosts
@@ -89,10 +86,10 @@ class PetViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        switch currentState {
-        case .Defend:
+        switch alarm.currentState {
+        case Alarm.State.Defend:
             println("defending")
-        case .Play:
+        case Alarm.State.Play:
             println("playing")
         }
         
@@ -107,19 +104,19 @@ class PetViewController: UIViewController {
         
         //alarmTime.hidden = !alarmTime.hidden
         //alarmToggle.selected = !alarmToggle.selected
-        if(!Alarm.sharedInstance.isSet) {
+        if(!alarm.isSet) {
             alarmTime.hidden = false
             alarmToggle.selected = false
             
-            NotificationHelper.handleScheduling(Alarm.sharedInstance.time, numOfNotifications: 3, delayInSeconds: 0)
-            Alarm.sharedInstance.isSet = true
-            alarmTime.text = Alarm.sharedInstance.dateFormatter.stringFromDate(Alarm.sharedInstance.time)
+            NotificationHelper.handleScheduling(alarm.time, numOfNotifications: 3, delayInSeconds: 0)
+            alarm.isSet = true
+            alarmTime.text = alarm.dateFormatter.stringFromDate(alarm.time)
         }
         else {
             alarmTime.hidden = true
             alarmToggle.selected = true
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            Alarm.sharedInstance.isSet = false
+            alarm.isSet = false
         }
     }
     
