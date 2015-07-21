@@ -26,8 +26,7 @@ class NotificationHelper {
         notification.soundName = "ShipBell.wav"
         notification.category = "CATEGORY"
         
-        
-        //UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
     //zero seconds and schedule number of notifications
@@ -37,7 +36,7 @@ class NotificationHelper {
         //check current day and time. if the time today already passed, set alarm for next day
         //if snoozing, then don't set for next day
         
-        if delayInSeconds != 0 {
+        if delayInSeconds == 0 {
             let currentTime = NSDate()
             if currentTime.isEqualToDate(currentTime.laterDate(dateToFix)) {
                 dateComponents.day += 1
@@ -60,7 +59,7 @@ class NotificationHelper {
             
             scheduleNotification(id: index, alarm: fixedDate)
             
-            dateComponents.second += 30*index
+            dateComponents.second += 30
             fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         }
         //return saveAlarmTime
