@@ -230,7 +230,6 @@
                     <connections>
                         <outlet property="alarmTime" destination="WF0-tT-cZO" id="Yjl-hm-6b8"/>
                         <outlet property="alarmToggle" destination="Bfv-kQ-UIg" id="Jqg-vW-vYG"/>
-                        <outlet property="ghost" destination="lHE-0j-wVq" id="X24-7g-yeG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VB-5f-Stk" userLabel="First Responder" sceneMemberID="firstResponder"/>

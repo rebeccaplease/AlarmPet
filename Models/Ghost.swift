@@ -17,8 +17,5 @@ class Ghost {
         return
     }
 */
-    init() {
-        
-        
-    }
+    
 }

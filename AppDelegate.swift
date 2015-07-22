@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var alarm = Alarm.sharedInstance
+    let alarm = Alarm.sharedInstance
     
     //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NotificationHelper.registerNotification(application)
         }
         
+        alarm.checkState()
         return true
     }
     
@@ -51,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        alarm.checkState()
         println("applicationDidBecomeActive")
     }
     
@@ -62,8 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //if app is open and notification is recieved, open PetViewController
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        
-        //setPetView()
+
     }
     
     //if a custom notification action is chosen from push notification (from swiping left)
@@ -83,28 +84,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120)
             default: //for DEFEND
-                //setPetView()
-                //completionHandler()
+                application.cancelAllLocalNotifications()
+                alarm.checkState()
                 println("defense")
             }
         }
-        
-        //setPetView()
         completionHandler()
     }
-    
-    
-    //open view to PetViewController
-    /*func setPetView () {
-    var rootViewController = self.window!.rootViewController
-    let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-    var petViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PetViewController") as! PetViewController
-    
-    rootViewController?.presentViewController(petViewController, animated: false, completion: nil)
-    }
-    */
-    func setPetView() {
-        
-    }
 }
-

@@ -7,3 +7,10 @@
 //
 
 import Foundation
+//import RealmSwift
+
+class Pet {
+    var health: Int = 100
+    var affection: Int = 0
+    
+}
