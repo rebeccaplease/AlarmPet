@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let alarm = Alarm.sharedInstance
+    var ghostArray = Ghost.sharedInstance.ghostArray
     
     //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -30,6 +31,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         alarm.checkState()
+        switch alarm.currentState {
+        case Alarm.State.Defend:
+            println("Defending")
+            ghostArray = DefendView.createGhosts(self.window!.rootViewController!, ghostArray: ghostArray)
+        case Alarm.State.Play:
+            ghostArray = nil
+            println("Playing")
+        default:
+            println("Default")
+        }
+        
         return true
     }
     
@@ -52,8 +64,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        alarm.checkState()
         println("applicationDidBecomeActive")
+        alarm.checkState()
+        switch alarm.currentState {
+        case Alarm.State.Defend:
+            println("Defending")
+            ghostArray = DefendView.createGhosts(self.window!.rootViewController!, ghostArray: ghostArray)
+        case Alarm.State.Play:
+            ghostArray = nil
+            println("Playing")
+        default:
+            println("Default")
+        }
     }
     
     
@@ -86,7 +108,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             default: //for DEFEND
                 application.cancelAllLocalNotifications()
                 alarm.checkState()
-                println("defense")
+                
+                switch alarm.currentState {
+                case Alarm.State.Defend:
+                    println("Defending")
+                    ghostArray = DefendView.createGhosts(self.window!.rootViewController!, ghostArray: ghostArray)
+                case Alarm.State.Play:
+                    ghostArray = nil
+                    println("Playing")
+                default:
+                    println("Default")
+                }
             }
         }
         completionHandler()

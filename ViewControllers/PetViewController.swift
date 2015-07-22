@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import AVFoundation
+//import AVFoundation
 
 class PetViewController: UIViewController {
     
@@ -17,12 +17,10 @@ class PetViewController: UIViewController {
     
     //@IBOutlet weak var ghost: UIImageView!
     
-    var ghostArray:[(ghost: Ghost, imageView: UIImageView)]? = nil
     
-    //var ghostImageArray: [UIImageView]? = nil
-    
-    let tapRecognizer = UITapGestureRecognizer()
+
     let alarm = Alarm.sharedInstance
+    var ghostArray = Ghost.sharedInstance.ghostArray
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +40,17 @@ class PetViewController: UIViewController {
             alarmTime.hidden = false
             alarmTime.text = alarm.dateFormatter.stringFromDate(alarm.time!)
         }
-        createGhosts()
+        
+        switch alarm.currentState {
+        case Alarm.State.Defend:
+            println("Defending")
+            ghostArray = DefendView.createGhosts(self, ghostArray: ghostArray)
+        case Alarm.State.Play:
+            ghostArray = nil
+            println("Playing")
+        default:
+            println("Default")
+        }
         // AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         
     }
@@ -52,19 +60,16 @@ class PetViewController: UIViewController {
         super.viewWillAppear(animated)
         println("View Will Appear")
         
+        
         switch alarm.currentState {
         case Alarm.State.Defend:
-            //if close app and open it again
-            createGhosts()
+            println("Defending")
+            ghostArray = DefendView.createGhosts(self, ghostArray: ghostArray)
         case Alarm.State.Play:
             ghostArray = nil
-            //ghostImageArray = nil
-            //clear screen of ghosts
-            
-            println("playing")
+            println("Playing")
         default:
-            println("default")
-            
+            println("Default")
         }
     }
     //move ghosts
@@ -74,54 +79,16 @@ class PetViewController: UIViewController {
         
         switch alarm.currentState {
         case Alarm.State.Defend:
-            println("defending")
+            println("Defending")
         case Alarm.State.Play:
-            println("playing")
+            ghostArray = nil
+            println("Playing")
         default:
             println("Default")
         }
         
     }
-    /*
-    func randomPosition() -> CGRect {
     
-    
-    return
-    }
-    */
-    
-    func createGhosts() {
-        if let ghostArray = ghostArray {
-            
-        }
-        else {
-            ghostArray = []
-            
-            for index in 1...10 {
-                
-                var temp = [(ghost: Ghost(), imageView: UIImageView(image: UIImage(named: "Ghost")))]
-                
-                tapRecognizer.addTarget(self, action: "tappedGhost:")
-                temp[0].imageView.addGestureRecognizer(tapRecognizer)
-                temp[0].imageView.userInteractionEnabled = true
-                
-                var xy = CGFloat(index*15)
-                var dimensions = CGFloat(50)
-                
-                temp[0].imageView.frame = CGRectMake(xy, xy, dimensions, dimensions)
-                
-                self.view.addSubview(temp[0].imageView)
-                
-                ghostArray! += temp
-                println("\(ghostArray!.count)")
-                /*
-                tapRecognizer.addTarget(self, action: "tappedGhost")
-                ***ghost.addGestureRecognizer(tapRecognizer)
-                ghost.userInteractionEnabled = true
-                */
-            }
-        }
-    }
     func tappedGhost(recognizer: UIGestureRecognizer) {
         
         recognizer.view!.hidden = true

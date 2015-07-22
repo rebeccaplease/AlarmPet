@@ -17,5 +17,15 @@ class Ghost {
         return
     }
 */
+    var ghostArray:[(ghost: Ghost, imageView: UIImageView)]? = nil
+    
+    class var sharedInstance : Ghost {
+        struct Static {
+            static let instance : Ghost = Ghost()
+        }
+        return Static.instance
+    }
+    
+    
     
 }
