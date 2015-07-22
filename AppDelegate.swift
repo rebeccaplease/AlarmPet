@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch alarm.currentState {
         case Alarm.State.Defend:
             println("Defending")
-            ghostArray = DefendView.createGhosts(self.window!.rootViewController!, ghostArray: ghostArray)
+            ghostArray = DefendView.createGhosts(self.window!.rootViewController!)
         case Alarm.State.Play:
             ghostArray = nil
             println("Playing")
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch alarm.currentState {
         case Alarm.State.Defend:
             println("Defending")
-            ghostArray = DefendView.createGhosts(self.window!.rootViewController!, ghostArray: ghostArray)
+            ghostArray = DefendView.createGhosts(self.window!.rootViewController!)
         case Alarm.State.Play:
             ghostArray = nil
             println("Playing")
@@ -112,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 switch alarm.currentState {
                 case Alarm.State.Defend:
                     println("Defending")
-                    ghostArray = DefendView.createGhosts(self.window!.rootViewController!, ghostArray: ghostArray)
+                    ghostArray = DefendView.createGhosts(self.window!.rootViewController!)
                 case Alarm.State.Play:
                     ghostArray = nil
                     println("Playing")

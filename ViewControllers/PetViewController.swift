@@ -44,7 +44,7 @@ class PetViewController: UIViewController {
         switch alarm.currentState {
         case Alarm.State.Defend:
             println("Defending")
-            ghostArray = DefendView.createGhosts(self, ghostArray: ghostArray)
+            ghostArray = DefendView.createGhosts(self)
         case Alarm.State.Play:
             ghostArray = nil
             println("Playing")
@@ -64,7 +64,7 @@ class PetViewController: UIViewController {
         switch alarm.currentState {
         case Alarm.State.Defend:
             println("Defending")
-            ghostArray = DefendView.createGhosts(self, ghostArray: ghostArray)
+            ghostArray = DefendView.createGhosts(self)
         case Alarm.State.Play:
             ghostArray = nil
             println("Playing")
@@ -89,27 +89,7 @@ class PetViewController: UIViewController {
         
     }
     
-    func tappedGhost(recognizer: UIGestureRecognizer) {
-        
-        recognizer.view!.hidden = true
-        println("no of ghosts left: \(ghostArray!.count)")
-        println("hide this ghost")
-        
-        for index in 0...ghostArray!.count {
-            if ghostArray![index].imageView.hidden == true {
-                ghostArray!.removeAtIndex(index)
-            }
-        }
-        if ghostArray!.count == 0 {
-            alarm.currentState = .Play
-            let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default,handler: nil))
-            
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-        
-    }
-    
+       
     @IBAction func alarmToggle(sender: AnyObject) {
         
         //alarmTime.hidden = !alarmTime.hidden
@@ -162,6 +142,17 @@ class PetViewController: UIViewController {
     
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         println("unwinding")
+        //update labels
+        if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
+            alarmToggle.selected = true
+            alarmTime.hidden = true
+        }
+        else {
+            alarmToggle.selected = false
+            alarmTime.hidden = false
+            alarmTime.text = alarm.dateFormatter.stringFromDate(alarm.time!)
+        }
+        self.view.setNeedsDisplay()
     }
     
 }
