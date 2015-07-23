@@ -164,7 +164,6 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="setAlarm:" destination="Z2h-hD-wyP" eventType="touchUpInside" id="SKC-aD-lWu"/>
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="overCurrentContext" id="17O-VI-bDD"/>
                                 </connections>
                             </button>
@@ -179,7 +178,6 @@
                                 </state>
                                 <state key="selected" image="AlarmOff"/>
                                 <connections>
-                                    <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="GKc-Sf-wPL"/>
                                     <action selector="toggleAlarm:" destination="Z2h-hD-wyP" eventType="touchUpInside" id="Tjn-pW-1lv"/>
                                 </connections>
                             </button>
@@ -226,10 +224,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="qVf-dA-xQ0"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <connections>
-                        <outlet property="alarmTime" destination="WF0-tT-cZO" id="Yjl-hm-6b8"/>
-                        <outlet property="alarmToggle" destination="Bfv-kQ-UIg" id="Jqg-vW-vYG"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VB-5f-Stk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

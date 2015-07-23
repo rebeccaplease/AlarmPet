@@ -15,6 +15,8 @@ class DefendView: NSObject {
     //static let tapRecognizer = UITapGestureRecognizer()
     static var moved:Bool = false
     
+    
+    
     static func createGhosts(vc: UIViewController) -> [(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]?  {
         let ghost = Ghost.sharedInstance
         //if user exits out without defeating all the ghosts
@@ -58,7 +60,7 @@ class DefendView: NSObject {
     
     static func tappedGhost(recognizer: UITapGestureRecognizer) {
         
-        let alarm = Alarm.sharedInstance
+        /*let alarm = Alarm.sharedInstance
         let ghost = Ghost.sharedInstance
         //var ghostArray = ghost.ghostArray
         
@@ -86,10 +88,12 @@ class DefendView: NSObject {
         }
         
         //println("Tapped with recognizer!")
+*/
     }
     static func move() {
-        let pet = Pet.sharedInstance
-        let ghost = Ghost.sharedInstance
+        //let pet = Pet.sharedInstance
+        //let ghost = Ghost.sharedInstance
+        /*
         if let g = ghost.ghostArray {
             if(moved == false) {
                 UIView.animateWithDuration(1.0, animations: {
@@ -99,8 +103,10 @@ class DefendView: NSObject {
                 moved = true
             }
         }
+*/
     }
     
+   
     /* static func tappedGhost() {
     println("Tapped without recognizer!")
     }

@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let alarm = Alarm.sharedInstance
+    //let alarm = Alarm.sharedInstance
     let ghost = Ghost.sharedInstance
     
     //when app is closed/in background, check for launch from push notification
@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             println("not coming from push")
             NotificationHelper.registerNotification(application)
         }
-        
+        /*
         alarm.checkState()
         switch alarm.currentState {
         case Alarm.State.Defend:
@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         default:
             println("Default")
         }
+*/
         
         return true
     }
@@ -68,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         println("applicationDidBecomeActive")
+        /*
         alarm.checkState()
         switch alarm.currentState {
         case Alarm.State.Defend:
@@ -81,6 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         default:
             println("Default")
         }
+*/
     }
     
     
@@ -108,10 +111,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 application.cancelAllLocalNotifications()
                 
                 println("zzzz snoozing")
-                
-                NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120)
+                let petViewController = self.window!.rootViewController as! PetViewController
+                let mainView = petViewController.view as! MainView
+                NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, alarm: mainView.alarm!)
             default: //for DEFEND
                 application.cancelAllLocalNotifications()
+               /*
                 alarm.checkState()
                 
                 switch alarm.currentState {
@@ -125,6 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 default:
                     println("Default")
                 }
+*/
             }
         }
         completionHandler()

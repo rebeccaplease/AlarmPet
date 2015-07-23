@@ -30,7 +30,7 @@ class NotificationHelper {
     }
     
     //zero seconds and schedule number of notifications
-    static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int) {
+    static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int, alarm: Alarm) {
         var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: dateToFix)
         
         //check current day and time. if the time today already passed, set alarm for next day
@@ -51,8 +51,8 @@ class NotificationHelper {
         var fixedDate: NSDate! = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         
         //zero seconds and save to Alarm
-        Alarm.sharedInstance.time = fixedDate
-        Alarm.sharedInstance.isSet = true
+        alarm.time = fixedDate
+        alarm.isSet = true
         
         for index in 1...numOfNotifications {
             //loop and schedule numOfNotifications notifications, 30 seconds apart
