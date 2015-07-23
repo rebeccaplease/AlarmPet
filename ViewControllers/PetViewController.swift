@@ -20,7 +20,7 @@ class PetViewController: UIViewController {
     
 
     let alarm = Alarm.sharedInstance
-    var ghostArray = Ghost.sharedInstance.ghostArray
+    let ghost = Ghost.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,9 +44,9 @@ class PetViewController: UIViewController {
         switch alarm.currentState {
         case Alarm.State.Defend:
             println("Defending")
-            ghostArray = DefendView.createGhosts(self)
+            ghost.updateGhostArray(DefendView.createGhosts(self))
         case Alarm.State.Play:
-            ghostArray = nil
+            ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
@@ -64,9 +64,9 @@ class PetViewController: UIViewController {
         switch alarm.currentState {
         case Alarm.State.Defend:
             println("Defending")
-            ghostArray = DefendView.createGhosts(self)
+            ghost.updateGhostArray(DefendView.createGhosts(self))
         case Alarm.State.Play:
-            ghostArray = nil
+            ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
@@ -81,7 +81,7 @@ class PetViewController: UIViewController {
         case Alarm.State.Defend:
             println("Defending")
         case Alarm.State.Play:
-            ghostArray = nil
+            ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")

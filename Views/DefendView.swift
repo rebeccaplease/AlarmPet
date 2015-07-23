@@ -9,29 +9,29 @@
 import Foundation
 import UIKit
 
-class DefendView {
+class DefendView: NSObject {
     
     //array of possible gestures
-    static let tapRecognizer = UITapGestureRecognizer()
+    //static let tapRecognizer = UITapGestureRecognizer()
+    static let ghost = Ghost.sharedInstance
     
-    
-    static func createGhosts(vc: UIViewController) -> [(ghost: Ghost, imageView: UIImageView)]?  {
+    static func createGhosts(vc: UIViewController) -> [(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]?  {
         //if user exits out without defeating all the ghosts
-        var ghostArray = Ghost.sharedInstance.ghostArray
+        var ghostArray = ghost.ghostArray
         
         if var ghostArray = ghostArray {
             return ghostArray
         }
             //create and draw ghosts on screen
         else {
-            var tempArray: [(ghost: Ghost, imageView: UIImageView)] = []
+            var tempArray: [(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)] = []
             
             for index in 0...9{
                 
-                var temp = [(ghost: Ghost(), imageView: UIImageView(image: UIImage(named: "Ghost")))]
+                var temp = [(ghost: Ghost(), imageView: UIImageView(image: UIImage(named: "Ghost")), tap: UITapGestureRecognizer() )]
                 
-                tapRecognizer.addTarget(vc, action: "tappedGhost:")
-                temp[0].imageView.addGestureRecognizer(tapRecognizer)
+                temp[0].tap.addTarget(self, action: "tappedGhost:")
+                temp[0].imageView.addGestureRecognizer(temp[0].tap)
                 temp[0].imageView.userInteractionEnabled = true
                 
                 var xy = CGFloat(index*20)
@@ -54,9 +54,10 @@ class DefendView {
         }
     }
     
-    static func tappedGhost(recognizer: UIGestureRecognizer) {
-        var ghostArray = Ghost.sharedInstance.ghostArray
-        let alarm = Alarm.sharedInstance
+    static func tappedGhost(recognizer: UITapGestureRecognizer) {
+        
+        /*let alarm = Alarm.sharedInstance
+        var ghostArray = ghost.ghostArray
         
         recognizer.view?.hidden = true
         println("no of ghosts left: \(ghostArray!.count)")
@@ -76,5 +77,11 @@ class DefendView {
             */
             println("You win!")
         }
+*/
+        println("Tapped with recognizer!")
     }
+    static func tappedGhost() {
+        println("Tapped without recognizer!")
+    }
+    
 }

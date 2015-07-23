@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let alarm = Alarm.sharedInstance
-    var ghostArray = Ghost.sharedInstance.ghostArray
+    let ghost = Ghost.sharedInstance
     
     //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -34,9 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch alarm.currentState {
         case Alarm.State.Defend:
             println("Defending")
-            ghostArray = DefendView.createGhosts(self.window!.rootViewController!)
+            ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
+            
         case Alarm.State.Play:
-            ghostArray = nil
+            ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
@@ -69,9 +70,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch alarm.currentState {
         case Alarm.State.Defend:
             println("Defending")
-            ghostArray = DefendView.createGhosts(self.window!.rootViewController!)
+            ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
         case Alarm.State.Play:
-            ghostArray = nil
+            ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
@@ -112,9 +113,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 switch alarm.currentState {
                 case Alarm.State.Defend:
                     println("Defending")
-                    ghostArray = DefendView.createGhosts(self.window!.rootViewController!)
+                    ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
+                    
                 case Alarm.State.Play:
-                    ghostArray = nil
+                    ghost.updateGhostArray(nil)
                     println("Playing")
                 default:
                     println("Default")

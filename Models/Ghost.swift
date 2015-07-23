@@ -17,7 +17,7 @@ class Ghost {
         return
     }
 */
-    var ghostArray:[(ghost: Ghost, imageView: UIImageView)]? = nil
+    var ghostArray:[(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]? = nil
     
     class var sharedInstance : Ghost {
         struct Static {
@@ -26,6 +26,9 @@ class Ghost {
         return Static.instance
     }
     
+    func updateGhostArray(array: [(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]?) {
+        ghostArray = array
+    }
     
     
 }
