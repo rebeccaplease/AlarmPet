@@ -69,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         alarm.checkState()
         switch alarm.currentState {
         case Alarm.State.Defend:
+            application.cancelAllLocalNotifications()
             println("Defending")
             ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
         case Alarm.State.Play:
