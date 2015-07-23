@@ -143,11 +143,11 @@
                         <viewControllerLayoutGuide type="top" id="SwH-tS-pBK"/>
                         <viewControllerLayoutGuide type="bottom" id="wkF-8v-V7W"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Z2h-hD-wyP">
+                    <view key="view" contentMode="scaleToFill" id="Z2h-hD-wyP" customClass="MainView" customModule="AlarmPet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5q-EZ-jC9">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5q-EZ-jC9" userLabel="Set Alarm">
                                 <rect key="frame" x="532" y="28" width="44" height="44"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -164,23 +164,11 @@
                                     </mask>
                                 </variation>
                                 <connections>
+                                    <action selector="setAlarm:" destination="Z2h-hD-wyP" eventType="touchUpInside" id="SKC-aD-lWu"/>
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="overCurrentContext" id="17O-VI-bDD"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pet" translatesAutoresizingMaskIntoConstraints="NO" id="N3i-po-e5j">
-                                <rect key="frame" x="250" y="250" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="bIk-YY-Hhn"/>
-                                    <constraint firstAttribute="width" constant="100" id="ooN-3f-DWp"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO">
-                                <rect key="frame" x="504" y="80" width="71" height="23"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfv-kQ-UIg">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfv-kQ-UIg" userLabel="Toggle Alarm">
                                 <rect key="frame" x="478" y="25" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="f7X-kf-GuI"/>
@@ -192,13 +180,20 @@
                                 <state key="selected" image="AlarmOff"/>
                                 <connections>
                                     <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="GKc-Sf-wPL"/>
+                                    <action selector="toggleAlarm:" destination="Z2h-hD-wyP" eventType="touchUpInside" id="Tjn-pW-1lv"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ghost" translatesAutoresizingMaskIntoConstraints="NO" id="lHE-0j-wVq">
-                                <rect key="frame" x="462" y="163" width="50" height="50"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO" userLabel="Alarm Time">
+                                <rect key="frame" x="504" y="80" width="71" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pet" translatesAutoresizingMaskIntoConstraints="NO" id="N3i-po-e5j">
+                                <rect key="frame" x="250" y="250" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="4TM-fW-wYn"/>
-                                    <constraint firstAttribute="width" constant="50" id="cVZ-Yp-SWb"/>
+                                    <constraint firstAttribute="height" constant="100" id="bIk-YY-Hhn"/>
+                                    <constraint firstAttribute="width" constant="100" id="ooN-3f-DWp"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -207,7 +202,6 @@
                         <constraints>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="10" id="7ti-bG-Se3"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="5" id="B8Z-cv-wGx"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="lHE-0j-wVq" secondAttribute="trailing" constant="72" id="GzZ-9F-rSO"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="8" id="S3W-pc-oGV"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="trailing" secondItem="Z2h-hD-wyP" secondAttribute="trailingMargin" constant="-8" id="Tnd-Be-VoU"/>
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="v5q-EZ-jC9" secondAttribute="bottom" constant="8" id="WD3-r4-Edq"/>
@@ -216,7 +210,6 @@
                             <constraint firstAttribute="centerX" secondItem="N3i-po-e5j" secondAttribute="centerX" id="fzJ-D2-9b8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WF0-tT-cZO" secondAttribute="trailing" constant="9" id="hbb-n4-o2V"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="Z2h-hD-wyP" secondAttribute="topMargin" constant="8" id="oUB-FI-xim"/>
-                            <constraint firstItem="lHE-0j-wVq" firstAttribute="top" secondItem="WF0-tT-cZO" secondAttribute="bottom" constant="60" id="uDM-pL-7dM"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -224,6 +217,12 @@
                                 <exclude reference="oUB-FI-xim"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outlet property="alarmTime" destination="WF0-tT-cZO" id="B7q-lY-Gm7"/>
+                            <outlet property="pet" destination="N3i-po-e5j" id="6MI-0w-89i"/>
+                            <outlet property="setAlarm" destination="v5q-EZ-jC9" id="pob-Er-Hui"/>
+                            <outlet property="toggleAlarm" destination="Bfv-kQ-UIg" id="DB3-jg-lAq"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="qVf-dA-xQ0"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -241,7 +240,6 @@
         <image name="AlarmOff" width="100" height="100"/>
         <image name="AlarmOn" width="100" height="100"/>
         <image name="Clock" width="100" height="100"/>
-        <image name="Ghost" width="100" height="100"/>
         <image name="Pet" width="100" height="100"/>
     </resources>
 </document>
