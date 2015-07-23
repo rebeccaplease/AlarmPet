@@ -35,7 +35,7 @@ class DefendView: NSObject {
                 temp[0].imageView.addGestureRecognizer(temp[0].tap)
                 temp[0].imageView.userInteractionEnabled = true
                 
-                var xy = CGFloat(index*20)
+                var xy = CGFloat(index*24)
                 var dimensions = CGFloat(50)
                 
                 temp[0].imageView.frame = CGRectMake(xy, xy, dimensions, dimensions)
@@ -78,10 +78,12 @@ class DefendView: NSObject {
             
             vc.presentViewController(alertController, animated: true, completion: nil)
             */
+            //alarm.time = nil
+            
             println("You win!")
         }
 
-        println("Tapped with recognizer!")
+        //println("Tapped with recognizer!")
     }
    /* static func tappedGhost() {
         println("Tapped without recognizer!")
