@@ -13,9 +13,10 @@ class DefendView: NSObject {
     
     //array of possible gestures
     //static let tapRecognizer = UITapGestureRecognizer()
-    static let ghost = Ghost.sharedInstance
+
     
     static func createGhosts(vc: UIViewController) -> [(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]?  {
+        let ghost = Ghost.sharedInstance
         //if user exits out without defeating all the ghosts
         var ghostArray = ghost.ghostArray
         
@@ -56,19 +57,21 @@ class DefendView: NSObject {
     
     static func tappedGhost(recognizer: UITapGestureRecognizer) {
         
-        /*let alarm = Alarm.sharedInstance
-        var ghostArray = ghost.ghostArray
+        let alarm = Alarm.sharedInstance
+        let ghost = Ghost.sharedInstance
+        //var ghostArray = ghost.ghostArray
         
         recognizer.view?.hidden = true
-        println("no of ghosts left: \(ghostArray!.count)")
+        println("no of ghosts left: \(ghost.ghostArray!.count)")
         println("hide this ghost")
         
-        for index in 0...ghostArray!.count {
-            if ghostArray![index].imageView.hidden == true {
-                ghostArray!.removeAtIndex(index)
+        for (index, element) in enumerate(ghost.ghostArray!) {
+            if element.imageView.hidden == true {
+                ghost.ghostArray!.removeAtIndex(index)
+                //break
             }
         }
-        if ghostArray!.count == 0 {
+        if ghost.ghostArray!.count == 0 {
             alarm.currentState = .Play
             /*let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default,handler: nil))
@@ -77,11 +80,11 @@ class DefendView: NSObject {
             */
             println("You win!")
         }
-*/
+
         println("Tapped with recognizer!")
     }
-    static func tappedGhost() {
+   /* static func tappedGhost() {
         println("Tapped without recognizer!")
     }
-    
+ */
 }
