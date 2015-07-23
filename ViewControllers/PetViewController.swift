@@ -16,8 +16,6 @@ class PetViewController: UIViewController {
     @IBOutlet weak var alarmToggle: UIButton!
     
     //@IBOutlet weak var ghost: UIImageView!
-    
-    
 
     let alarm = Alarm.sharedInstance
     let ghost = Ghost.sharedInstance
@@ -79,6 +77,7 @@ class PetViewController: UIViewController {
         
         switch alarm.currentState {
         case Alarm.State.Defend:
+            DefendView.move()
             println("Defending")
         case Alarm.State.Play:
             ghost.updateGhostArray(nil)
@@ -146,13 +145,16 @@ class PetViewController: UIViewController {
         if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
             alarmToggle.selected = true
             alarmTime.hidden = true
+            println("no notifications")
         }
         else {
             alarmToggle.selected = false
             alarmTime.hidden = false
             alarmTime.text = alarm.dateFormatter.stringFromDate(alarm.time!)
+            println("alarm set!")
         }
-        self.view.setNeedsDisplay()
+        
+        //self.view.setNeedsDisplay()
     }
     
 }

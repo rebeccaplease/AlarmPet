@@ -13,7 +13,7 @@ class DefendView: NSObject {
     
     //array of possible gestures
     //static let tapRecognizer = UITapGestureRecognizer()
-
+    static var moved:Bool = false
     
     static func createGhosts(vc: UIViewController) -> [(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]?  {
         let ghost = Ghost.sharedInstance
@@ -25,6 +25,7 @@ class DefendView: NSObject {
         }
             //create and draw ghosts on screen
         else {
+            moved = false
             var tempArray: [(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)] = []
             
             for index in 0...9{
@@ -43,7 +44,7 @@ class DefendView: NSObject {
                 tempArray += temp
                 vc.view.addSubview(tempArray[index].imageView)
                 println("\(tempArray.count)")
-               
+                
                 /*
                 tapRecognizer.addTarget(self, action: "tappedGhost")
                 ***ghost.addGestureRecognizer(tapRecognizer)
@@ -71,6 +72,7 @@ class DefendView: NSObject {
                 //break
             }
         }
+        
         if ghost.ghostArray!.count == 0 {
             alarm.currentState = .Play
             /*let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
@@ -82,11 +84,25 @@ class DefendView: NSObject {
             
             println("You win!")
         }
-
+        
         //println("Tapped with recognizer!")
     }
-   /* static func tappedGhost() {
-        println("Tapped without recognizer!")
+    static func move() {
+        let pet = Pet.sharedInstance
+        let ghost = Ghost.sharedInstance
+        if let g = ghost.ghostArray {
+            if(moved == false) {
+                UIView.animateWithDuration(1.0, animations: {
+                    ghost.ghostArray![0].imageView.frame = pet.position
+                    //return
+                    } , completion: nil)
+                moved = true
+            }
+        }
     }
- */
+    
+    /* static func tappedGhost() {
+    println("Tapped without recognizer!")
+    }
+    */
 }
