@@ -15,8 +15,6 @@ class DefendView: NSObject {
     //static let tapRecognizer = UITapGestureRecognizer()
     static var moved:Bool = false
     
-    
-    
     static func createGhosts(vc: UIViewController) -> [(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]?  {
         let ghost = Ghost.sharedInstance
         //if user exits out without defeating all the ghosts
@@ -60,7 +58,6 @@ class DefendView: NSObject {
     
     static func tappedGhost(recognizer: UITapGestureRecognizer) {
         
-        /*let alarm = Alarm.sharedInstance
         let ghost = Ghost.sharedInstance
         //var ghostArray = ghost.ghostArray
         
@@ -76,7 +73,7 @@ class DefendView: NSObject {
         }
         
         if ghost.ghostArray!.count == 0 {
-            alarm.currentState = .Play
+            StateMachine.currentState = .Play
             /*let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default,handler: nil))
             
@@ -88,7 +85,7 @@ class DefendView: NSObject {
         }
         
         //println("Tapped with recognizer!")
-*/
+
     }
     static func move() {
         //let pet = Pet.sharedInstance
