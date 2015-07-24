@@ -80,6 +80,7 @@ class DefendView: NSObject {
             vc.presentViewController(alertController, animated: true, completion: nil)
             */
             //alarm.time = nil
+            ghost.ghostArray = nil
             
             println("You win!")
         }
@@ -88,9 +89,9 @@ class DefendView: NSObject {
 
     }
     static func move() {
-        //let pet = Pet.sharedInstance
-        //let ghost = Ghost.sharedInstance
-        /*
+        let pet = Pet.sharedInstance
+        let ghost = Ghost.sharedInstance
+        
         if let g = ghost.ghostArray {
             if(moved == false) {
                 UIView.animateWithDuration(1.0, animations: {
@@ -100,7 +101,6 @@ class DefendView: NSObject {
                 moved = true
             }
         }
-*/
     }
     
    

@@ -63,5 +63,10 @@ class StateMachine {
             realm.add(alarm)
         }
     }
-    
+    static func deleteRealmAlarm() {
+        let realm = Realm()
+        realm.write {
+            realm.deleteAll()
+        }
+    }
 }

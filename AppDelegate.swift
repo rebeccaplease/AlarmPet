@@ -127,7 +127,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             default: //for DEFEND
                 application.cancelAllLocalNotifications()
                 
-                
                 StateMachine.checkState()
                 switch StateMachine.currentState {
                 case .Defend:
