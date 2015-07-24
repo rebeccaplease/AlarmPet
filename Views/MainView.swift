@@ -30,13 +30,15 @@ class MainView: UIView {
         toggleAlarm.hidden = true
     }
     
-    var alarm: Alarm? {
+    /*var alarm: Alarm {
         didSet {
-            if let alarm = alarm, alarmTime = alarmTime {
+            if let alarmTime = alarmTime {
                 alarmTime.text = dateFormatter.stringFromDate(alarm.time!)
             }
         }
-    }
+    }*/
+    var alarm = Alarm()
+    
     var dateFormatter: NSDateFormatter = {
         var formatter = NSDateFormatter()
         formatter.timeStyle = NSDateFormatterStyle.ShortStyle

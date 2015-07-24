@@ -26,12 +26,14 @@ class AlarmViewController: UIViewController {
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
         //savedTime.text = AlarmViewController.dateFormatter.stringFromDate(saveAlarmTime)
-        //saveAlarm()
+        
+        StateMachine.saveRealmAlarm(newAlarm)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
     @IBAction func cancelUnwindSegue(sender: AnyObject) {
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         
     }
@@ -54,25 +56,5 @@ class AlarmViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func saveAlarm() {
-        if let oldAlarm = oldAlarm {
-            let realm = Realm()
-            
-            realm.write {
-                if(self.oldAlarm!.isSet != true || self.oldAlarm!.time != self.newAlarm.time) {
-                    self.oldAlarm!.isSet = true
-                    self.oldAlarm!.time = self.newAlarm.time
-                }
-            }
-        }
-        else {
-            let realm = Realm()
-            realm.write {
-                self.newAlarm.isSet = true
-                self.newAlarm.time = self.newAlarm.time
-            }
-        }
-    }
-    
 }
 

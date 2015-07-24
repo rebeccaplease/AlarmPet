@@ -31,21 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             println("not coming from push")
             NotificationHelper.registerNotification(application)
         }
-        /*
-        alarm.checkState()
-        switch alarm.currentState {
-        case Alarm.State.Defend:
-            println("Defending")
-            ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
-            DefendView.move()
-        case Alarm.State.Play:
-            ghost.updateGhostArray(nil)
-            println("Playing")
-        default:
-            println("Default")
-        }
-*/
-        
         return true
     }
     
@@ -70,20 +55,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         println("applicationDidBecomeActive")
         /*
-        alarm.checkState()
-        switch alarm.currentState {
-        case Alarm.State.Defend:
+        if let pvc = self.window!.rootViewController as? PetViewController {
+        let petViewController = self.window!.rootViewController as! PetViewController
+        let mainView = petViewController.view as! MainView
+        
+        petViewController.checkState()
+        switch petViewController.currentState {
+        case .Defend:
+        application.cancelAllLocalNotifications()
+        println("Defending")
+        ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
+        DefendView.move()
+        case .Play:
+        ghost.updateGhostArray(nil)
+        println("Playing")
+        default:
+        println("Default")
+        }
+        }
+        
+        */
+        
+        
+        StateMachine.checkState()
+        switch StateMachine.currentState {
+        case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
             ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
             DefendView.move()
-        case Alarm.State.Play:
+        case .Play:
             ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
         }
-*/
+        
     }
     
     
@@ -94,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //if app is open and notification is recieved, open PetViewController
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-
+        
     }
     
     //if a custom notification action is chosen from push notification (from swiping left)
@@ -111,26 +118,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 application.cancelAllLocalNotifications()
                 
                 println("zzzz snoozing")
+                
+                
                 let petViewController = self.window!.rootViewController as! PetViewController
+                
                 let mainView = petViewController.view as! MainView
-                NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, alarm: mainView.alarm!)
+                NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, alarm: mainView.alarm)
             default: //for DEFEND
                 application.cancelAllLocalNotifications()
-               /*
-                alarm.checkState()
                 
-                switch alarm.currentState {
-                case Alarm.State.Defend:
+                
+                StateMachine.checkState()
+                switch StateMachine.currentState {
+                case .Defend:
+                    application.cancelAllLocalNotifications()
                     println("Defending")
                     ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
                     DefendView.move()
-                case Alarm.State.Play:
+                case .Play:
                     ghost.updateGhostArray(nil)
                     println("Playing")
                 default:
                     println("Default")
                 }
-*/
             }
         }
         completionHandler()

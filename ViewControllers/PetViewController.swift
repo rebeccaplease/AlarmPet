@@ -20,41 +20,7 @@ class PetViewController: UIViewController {
     //let alarm = Alarm.sharedInstance
     let ghost = Ghost.sharedInstance
     
-    enum State: String, Printable {
-        case Defend = "Defend" //alarm going off
-        case Play = "Play"
-        
-        var description : String {
-            get {
-                return self.rawValue
-            }
-        }
-    }
-    
-    var currentState: State = .Play
-    
-    func checkState() {
-        let mainView = self.view as! MainView
-        //if current time is within 30 minutes of alarm time
-        if let time = mainView.alarm!.time {
-            //returns time difference in seconds (negative if time is earlier than current time)
-            var interval = time.timeIntervalSinceNow
-            println("\(interval)")
-            if (interval < 0 && interval > -30*60) {
-                currentState = .Defend
-            }
-            else {
-                currentState = .Play
-            }
-        }
-        else {
-            currentState = .Play
-        }
-        
-        println(currentState)
-    }
-    
-    
+    //MARK: View Loading
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +29,21 @@ class PetViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        
+        StateMachine.checkState()
+        switch StateMachine.currentState {
+        case .Defend:
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            println("Defending")
+            ghost.updateGhostArray(DefendView.createGhosts(self))
+            DefendView.move()
+        case .Play:
+            ghost.updateGhostArray(nil)
+            println("Playing")
+        default:
+            println("Default")
+        }
         /*
         //bind label and button to Alarm?
         if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
@@ -94,8 +75,7 @@ class PetViewController: UIViewController {
         super.viewWillAppear(animated)
         println("View Will Appear")
         
-        
-        switch currentState {
+        switch StateMachine.currentState {
         case .Defend:
             println("Defending")
             ghost.updateGhostArray(DefendView.createGhosts(self))
@@ -113,7 +93,7 @@ class PetViewController: UIViewController {
         super.viewDidAppear(animated)
         println("View Did Appear")
         
-        switch currentState {
+        switch StateMachine.currentState {
         case .Defend:
             DefendView.move()
             println("Defending")
@@ -127,26 +107,26 @@ class PetViewController: UIViewController {
         
     }
     
-    
+    //MARK: Toggle Alarm
     @IBAction func alarmToggle(sender: AnyObject) {
         
         //alarmTime.hidden = !alarmTime.hidden
         //alarmToggle.selected = !alarmToggle.selected
         let mainView = self.view as! MainView
-        if(!mainView.alarm!.isSet) {
+        if(!mainView.alarm.isSet) {
             mainView.alarmTime.hidden = false
             mainView.toggleAlarm.selected = false
-            if let time = mainView.alarm!.time  {
-                NotificationHelper.handleScheduling(mainView.alarm!.time!, numOfNotifications: 3, delayInSeconds: 0, alarm: mainView.alarm!)
-                mainView.alarm!.isSet = true
-                mainView.alarmTime.text = mainView.dateFormatter.stringFromDate(mainView.alarm!.time!)
-            }
+            
+            NotificationHelper.handleScheduling(mainView.alarm.time, numOfNotifications: 3, delayInSeconds: 0, alarm: mainView.alarm)
+            mainView.alarm.isSet = true
+            mainView.alarmTime.text = mainView.dateFormatter.stringFromDate(mainView.alarm.time)
+            
         }
         else {
             mainView.alarmTime.hidden = true
             mainView.toggleAlarm.selected = true
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            mainView.alarm!.isSet = false
+            mainView.alarm.isSet = false
         }
         
     }
@@ -177,17 +157,17 @@ class PetViewController: UIViewController {
         }
         
         if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
-        mainView.toggleAlarm.selected = true
-        mainView.alarmTime.hidden = true
-        println("no notifications")
+            mainView.toggleAlarm.selected = true
+            mainView.alarmTime.hidden = true
+            println("no notifications")
         }
         else {
-        mainView.toggleAlarm.selected = false
-        mainView.alarmTime.hidden = false
-        
-        let mainView = self.view as! MainView
-        mainView.alarmTime.text = mainView.dateFormatter.stringFromDate(mainView.alarm!.time!)
-        println("alarm set!")
+            mainView.toggleAlarm.selected = false
+            mainView.alarmTime.hidden = false
+            
+            let mainView = self.view as! MainView
+            mainView.alarmTime.text = mainView.dateFormatter.stringFromDate(mainView.alarm.time)
+            println("alarm set!")
         }
         //self.view.setNeedsDisplay()
     }
