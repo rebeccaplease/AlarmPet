@@ -20,9 +20,9 @@ class MainView: UIView {
     
     //var ghostArray:[(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]? = nil
     
-    //@IBAction func toggleAlarm(sender: AnyObject) {
+   // @IBAction func toggleAlarm(sender: AnyObject) {
         
-   // }
+    //}
     
     func hideMenu() {
         setAlarm.hidden = true

@@ -44,7 +44,7 @@
                                 </state>
                                 <connections>
                                     <action selector="saveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GEO-wu-aD1"/>
-                                    <segue destination="EBm-nG-J3p" kind="unwind" unwindAction="unwindToSegue:" id="lrr-D9-wsm"/>
+                                    <segue destination="EBm-nG-J3p" kind="unwind" identifier="Save" unwindAction="unwindToSegue:" id="lrr-D9-wsm"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1B-he-C1H">
@@ -100,7 +100,7 @@
                                 </state>
                                 <connections>
                                     <action selector="cancelUnwindSegue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cSn-pp-0HR"/>
-                                    <segue destination="EBm-nG-J3p" kind="unwind" unwindAction="unwindToSegue:" id="dLY-5m-t3Q"/>
+                                    <segue destination="EBm-nG-J3p" kind="unwind" identifier="Cancel" unwindAction="unwindToSegue:" id="dLY-5m-t3Q"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -178,7 +178,7 @@
                                 </state>
                                 <state key="selected" image="AlarmOff"/>
                                 <connections>
-                                    <action selector="toggleAlarm:" destination="Z2h-hD-wyP" eventType="touchUpInside" id="Tjn-pW-1lv"/>
+                                    <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="tqf-Q1-VuV"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO" userLabel="Alarm Time">

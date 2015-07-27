@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 //import AVFoundation
 
 class PetViewController: UIViewController {
@@ -112,21 +113,32 @@ class PetViewController: UIViewController {
         
         //alarmTime.hidden = !alarmTime.hidden
         //alarmToggle.selected = !alarmToggle.selected
+        let realm = Realm()
         let mainView = self.view as! MainView
         if(!mainView.alarm.isSet) {
+            
+            realm.write{
+                mainView.alarm.isSet = true
+            }
+            
             mainView.alarmTime.hidden = false
             mainView.toggleAlarm.selected = false
             
             NotificationHelper.handleScheduling(mainView.alarm.time, numOfNotifications: 3, delayInSeconds: 0, alarm: mainView.alarm)
-            mainView.alarm.isSet = true
+            
             mainView.alarmTime.text = mainView.dateFormatter.stringFromDate(mainView.alarm.time)
             
         }
         else {
+            
+            realm.write{
+                mainView.alarm.isSet = false
+            }
+            
             mainView.alarmTime.hidden = true
             mainView.toggleAlarm.selected = true
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            mainView.alarm.isSet = false
+            
         }
         
     }
@@ -154,6 +166,11 @@ class PetViewController: UIViewController {
             let mainView = self.view as! MainView
             //set new alarm from alarmViewController
             mainView.alarm = alarmViewController.newAlarm
+            
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            NotificationHelper.handleScheduling(alarmViewController.datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: alarmViewController.newAlarm)
+            StateMachine.deleteRealmAlarm()
+            StateMachine.saveRealmAlarm(alarmViewController.newAlarm)
         }
         
         if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {

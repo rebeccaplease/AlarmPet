@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 import UIKit
 
 class NotificationHelper {
@@ -51,8 +52,13 @@ class NotificationHelper {
         var fixedDate: NSDate! = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         
         //zero seconds and save to Alarm
-        alarm.time = fixedDate
-        alarm.isSet = true
+        
+        
+        let realm = Realm()
+        realm.write{
+            alarm.time = fixedDate
+            alarm.isSet = true
+        }
         
         for index in 1...numOfNotifications {
             //loop and schedule numOfNotifications notifications, 30 seconds apart

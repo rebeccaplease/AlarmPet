@@ -88,6 +88,7 @@ class DefendView: NSObject {
         //println("Tapped with recognizer!")
 
     }
+    
     static func move() {
         let pet = Pet.sharedInstance
         let ghost = Ghost.sharedInstance
@@ -103,9 +104,4 @@ class DefendView: NSObject {
         }
     }
     
-   
-    /* static func tappedGhost() {
-    println("Tapped without recognizer!")
-    }
-    */
 }
