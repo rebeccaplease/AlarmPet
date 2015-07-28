@@ -10,17 +10,11 @@ import Foundation
 import UIKit
 
 class Ghost: NSObject {
-    var moved: Bool
-    var id: Int
+
     static var size: Int = 50
     //static var delay: NSTimeInterval = 10
     static var currentIndex: Int = 0
     static var ghostArrayCount = 10
-    
-    init(id: Int) {
-        self.id = id
-        self.moved = false
-    }
     
     static var ghostArray:[(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]? = nil
     
@@ -40,13 +34,11 @@ class Ghost: NSObject {
         }
             //create and draw ghosts on screen
         else {
-            //moved = false
-            //var tempArray: [(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)] = []
             ghostArray = []
             
             for index in 0...ghostArrayCount-1{
                 
-                var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")), tap: UITapGestureRecognizer() )]
+                var temp = [(ghost: Ghost(), imageView: UIImageView(image: UIImage(named: "Ghost")), tap: UITapGestureRecognizer() )]
                 
                 temp[0].tap.addTarget(self, action: "tappedGhost:")
                 temp[0].imageView.addGestureRecognizer(temp[0].tap)
@@ -68,7 +60,6 @@ class Ghost: NSObject {
             }
         }
     }
-    
     
     //loop through and move a ghost
     static func move(timer: NSTimer) {
@@ -96,14 +87,6 @@ class Ghost: NSObject {
         
         if ghostArrayCount == 0 {
             StateMachine.currentState = .Play
-            /*let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default,handler: nil))
-            
-            vc.presentViewController(alertController, animated: true, completion: nil)
-            */
-            //StateMachine.displayWinAlert()
-            
-            recognizer.view?.superview
             
             ghostArray = nil
             currentIndex = 0

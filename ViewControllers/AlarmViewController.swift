@@ -10,8 +10,8 @@ import UIKit
 
 class AlarmViewController: UIViewController {
     
-    var newAlarm: Alarm = Alarm()
-    var oldAlarm: Alarm? = nil
+    var alarm: Alarm? = StateMachine.getRealmAlarm()
+
     //MARK: Date functions
     
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -28,6 +28,22 @@ class AlarmViewController: UIViewController {
         StateMachine.deleteRealmAlarm()
         StateMachine.saveRealmAlarm(newAlarm)
         */
+        if let newAlarm = alarm{
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
+            StateMachine.deleteRealmAlarm()
+            StateMachine.saveRealmAlarm(newAlarm)
+        }
+        else {
+            alarm = Alarm()
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: alarm!)
+            //StateMachine.deleteRealmAlarm()
+            StateMachine.saveRealmAlarm(alarm!)
+        }
+        
+       
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

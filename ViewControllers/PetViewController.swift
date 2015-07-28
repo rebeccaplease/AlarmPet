@@ -19,10 +19,10 @@ class PetViewController: UIViewController {
         didSet {
             switch(state) {
             case .Win:
-            
-            state = .Play
+                
+                state = .Play
             default:
-            println("default")
+                println("default")
             }
         }
     }
@@ -30,6 +30,9 @@ class PetViewController: UIViewController {
     //MARK: View Loading
     
     override func viewDidLoad() {
+        
+        //print realm objects**
+        
         super.viewDidLoad()
         
         println("View Did Load")
@@ -62,6 +65,7 @@ class PetViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         println("View Will Appear")
+        
         
         switch StateMachine.currentState {
         case .Defend:
@@ -131,44 +135,61 @@ class PetViewController: UIViewController {
         // Get the new View Controller using segue.destinationViewController.
         // Pass the selected object to the new View Controller.
         println("prepareForSegue")
-        
+        /*
         let alarmViewController = segue.destinationViewController as! AlarmViewController
         let mainView = self.view as! MainView
         //pass alarm to alarmViewController
         alarmViewController.oldAlarm = mainView.alarm
-        
+        */
     }
     
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         println("unwinding")
-        //update labels
-        let mainView = self.view as! MainView
-        if segue.identifier == "Save" {
-            let alarmViewController = segue.sourceViewController as! AlarmViewController
-            let mainView = self.view as! MainView
-            //set new alarm from alarmViewController
-            mainView.alarm = alarmViewController.newAlarm
-            
-            UIApplication.sharedApplication().cancelAllLocalNotifications()
-            NotificationHelper.handleScheduling(alarmViewController.datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: alarmViewController.newAlarm)
-            StateMachine.deleteRealmAlarm()
-            StateMachine.saveRealmAlarm(alarmViewController.newAlarm)
-        }
         
-        if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
-            mainView.toggleAlarm.selected = true
-            mainView.alarmTime.hidden = true
-            println("no notifications")
-        }
-        else {
+        let mainView = self.view as! MainView
+        
+        if (segue.identifier == "Save") {
+            
             mainView.toggleAlarm.selected = false
             mainView.alarmTime.hidden = false
             
-            let mainView = self.view as! MainView
             mainView.alarmTime.text = mainView.dateFormatter.stringFromDate(mainView.alarm.time)
             println("alarm set!")
         }
-        //self.view.setNeedsDisplay()
     }
     
+    /*
+    
+    //update labels
+    let mainView = self.view as! MainView
+    
+    
+    if segue.identifier == "Save" {
+    let alarmViewController = segue.sourceViewController as! AlarmViewController
+    let mainView = self.view as! MainView
+    //set new alarm from alarmViewController
+    mainView.alarm = alarmViewController.newAlarm
+    
+    UIApplication.sharedApplication().cancelAllLocalNotifications()
+    NotificationHelper.handleScheduling(alarmViewController.datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: alarmViewController.newAlarm)
+    StateMachine.deleteRealmAlarm()
+    StateMachine.saveRealmAlarm(alarmViewController.newAlarm)
+    }
+    
+    if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
+    mainView.toggleAlarm.selected = true
+    mainView.alarmTime.hidden = true
+    println("no notifications")
+    }
+    else {
+    mainView.toggleAlarm.selected = false
+    mainView.alarmTime.hidden = false
+    
+    let mainView = self.view as! MainView
+    mainView.alarmTime.text = mainView.dateFormatter.stringFromDate(mainView.alarm.time)
+    println("alarm set!")
+    }
+    //self.view.setNeedsDisplay()
+    */
+
 }

@@ -12,8 +12,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    //let alarm = Alarm.sharedInstance
-    //let ghost = Ghost.sharedInstance
     
     //let pet: Pet = StateMachine.getRealmPet()!
     
@@ -24,10 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.cancelAllLocalNotifications()
         if let launchOptions = launchOptions {
             println("launchOptions")
-            //also check specifially for local notifications?
-            //if let notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] as? [NSObject : AnyObject] {
-            //setPetView()
-            //}
         }
         else {
             println("not coming from push")
@@ -63,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.cancelAllLocalNotifications()
             println("Defending")
             Ghost.createGhosts(self.window!.rootViewController!)
-            //Ghost.move(pet.x, pet.y)
         case .Play:
             Ghost.updateGhostArray(nil)
             println("Playing")
@@ -98,12 +91,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 application.cancelAllLocalNotifications()
                 
                 println("zzzz snoozing")
-                
-                
-                let petViewController = self.window!.rootViewController as! PetViewController
-                
-                let mainView = petViewController.view as! MainView
-                NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, alarm: mainView.alarm)
+                //**load alarm from here
+                if let alarm = StateMachine.getRealmAlarm() {
+                    NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, alarm: alarm)
+                }
             default: //for DEFEND
                 application.cancelAllLocalNotifications()
                 
