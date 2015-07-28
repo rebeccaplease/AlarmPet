@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 class StateMachine {
-    
+    //MARK: State
     enum State: String, Printable {
         case Defend = "Defend" //alarm going off
         case Play = "Play"
@@ -45,7 +45,8 @@ class StateMachine {
         
         println(currentState)
     }
-    
+    //MARK: Realm Alarm
+   
     static func getRealmAlarm() -> Alarm? {
         let realm = Realm()
         let alarm = realm.objects(Alarm)
@@ -54,6 +55,14 @@ class StateMachine {
         }
         else {
             return nil
+        }
+    }
+    
+    static func updateRealmAlarm(alarm: Alarm, time: NSDate, isSet: Bool) {
+        let realm = Realm()
+        realm.write{
+            alarm.time = time
+            alarm.isSet = isSet
         }
     }
     
@@ -69,4 +78,17 @@ class StateMachine {
             realm.deleteAll()
         }
     }
+    //MARK: Realm Pet
+    static func getRealmPet() -> Pet?{
+        let realm = Realm()
+        let pet = realm.objects(Pet)
+        if pet.count > 0 {
+            return pet.first
+        }
+        else {
+            return nil
+        }
+    }
+    
+    
 }

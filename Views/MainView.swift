@@ -18,25 +18,12 @@ class MainView: UIView {
     
     @IBOutlet weak var toggleAlarm: UIButton!
     
-    //var ghostArray:[(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]? = nil
-    
-   // @IBAction func toggleAlarm(sender: AnyObject) {
-        
-    //}
-    
     func hideMenu() {
         setAlarm.hidden = true
         alarmTime.hidden = true
         toggleAlarm.hidden = true
     }
-    
-    /*var alarm: Alarm {
-        didSet {
-            if let alarmTime = alarmTime {
-                alarmTime.text = dateFormatter.stringFromDate(alarm.time!)
-            }
-        }
-    }*/
+
     var alarm = Alarm()
     
     var dateFormatter: NSDateFormatter = {

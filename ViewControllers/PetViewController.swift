@@ -12,14 +12,10 @@ import RealmSwift
 
 class PetViewController: UIViewController {
     
-    //@IBOutlet weak var alarmTime: UILabel!
+    //let ghost = Ghost.sharedInstance
+    //let pet: Pet? = StateMachine.getRealmPet()
+    //var pet: Pet? = self.getPet()
     
-    //@IBOutlet weak var alarmToggle: UIButton!
-    
-    //@IBOutlet weak var ghost: UIImageView!
-    
-    //let alarm = Alarm.sharedInstance
-    let ghost = Ghost.sharedInstance
     
     //MARK: View Loading
     
@@ -37,36 +33,17 @@ class PetViewController: UIViewController {
         case .Defend:
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             println("Defending")
-            ghost.updateGhostArray(DefendView.createGhosts(self))
-            DefendView.move()
+            Ghost.createGhosts(self)
+            //Ghost.move(pet!.x, pet.y)
         case .Play:
-            ghost.updateGhostArray(nil)
+            Ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
         }
         /*
         //bind label and button to Alarm?
-        if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
-        alarmToggle.selected = true
-        alarmTime.hidden = true
-        }
-        else {
-        alarmToggle.selected = false
-        alarmTime.hidden = false
-        alarmTime.text = alarm.dateFormatter.stringFromDate(alarm.time!)
-        }
-        
-        switch alarm.currentState {
-        case Alarm.State.Defend:
-        println("Defending")
-        ghost.updateGhostArray(DefendView.createGhosts(self))
-        case Alarm.State.Play:
-        ghost.updateGhostArray(nil)
-        println("Playing")
-        default:
-        println("Default")
-        }
+
         // AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         */
     }
@@ -79,9 +56,9 @@ class PetViewController: UIViewController {
         switch StateMachine.currentState {
         case .Defend:
             println("Defending")
-            ghost.updateGhostArray(DefendView.createGhosts(self))
+            Ghost.createGhosts(self)
         case .Play:
-            ghost.updateGhostArray(nil)
+            Ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
@@ -94,12 +71,13 @@ class PetViewController: UIViewController {
         super.viewDidAppear(animated)
         println("View Did Appear")
         
+        
         switch StateMachine.currentState {
         case .Defend:
-            DefendView.move()
+            //Ghost.move(pet!.x, pet.y)
             println("Defending")
         case .Play:
-            ghost.updateGhostArray(nil)
+            Ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")

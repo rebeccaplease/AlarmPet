@@ -13,7 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     //let alarm = Alarm.sharedInstance
-    let ghost = Ghost.sharedInstance
+    //let ghost = Ghost.sharedInstance
+    
+    //let pet: Pet = StateMachine.getRealmPet()!
     
     //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -54,38 +56,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         println("applicationDidBecomeActive")
-        /*
-        if let pvc = self.window!.rootViewController as? PetViewController {
-        let petViewController = self.window!.rootViewController as! PetViewController
-        let mainView = petViewController.view as! MainView
-        
-        petViewController.checkState()
-        switch petViewController.currentState {
-        case .Defend:
-        application.cancelAllLocalNotifications()
-        println("Defending")
-        ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
-        DefendView.move()
-        case .Play:
-        ghost.updateGhostArray(nil)
-        println("Playing")
-        default:
-        println("Default")
-        }
-        }
-        
-        */
-        
         
         StateMachine.checkState()
         switch StateMachine.currentState {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
-            ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
-            DefendView.move()
+            Ghost.createGhosts(self.window!.rootViewController!)
+            //Ghost.move(pet.x, pet.y)
         case .Play:
-            ghost.updateGhostArray(nil)
+            Ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
@@ -132,10 +112,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 case .Defend:
                     application.cancelAllLocalNotifications()
                     println("Defending")
-                    ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
-                    DefendView.move()
+                    Ghost.createGhosts(self.window!.rootViewController!)
+                    //Ghost.move(pet.x, pet.y)
                 case .Play:
-                    ghost.updateGhostArray(nil)
+                    Ghost.updateGhostArray(nil)
                     println("Playing")
                 default:
                     println("Default")
