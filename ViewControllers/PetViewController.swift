@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
 //import AVFoundation
 
 class PetViewController: UIViewController {
@@ -16,6 +15,17 @@ class PetViewController: UIViewController {
     //let pet: Pet? = StateMachine.getRealmPet()
     //var pet: Pet? = self.getPet()
     
+    var state: StateMachine.State = StateMachine.currentState {
+        didSet {
+            switch(state) {
+            case .Win:
+            
+            state = .Play
+            default:
+            println("default")
+            }
+        }
+    }
     
     //MARK: View Loading
     
@@ -43,7 +53,7 @@ class PetViewController: UIViewController {
         }
         /*
         //bind label and button to Alarm?
-
+        
         // AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         */
     }
@@ -89,15 +99,10 @@ class PetViewController: UIViewController {
     //MARK: Toggle Alarm
     @IBAction func alarmToggle(sender: AnyObject) {
         
-        //alarmTime.hidden = !alarmTime.hidden
-        //alarmToggle.selected = !alarmToggle.selected
-        let realm = Realm()
         let mainView = self.view as! MainView
         if(!mainView.alarm.isSet) {
             
-            realm.write{
-                mainView.alarm.isSet = true
-            }
+            StateMachine.updateRealmAlarm(mainView.alarm, time: mainView.alarm.time, isSet: true)
             
             mainView.alarmTime.hidden = false
             mainView.toggleAlarm.selected = false
@@ -109,9 +114,8 @@ class PetViewController: UIViewController {
         }
         else {
             
-            realm.write{
-                mainView.alarm.isSet = false
-            }
+            StateMachine.updateRealmAlarm(mainView.alarm, time: mainView.alarm.time, isSet: true)
+            
             
             mainView.alarmTime.hidden = true
             mainView.toggleAlarm.selected = true

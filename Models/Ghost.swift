@@ -65,34 +65,23 @@ class Ghost: NSObject {
                 
                 NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "move:", userInfo: nil, repeats: false)
                 
-                /*
-                tapRecognizer.addTarget(self, action: "tappedGhost")
-                ***ghost.addGestureRecognizer(tapRecognizer)
-                ghost.userInteractionEnabled = true
-                */
-                
             }
         }
     }
     
     
     //loop through and move a ghost
-  static func move(timer: NSTimer) {
-        
+    static func move(timer: NSTimer) {
         var position = CGRect(x: 200, y: 200, width: size, height: size)
         
-        //for index in 0...ghostArray!.count-1 {
-        // for (index, element) in enumerate(ghostArray!) {
-        //if element.ghost.id == ghost.id {
-        
-        UIView.animateWithDuration(2.0, animations: {
+        UIView.animateWithDuration(2.0, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
             //show ghost and move it
             self.ghostArray![self.currentIndex].imageView.hidden = false
             self.ghostArray![self.currentIndex].imageView.userInteractionEnabled = true
             self.ghostArray![self.currentIndex].imageView.frame = position
-            
-            self.currentIndex++
-        })
+            }, completion: nil)
+        
+        self.currentIndex++
     }
     
     static func tappedGhost(recognizer: UITapGestureRecognizer) {
@@ -105,15 +94,6 @@ class Ghost: NSObject {
         
         println("no of ghosts left: \(ghostArrayCount)")
         
-        /*
-        for (index, element) in enumerate(ghostArray!) {
-        if element.imageView.userInteractionEnabled == false{
-        ghostArray!.removeAtIndex(index)
-        
-        }
-        }
-        */
-        
         if ghostArrayCount == 0 {
             StateMachine.currentState = .Play
             /*let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
@@ -121,7 +101,12 @@ class Ghost: NSObject {
             
             vc.presentViewController(alertController, animated: true, completion: nil)
             */
+            //StateMachine.displayWinAlert()
+            
+            recognizer.view?.superview
+            
             ghostArray = nil
+            currentIndex = 0
             ghostArrayCount = 10
             
             println("You win!")

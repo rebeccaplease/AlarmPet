@@ -7,13 +7,13 @@
 //
 
 import Foundation
-import RealmSwift
 import UIKit
 
 class NotificationHelper {
     
     //zero seconds and schedule number of notifications
     static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int, alarm: Alarm) {
+        
         var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: dateToFix)
         
         //check current day and time. if the time today already passed, set alarm for next day
