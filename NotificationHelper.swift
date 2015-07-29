@@ -35,7 +35,7 @@ class NotificationHelper {
         
         //zero seconds and save to Alarm
         
-        StateMachine.updateRealmAlarm(alarm, time: fixedDate, isSet: true)
+        StateMachine.updateRealmAlarm(time: fixedDate, isSet: true)
         
         for index in 1...numOfNotifications {
             //loop and schedule numOfNotifications notifications, 30 seconds apart

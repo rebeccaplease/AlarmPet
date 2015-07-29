@@ -31,18 +31,17 @@ class AlarmViewController: UIViewController {
         if let newAlarm = alarm{
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
-            StateMachine.deleteRealmAlarm()
-            StateMachine.saveRealmAlarm(newAlarm)
+            //StateMachine.deleteRealmAlarm()
+            //StateMachine.saveRealmAlarm(newAlarm)
+            StateMachine.updateRealmAlarm(time: newAlarm.time, isSet: true)
         }
         else {
-            alarm = Alarm()
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: alarm!)
+            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: Alarm())
             //StateMachine.deleteRealmAlarm()
+            alarm = StateMachine.getRealmAlarm()
             StateMachine.saveRealmAlarm(alarm!)
         }
-        
-       
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }

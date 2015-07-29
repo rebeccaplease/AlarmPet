@@ -50,15 +50,15 @@ class StateMachine {
     }
     
     /*static func displayWinAlert(vc: UIViewController) {
-        
-        let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: { action in
-            self.currentState = .Play
-            return
-        }))
-        
-        vc.presentViewController(alertController, animated: true, completion: nil)
-        
+    
+    let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
+    alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: { action in
+    self.currentState = .Play
+    return
+    }))
+    
+    vc.presentViewController(alertController, animated: true, completion: nil)
+    
     }*/
     
     //MARK: Realm Alarm
@@ -74,14 +74,17 @@ class StateMachine {
         }
     }
     
-    static func updateRealmAlarm(alarm: Alarm, time: NSDate, isSet: Bool) {
+    static func updateRealmAlarm(#time: NSDate, isSet: Bool) {
         let realm = Realm()
-        realm.write{
-            if(alarm.time != time) {
-                alarm.time = time
-            }
-            if(alarm.isSet != isSet) {
-                alarm.isSet = isSet
+        var alarm = getRealmAlarm()
+        if let alarm = alarm {
+            realm.write{
+                if(alarm.time != time) {
+                    alarm.time = time
+                }
+                if(alarm.isSet != isSet) {
+                    alarm.isSet = isSet
+                }
             }
         }
     }

@@ -106,8 +106,9 @@ class PetViewController: UIViewController {
         let mainView = self.view as! MainView
         if(!mainView.alarm.isSet) {
             
-            StateMachine.updateRealmAlarm(mainView.alarm, time: mainView.alarm.time, isSet: true)
+            StateMachine.updateRealmAlarm(time: mainView.alarm.time, isSet: true)
             
+            mainView.alarm = StateMachine.getRealmAlarm()!
             mainView.alarmTime.hidden = false
             mainView.toggleAlarm.selected = false
             
@@ -118,9 +119,9 @@ class PetViewController: UIViewController {
         }
         else {
             
-            StateMachine.updateRealmAlarm(mainView.alarm, time: mainView.alarm.time, isSet: true)
+            StateMachine.updateRealmAlarm(time: mainView.alarm.time, isSet: false)
             
-            
+            mainView.alarm = StateMachine.getRealmAlarm()!
             mainView.alarmTime.hidden = true
             mainView.toggleAlarm.selected = true
             UIApplication.sharedApplication().cancelAllLocalNotifications()
