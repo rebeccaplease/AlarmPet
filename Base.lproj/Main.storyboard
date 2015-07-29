@@ -220,12 +220,14 @@
                             <outlet property="pet" destination="N3i-po-e5j" id="6MI-0w-89i"/>
                             <outlet property="setAlarm" destination="v5q-EZ-jC9" id="pob-Er-Hui"/>
                             <outlet property="toggleAlarm" destination="Bfv-kQ-UIg" id="DB3-jg-lAq"/>
+                            <outletCollection property="gestureRecognizers" destination="vI3-zT-vpg" appends="YES" id="cmS-Wc-GYg"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="qVf-dA-xQ0"/>
                     <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VB-5f-Stk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="vI3-zT-vpg"/>
             </objects>
             <point key="canvasLocation" x="616" y="607"/>
         </scene>
