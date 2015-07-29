@@ -96,7 +96,7 @@ class Ghost: NSObject {
             var tapLocation = gesture.locationInView(ghost.imageView.superview)
             if ghost.imageView.layer.presentationLayer().frame.contains(tapLocation) {
                 if(!ghost.ghost.dead) {
-                    println("\(ghost.ghost.id)")
+                    println("id: \(ghost.ghost.id)")
                     ghost.ghost.dead = true
                     return ghost.ghost.id
                 }

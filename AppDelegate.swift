@@ -56,10 +56,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
-            Ghost.createGhosts(self.window!.rootViewController!)
+            
+            
+            //Ghost.createGhosts(self.window!.rootViewController)
+            Ghost.createGhosts(self.window!.visibleViewController()!)
+            
         case .Play:
             Ghost.updateGhostArray(nil)
             println("Playing")
+            
         default:
             println("Default")
         }
@@ -96,7 +101,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, alarm: alarm)
                 }
             default: //for DEFEND
-                application.cancelAllLocalNotifications()
+                println("defend")
+                /*application.cancelAllLocalNotifications()
                 
                 StateMachine.checkState()
                 switch StateMachine.currentState {
@@ -104,15 +110,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     application.cancelAllLocalNotifications()
                     println("Defending")
                     Ghost.createGhosts(self.window!.rootViewController!)
-                    //Ghost.move(pet.x, pet.y)
+                
                 case .Play:
                     Ghost.updateGhostArray(nil)
                     println("Playing")
+                
                 default:
                     println("Default")
-                }
+
+                } */
             }
         }
         completionHandler()
+    }
+}
+
+extension UIWindow {
+    
+    func visibleViewController() -> UIViewController? {
+        if let rootViewController: UIViewController  = self.rootViewController {
+            return UIWindow.getVisibleViewControllerFrom(rootViewController)
+        }
+        return nil
+    }
+    
+    class func getVisibleViewControllerFrom(vc:UIViewController) -> UIViewController {
+        
+        if vc.isKindOfClass(UINavigationController.self) {
+            
+            let navigationController = vc as! UINavigationController
+            return UIWindow.getVisibleViewControllerFrom( navigationController.visibleViewController)
+        }
+            
+        else {
+            
+            if let presentedViewController = vc.presentedViewController {
+                
+                return UIWindow.getVisibleViewControllerFrom(presentedViewController.presentedViewController!)
+                
+            } else {
+                
+                return vc;
+            }
+        }
     }
 }
