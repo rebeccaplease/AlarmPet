@@ -45,6 +45,7 @@ class Ghost: NSObject {
             let mainView = vc.view as! MainView
             let tap = mainView.gestureRecognizers![0] as! UITapGestureRecognizer
             tap.addTarget(self, action: "tappedGhost:")
+            mainView.addGestureRecognizer(tap)
             
             ghostArray = []
             
@@ -66,7 +67,11 @@ class Ghost: NSObject {
                 temp[0].imageView.frame = CGRectMake(xy, xy, dimensions, dimensions)
                 
                 ghostArray! += temp
+                
+                
                 vc.view.addSubview(ghostArray![index].imageView)
+                
+                
                 println("\(ghostArray!.count)")
                 var delay = NSTimeInterval(index*5)
                 
@@ -82,8 +87,9 @@ class Ghost: NSObject {
         
         UIView.animateWithDuration(2.0, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
             //show ghost and move it
+            
             self.ghostArray![self.currentIndex].imageView.hidden = false
-            self.ghostArray![self.currentIndex].imageView.userInteractionEnabled = true
+            self.ghostArray![self.currentIndex].imageView.userInteractionEnabled = false
             self.ghostArray![self.currentIndex].imageView.frame = position
             }, completion: nil)
         
@@ -94,11 +100,13 @@ class Ghost: NSObject {
         
         for (index, ghost) in enumerate(ghostArray!) {
             var tapLocation = gesture.locationInView(ghost.imageView.superview)
-            if ghost.imageView.layer.presentationLayer().frame.contains(tapLocation) {
-                if(!ghost.ghost.dead) {
-                    println("id: \(ghost.ghost.id)")
-                    ghost.ghost.dead = true
-                    return ghost.ghost.id
+            if ghost.imageView.hidden == false {
+                if ghost.imageView.layer.presentationLayer().frame.contains(tapLocation) {
+                    if(!ghost.ghost.dead) {
+                        println("id: \(ghost.ghost.id)")
+                        ghost.ghost.dead = true
+                        return ghost.ghost.id
+                    }
                 }
             }
         }
