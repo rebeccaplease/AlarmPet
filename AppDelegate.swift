@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         //if launchOptions is not nil (starting from a push notif), then open PetViewControler
+        
+        //NSFileManager.defaultManager().removeItemAtPath(Realm.defaultPath, error: nil)
         
         application.cancelAllLocalNotifications()
         if let launchOptions = launchOptions {

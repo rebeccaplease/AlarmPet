@@ -217,7 +217,7 @@
                         </variation>
                         <connections>
                             <outlet property="alarmTime" destination="WF0-tT-cZO" id="B7q-lY-Gm7"/>
-                            <outlet property="pet" destination="N3i-po-e5j" id="6MI-0w-89i"/>
+                            <outlet property="petImageView" destination="N3i-po-e5j" id="lPJ-hV-2HB"/>
                             <outlet property="setAlarm" destination="v5q-EZ-jC9" id="pob-Er-Hui"/>
                             <outlet property="toggleAlarm" destination="Bfv-kQ-UIg" id="DB3-jg-lAq"/>
                             <outletCollection property="gestureRecognizers" destination="vI3-zT-vpg" appends="YES" id="cmS-Wc-GYg"/>

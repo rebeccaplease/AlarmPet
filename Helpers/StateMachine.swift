@@ -114,6 +114,21 @@ class StateMachine {
             return nil
         }
     }
-    
-    
+    static func saveRealmPet(pet: Pet) {
+        let realm = Realm()
+        realm.write {
+            realm.add(pet)
+        }
+    }
+    //health, affection, etc
+    static func updateRealmPet(#x: CGFloat,y: CGFloat) {
+        let realm = Realm()
+        var pet = getRealmPet()
+        if let pet = pet {
+            realm.write{
+                pet.x = Int(x)
+                pet.y = Int(y)
+            }
+        }
+    }
 }

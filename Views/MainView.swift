@@ -9,8 +9,9 @@
 import UIKit
 
 class MainView: UIView {
+    
 
-    @IBOutlet weak var pet: UIImageView!
+    @IBOutlet weak var petImageView: UIImageView!
     
     @IBOutlet weak var setAlarm: UIButton!
     
@@ -24,13 +25,8 @@ class MainView: UIView {
         toggleAlarm.hidden = true
     }
 
-    var alarm = Alarm()
+    //var alarm: Alarm? = nil
     
-    var dateFormatter: NSDateFormatter = {
-        var formatter = NSDateFormatter()
-        formatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        
-        return formatter
-        }()
+
     
 }
