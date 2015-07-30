@@ -14,8 +14,8 @@ class Pet: Object {
     dynamic var health: Int = 100
     dynamic var affection: Int = 0
     
-    dynamic var x: Int = 250
-    dynamic var y: Int = 250
+    dynamic var x: Float  = 250
+    dynamic var y: Float = 250
     
     dynamic var width: Int = 100
     dynamic var height = 100

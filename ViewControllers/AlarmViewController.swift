@@ -10,8 +10,8 @@ import UIKit
 
 class AlarmViewController: UIViewController {
     
-    var alarm: Alarm? = StateMachine.getRealmAlarm()
-
+    //var alarm: Alarm? = StateMachine.getRealmAlarm()
+    var alarm: Alarm?
     //MARK: Date functions
     
     @IBOutlet weak var datePicker: UIDatePicker!

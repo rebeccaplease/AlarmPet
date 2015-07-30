@@ -61,6 +61,27 @@ class StateMachine {
     
     }*/
     
+    static func printAllRealmObjects() {
+        let realm = Realm()
+        let obj = realm.objects(Alarm)
+        for item in obj {
+            println(item.description)
+        }
+        
+        let obj2 = realm.objects(Pet)
+        for item in obj2 {
+            println(item.description)
+        }
+        
+    }
+    
+    static func deleteRealmObjects() {
+        let realm = Realm()
+        realm.write {
+            realm.deleteAll()
+        }
+    }
+    
     //MARK: Realm Alarm
     
     static func getRealmAlarm() -> Alarm? {
@@ -96,12 +117,6 @@ class StateMachine {
         }
     }
     
-    static func deleteRealmAlarm() {
-        let realm = Realm()
-        realm.write {
-            realm.deleteAll()
-        }
-    }
     
     //MARK: Realm Pet
     static func getRealmPet() -> Pet?{

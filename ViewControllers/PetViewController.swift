@@ -32,12 +32,16 @@ class PetViewController: UIViewController {
         
         //print realm objects**
         
+        StateMachine.printAllRealmObjects()
+        //StateMachine.deleteRealmObjects()
+        
         super.viewDidLoad()
         
         println("View Did Load")
         // Do any additional setup after loading the view.
         
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
         
         if let pet = pet {
             let mainView = self.view as! MainView
@@ -50,19 +54,6 @@ class PetViewController: UIViewController {
             StateMachine.saveRealmPet(pet!)
         }
         
-        
-        StateMachine.checkState()
-        switch StateMachine.currentState {
-        case .Defend:
-            UIApplication.sharedApplication().cancelAllLocalNotifications()
-            println("Defending")
-            Ghost.createGhosts(self)
-        case .Play:
-            Ghost.updateGhostArray(nil)
-            println("Playing")
-        default:
-            println("Default")
-        }
         
         let mainView = self.view as! MainView
         if let alarm = alarm{
@@ -80,6 +71,23 @@ class PetViewController: UIViewController {
             mainView.toggleAlarm.selected = true
             mainView.alarmTime.hidden = true
         }
+        
+        
+        StateMachine.checkState()
+        switch StateMachine.currentState {
+        case .Defend:
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            println("Defending")
+            Ghost.createGhosts(self)
+        case .Play:
+            Ghost.updateGhostArray(nil)
+            println("Playing")
+        default:
+            println("Default")
+        }
+        
+        
+        
         /*
         //bind label and button to Alarm?
         
@@ -92,7 +100,6 @@ class PetViewController: UIViewController {
         super.viewWillAppear(animated)
         println("View Will Appear")
         
-        
         switch StateMachine.currentState {
         case .Defend:
             println("Defending")
@@ -103,26 +110,8 @@ class PetViewController: UIViewController {
         default:
             println("Default")
         }
-        
     }
-    //move ghosts
-    override func viewDidAppear(animated: Bool) {
-        
-        super.viewDidAppear(animated)
-        println("View Did Appear")
-        
-        
-        switch StateMachine.currentState {
-        case .Defend:
-            //Ghost.move(pet!.x, pet.y)
-            println("Defending")
-        case .Play:
-            Ghost.updateGhostArray(nil)
-            println("Playing")
-        default:
-            println("Default")
-        }
-    }
+    
     
     //MARK: Toggle Alarm
     @IBAction func alarmToggle(sender: AnyObject) {
@@ -161,12 +150,12 @@ class PetViewController: UIViewController {
         // Get the new View Controller using segue.destinationViewController.
         // Pass the selected object to the new View Controller.
         println("prepareForSegue")
-        /*
+        
         let alarmViewController = segue.destinationViewController as! AlarmViewController
-        let mainView = self.view as! MainView
+        //let mainView = self.view as! MainView
         //pass alarm to alarmViewController
-        alarmViewController.oldAlarm = mainView.alarm
-        */
+        alarmViewController.alarm = alarm
+        
     }
     
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
