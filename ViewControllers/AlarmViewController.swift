@@ -22,12 +22,7 @@ class AlarmViewController: UIViewController {
         //set default seconds to zero
         //if time is before today, set to next day
         //on and off alarms
-        /*
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
-        NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
-        StateMachine.deleteRealmAlarm()
-        StateMachine.saveRealmAlarm(newAlarm)
-        */
+       
         println("saveButtonPressed")
         if let newAlarm = alarm{
             UIApplication.sharedApplication().cancelAllLocalNotifications()

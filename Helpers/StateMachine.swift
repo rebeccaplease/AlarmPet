@@ -12,6 +12,7 @@ import UIKit
 
 class StateMachine {
     //MARK: State
+    
     enum State: String, Printable {
         case Defend = "Defend" //alarm going off
         case Play = "Play"
@@ -36,6 +37,7 @@ class StateMachine {
                 //if current time is within 30 minutes of alarm time
                 if (interval < 0 && interval > -30*60) {
                     currentState = .Defend
+                   
                 }
                 else {
                     currentState = .Play
@@ -45,6 +47,8 @@ class StateMachine {
                 currentState = .Play
             }
         }
+        
+        updateRealmState(currentState.description)
         
         println(currentState)
     }
@@ -73,6 +77,11 @@ class StateMachine {
             println(item.description)
         }
         
+        let obj3 = realm.objects(SaveState)
+        for item in obj3 {
+            println(item.description)
+        }
+        
     }
     
     static func deleteRealmObjects() {
@@ -95,7 +104,16 @@ class StateMachine {
         }
     }
     
-    static func updateRealmState(#gameState: String, numGhosts: Int) {
+    static func updateRealmState(gameState: String) {
+        let realm = Realm()
+        var state = getRealmState()
+        if let state = state{
+            realm.write{
+                state.state = gameState
+            }
+        }
+    }
+    static func updateRealmStateAndGhosts(#gameState: String, numGhosts: Int) {
         let realm = Realm()
         var state = getRealmState()
         if let state = state{
@@ -104,6 +122,13 @@ class StateMachine {
                 state.state = gameState
                 state.remainingGhosts = numGhosts
             }
+        }
+    }
+    
+    static func saveRealmState(saveState: SaveState) {
+        let realm = Realm()
+        realm.write {
+            realm.add(saveState)
         }
     }
     

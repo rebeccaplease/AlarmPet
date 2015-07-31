@@ -84,7 +84,7 @@ class PetViewController: UIViewController {
         case .Defend:
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             println("Defending")
-            Ghost.createGhosts(self)
+            Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
         case .Play:
             Ghost.updateGhostArray(nil)
             println("Playing")
@@ -109,7 +109,7 @@ class PetViewController: UIViewController {
         switch StateMachine.currentState {
         case .Defend:
             println("Defending")
-            Ghost.createGhosts(self)
+            Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
         case .Play:
             Ghost.updateGhostArray(nil)
             println("Playing")

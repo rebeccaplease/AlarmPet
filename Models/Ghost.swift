@@ -27,11 +27,15 @@ class Ghost: NSObject {
     
     //MARK: Class methods
     
+    static func getGhostCount() -> Int{
+        return ghostArrayCount
+    }
+    
     static func updateGhostArray(array: [ (ghost: Ghost, imageView: UIImageView) ]?) {
         ghostArray = array
     }
     
-    static func createGhosts(vc: UIViewController)  {
+    static func createGhosts(vc: UIViewController, ghostCount: Int)  {
         //let ghost = Ghost.sharedInstance
         //if user exits out without defeating all the ghosts
         //var ghostArray = ghost.ghostArray
@@ -49,14 +53,10 @@ class Ghost: NSObject {
             
             ghostArray = []
             
-            for index in 0...ghostArrayCount-1{
-                
-                //var temp = [(ghost: Ghost(), imageView: UIImageView(image: UIImage(named: "Ghost")), tap: UITapGestureRecognizer() )]
+            for index in 0...ghostCount-1{
+            
                 var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")) )]
                 
-                //temp[0].tap.addTarget(self, action: "tappedGhost:")
-                
-                //temp[0].imageView.addGestureRecognizer(tap)
                 
                 temp[0].imageView.userInteractionEnabled = false
                 temp[0].imageView.hidden = true
@@ -79,7 +79,7 @@ class Ghost: NSObject {
                 
             }
         }
-    }
+    } 
     
     //loop through and move a ghost
     static func move(timer: NSTimer) {

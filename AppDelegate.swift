@@ -57,8 +57,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        
         println("applicationDidEnterBackground")
+        if let state = StateMachine.getRealmState() {
+            
+            StateMachine.updateRealmStateAndGhosts(gameState: state.state, numGhosts: Ghost.getGhostCount())
+            
+        }
+        else {
+            var saveState = SaveState()
+            
+            saveState.state = StateMachine.currentState.description
+            saveState.remainingGhosts = Ghost.getGhostCount()
+            StateMachine.saveRealmState(saveState)
+        }
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
@@ -76,9 +87,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.cancelAllLocalNotifications()
             println("Defending")
             
-            
             //Ghost.createGhosts(self.window!.rootViewController)
-            Ghost.createGhosts(self.window!.visibleViewController()!)
+            Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
         case .Play:
             Ghost.updateGhostArray(nil)
@@ -95,6 +105,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         
         println("applicationWillTerminate")
+        
+        if let state = StateMachine.getRealmState() {
+            
+            StateMachine.updateRealmStateAndGhosts(gameState: state.state, numGhosts: Ghost.getGhostCount())
+            
+        }
+        else {
+            var saveState = SaveState()
+            
+            saveState.state = StateMachine.currentState.description
+            saveState.remainingGhosts = Ghost.getGhostCount()
+            StateMachine.saveRealmState(saveState)
+        }
     }
     
     //if app is open and notification is recieved
@@ -109,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
-            Ghost.createGhosts(self.window!.visibleViewController()!)
+            Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
         case .Play:
             Ghost.updateGhostArray(nil)
@@ -142,7 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             default: //for DEFEND
                 println("defend")
-        
+                
             }
         }
         completionHandler()
