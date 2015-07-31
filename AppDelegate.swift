@@ -7,44 +7,43 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let alarm = Alarm.sharedInstance
-    let ghost = Ghost.sharedInstance
+    
+    //let pet: Pet = StateMachine.getRealmPet()!
     
     //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         //if launchOptions is not nil (starting from a push notif), then open PetViewControler
         
+        
+        // Notice setSchemaVersion is set to 1, this is always set manually. It must be
+        // higher than the previous version (oldSchemaVersion) or an RLMException is thrown
+        setSchemaVersion(1, Realm.defaultPath, { migration, oldSchemaVersion in
+            // We haven’t migrated anything yet, so oldSchemaVersion == 0
+            if oldSchemaVersion < 1 {
+                // Nothing to do!
+                // Realm will automatically detect new properties and removed properties
+                // And will update the schema on disk automatically
+            }
+        })
+        // now that we have called `setSchemaVersion(_:_:_:)`, opening an outdated
+        // Realm will automatically perform the migration and opening the Realm will succeed
+        // i.e. Realm()
+        
+        
         application.cancelAllLocalNotifications()
         if let launchOptions = launchOptions {
             println("launchOptions")
-            //also check specifially for local notifications?
-            //if let notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] as? [NSObject : AnyObject] {
-            //setPetView()
-            //}
         }
         else {
             println("not coming from push")
             NotificationHelper.registerNotification(application)
         }
-        
-        alarm.checkState()
-        switch alarm.currentState {
-        case Alarm.State.Defend:
-            println("Defending")
-            ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
-            DefendView.move()
-        case Alarm.State.Play:
-            ghost.updateGhostArray(nil)
-            println("Playing")
-        default:
-            println("Default")
-        }
-        
         return true
     }
     
@@ -57,6 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        
         println("applicationDidEnterBackground")
     }
     
@@ -68,30 +69,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         println("applicationDidBecomeActive")
-        alarm.checkState()
-        switch alarm.currentState {
-        case Alarm.State.Defend:
+        
+        StateMachine.checkState()
+        switch StateMachine.currentState {
+        case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
-            ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
-            DefendView.move()
-        case Alarm.State.Play:
-            ghost.updateGhostArray(nil)
+            
+            
+            //Ghost.createGhosts(self.window!.rootViewController)
+            Ghost.createGhosts(self.window!.visibleViewController()!)
+            
+        case .Play:
+            Ghost.updateGhostArray(nil)
             println("Playing")
+            
         default:
             println("Default")
         }
+        
     }
     
     
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
         println("applicationWillTerminate")
     }
     
-    //if app is open and notification is recieved, open PetViewController
+    //if app is open and notification is recieved
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-
+        
+        println("didReceiveLocalNotification")
+        
+        application.cancelAllLocalNotifications()
+        
+        StateMachine.checkState()
+        switch StateMachine.currentState {
+        case .Defend:
+            application.cancelAllLocalNotifications()
+            println("Defending")
+            Ghost.createGhosts(self.window!.visibleViewController()!)
+            
+        case .Play:
+            Ghost.updateGhostArray(nil)
+            println("Playing")
+            
+        default:
+            println("Default")
+            
+        }
+        
     }
     
     //if a custom notification action is chosen from push notification (from swiping left)
@@ -108,25 +136,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 application.cancelAllLocalNotifications()
                 
                 println("zzzz snoozing")
-                
-                NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120)
-            default: //for DEFEND
-                application.cancelAllLocalNotifications()
-                alarm.checkState()
-                
-                switch alarm.currentState {
-                case Alarm.State.Defend:
-                    println("Defending")
-                    ghost.updateGhostArray(DefendView.createGhosts(self.window!.rootViewController!))
-                    DefendView.move()
-                case Alarm.State.Play:
-                    ghost.updateGhostArray(nil)
-                    println("Playing")
-                default:
-                    println("Default")
+                //**load alarm from here
+                if let alarm = StateMachine.getRealmAlarm() {
+                    NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, alarm: alarm)
                 }
+            default: //for DEFEND
+                println("defend")
+        
             }
         }
         completionHandler()
+    }
+}
+
+extension UIWindow {
+    
+    func visibleViewController() -> UIViewController? {
+        if let rootViewController: UIViewController  = self.rootViewController {
+            return UIWindow.getVisibleViewControllerFrom(rootViewController)
+        }
+        return nil
+    }
+    
+    class func getVisibleViewControllerFrom(vc:UIViewController) -> UIViewController {
+        
+        if vc.isKindOfClass(UINavigationController.self) {
+            
+            let navigationController = vc as! UINavigationController
+            return UIWindow.getVisibleViewControllerFrom( navigationController.visibleViewController)
+        }
+            
+        else {
+            
+            if let presentedViewController = vc.presentedViewController {
+                
+                return UIWindow.getVisibleViewControllerFrom(presentedViewController.presentedViewController!)
+                
+            } else {
+                
+                return vc;
+            }
+        }
     }
 }

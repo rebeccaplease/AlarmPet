@@ -44,7 +44,7 @@
                                 </state>
                                 <connections>
                                     <action selector="saveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GEO-wu-aD1"/>
-                                    <segue destination="EBm-nG-J3p" kind="unwind" unwindAction="unwindToSegue:" id="lrr-D9-wsm"/>
+                                    <segue destination="EBm-nG-J3p" kind="unwind" identifier="Save" unwindAction="unwindToSegue:" id="lrr-D9-wsm"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1B-he-C1H">
@@ -100,7 +100,7 @@
                                 </state>
                                 <connections>
                                     <action selector="cancelUnwindSegue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cSn-pp-0HR"/>
-                                    <segue destination="EBm-nG-J3p" kind="unwind" unwindAction="unwindToSegue:" id="dLY-5m-t3Q"/>
+                                    <segue destination="EBm-nG-J3p" kind="unwind" identifier="Cancel" unwindAction="unwindToSegue:" id="dLY-5m-t3Q"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -164,7 +164,6 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="setAlarm:" destination="Z2h-hD-wyP" eventType="touchUpInside" id="SKC-aD-lWu"/>
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="overCurrentContext" id="17O-VI-bDD"/>
                                 </connections>
                             </button>
@@ -179,8 +178,7 @@
                                 </state>
                                 <state key="selected" image="AlarmOff"/>
                                 <connections>
-                                    <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="GKc-Sf-wPL"/>
-                                    <action selector="toggleAlarm:" destination="Z2h-hD-wyP" eventType="touchUpInside" id="Tjn-pW-1lv"/>
+                                    <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="tqf-Q1-VuV"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO" userLabel="Alarm Time">
@@ -219,19 +217,17 @@
                         </variation>
                         <connections>
                             <outlet property="alarmTime" destination="WF0-tT-cZO" id="B7q-lY-Gm7"/>
-                            <outlet property="pet" destination="N3i-po-e5j" id="6MI-0w-89i"/>
+                            <outlet property="petImageView" destination="N3i-po-e5j" id="lPJ-hV-2HB"/>
                             <outlet property="setAlarm" destination="v5q-EZ-jC9" id="pob-Er-Hui"/>
                             <outlet property="toggleAlarm" destination="Bfv-kQ-UIg" id="DB3-jg-lAq"/>
+                            <outletCollection property="gestureRecognizers" destination="vI3-zT-vpg" appends="YES" id="cmS-Wc-GYg"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="qVf-dA-xQ0"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <connections>
-                        <outlet property="alarmTime" destination="WF0-tT-cZO" id="Yjl-hm-6b8"/>
-                        <outlet property="alarmToggle" destination="Bfv-kQ-UIg" id="Jqg-vW-vYG"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VB-5f-Stk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="vI3-zT-vpg"/>
             </objects>
             <point key="canvasLocation" x="616" y="607"/>
         </scene>

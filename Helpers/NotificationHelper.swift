@@ -11,26 +11,9 @@ import UIKit
 
 class NotificationHelper {
     
-    //schedule one notification with ID and alarm time
-    static func scheduleNotification(#id: Int, alarm: NSDate){
-        
-        println(alarm)
-        
-        var notification = UILocalNotification()
-        
-        //when notif will appear
-        notification.fireDate = alarm
-        notification.timeZone  = NSTimeZone.defaultTimeZone()
-        notification.alertBody = "Virtual pet in danger!"
-        notification.alertAction = "open"
-        notification.soundName = "ShipBell.wav"
-        notification.category = "CATEGORY"
-        
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-    }
-    
     //zero seconds and schedule number of notifications
-    static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int) {
+    static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int, alarm: Alarm) {
+        
         var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: dateToFix)
         
         //check current day and time. if the time today already passed, set alarm for next day
@@ -51,8 +34,8 @@ class NotificationHelper {
         var fixedDate: NSDate! = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         
         //zero seconds and save to Alarm
-        Alarm.sharedInstance.time = fixedDate
-        Alarm.sharedInstance.isSet = true
+        
+        StateMachine.updateRealmAlarm(time: fixedDate, isSet: true)
         
         for index in 1...numOfNotifications {
             //loop and schedule numOfNotifications notifications, 30 seconds apart
@@ -63,6 +46,24 @@ class NotificationHelper {
             fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         }
         //return saveAlarmTime
+    }
+    
+    //schedule one notification with ID and alarm time
+    static func scheduleNotification(#id: Int, alarm: NSDate){
+        
+        println(alarm)
+        
+        var notification = UILocalNotification()
+        
+        //when notif will appear
+        notification.fireDate = alarm
+        notification.timeZone  = NSTimeZone.defaultTimeZone()
+        notification.alertBody = "Virtual pet in danger!"
+        notification.alertAction = "open"
+        notification.soundName = "ShipBell.wav"
+        notification.category = "CATEGORY"
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
     //set up custom notification buttons and register user settings permission (if first launch)

@@ -9,9 +9,9 @@
 import UIKit
 
 class AlarmViewController: UIViewController {
-
-    var saveAlarmTime: NSDate = NSDate()
     
+    //var alarm: Alarm? = StateMachine.getRealmAlarm()
+    var alarm: Alarm?
     //MARK: Date functions
     
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -22,22 +22,43 @@ class AlarmViewController: UIViewController {
         //set default seconds to zero
         //if time is before today, set to next day
         //on and off alarms
+        /*
         UIApplication.sharedApplication().cancelAllLocalNotifications()
-        NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0)
-        //savedTime.text = AlarmViewController.dateFormatter.stringFromDate(saveAlarmTime)
+        NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
+        StateMachine.deleteRealmAlarm()
+        StateMachine.saveRealmAlarm(newAlarm)
+        */
+        println("saveButtonPressed")
+        if let newAlarm = alarm{
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
+            StateMachine.updateRealmAlarm(time: newAlarm.time, isSet: true)
+           //fix this for runtime
+            alarm = StateMachine.getRealmAlarm()
+        }
+        else {
+            let a = Alarm()
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: a)
+            StateMachine.saveRealmAlarm(a)
+            alarm = StateMachine.getRealmAlarm()
+        }
+        
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
     
     @IBAction func cancelUnwindSegue(sender: AnyObject) {
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         
     }
-
+    
     //MARK: View functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        println("viewDidLoadAlarm")
         // Do any additional setup after loading the view, typically from a nib.
         //set to display times
         datePicker.datePickerMode = UIDatePickerMode.Time
@@ -45,9 +66,9 @@ class AlarmViewController: UIViewController {
         //default to current time
         datePicker.date = currentDate
         
-       // navigationController?.setNavigationBarHidden(false, animated: false)
+        // navigationController?.setNavigationBarHidden(false, animated: false)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

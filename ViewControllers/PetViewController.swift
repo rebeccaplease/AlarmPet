@@ -11,16 +11,33 @@ import UIKit
 
 class PetViewController: UIViewController {
     
-    @IBOutlet weak var alarmTime: UILabel!
+    var pet: Pet?
+    var alarm: Alarm?
     
-    @IBOutlet weak var alarmToggle: UIButton!
+    var state: StateMachine.State = StateMachine.currentState {
+        didSet {
+            switch(state) {
+            case .Win:
+                
+                state = .Play
+            default:
+                println("default")
+            }
+        }
+    }
     
-    //@IBOutlet weak var ghost: UIImageView!
-
-    let alarm = Alarm.sharedInstance
-    let ghost = Ghost.sharedInstance
+    //MARK: View Loading
     
     override func viewDidLoad() {
+        
+        //print realm objects**
+        
+        StateMachine.printAllRealmObjects()
+        //StateMachine.deleteRealmObjects()
+        
+        pet = StateMachine.getRealmPet()
+        alarm = StateMachine.getRealmAlarm()
+        
         super.viewDidLoad()
         
         println("View Did Load")
@@ -28,29 +45,60 @@ class PetViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        //bind label and button to Alarm?
-        if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
-            alarmToggle.selected = true
-            alarmTime.hidden = true
+        
+        if let pet = pet {
+            let mainView = self.view as! MainView
+            
+            var petPosition =  mainView.petImageView.frame.origin
+            StateMachine.updateRealmPet(x: petPosition.x, y: petPosition.y)
         }
         else {
-            alarmToggle.selected = false
-            alarmTime.hidden = false
-            alarmTime.text = alarm.dateFormatter.stringFromDate(alarm.time!)
+            pet = Pet()
+            StateMachine.saveRealmPet(pet!)
         }
         
-        switch alarm.currentState {
-        case Alarm.State.Defend:
+        
+        let mainView = self.view as! MainView
+        if let alarm = alarm{
+            if (alarm.isSet) {
+                mainView.toggleAlarm.selected = false
+                mainView.alarmTime.hidden = false
+                mainView.alarmTime.text = dateFormatter.stringFromDate(alarm.time)
+            }
+            else {
+                mainView.toggleAlarm.selected = true
+                mainView.alarmTime.hidden = true
+            }
+        }
+        else {
+            
+            mainView.toggleAlarm.selected = true
+            mainView.alarmTime.hidden = true
+            alarm = Alarm()
+            StateMachine.saveRealmAlarm(alarm!)
+        }
+        
+        
+        StateMachine.checkState()
+        switch StateMachine.currentState {
+        case .Defend:
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
             println("Defending")
-            ghost.updateGhostArray(DefendView.createGhosts(self))
-        case Alarm.State.Play:
-            ghost.updateGhostArray(nil)
+            Ghost.createGhosts(self)
+        case .Play:
+            Ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
         }
-        // AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         
+        
+        
+        /*
+        //bind label and button to Alarm?
+        
+        // AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
+        */
     }
     
     //called every time view appears
@@ -58,56 +106,48 @@ class PetViewController: UIViewController {
         super.viewWillAppear(animated)
         println("View Will Appear")
         
-        
-        switch alarm.currentState {
-        case Alarm.State.Defend:
+        switch StateMachine.currentState {
+        case .Defend:
             println("Defending")
-            ghost.updateGhostArray(DefendView.createGhosts(self))
-        case Alarm.State.Play:
-            ghost.updateGhostArray(nil)
+            Ghost.createGhosts(self)
+        case .Play:
+            Ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
         }
-    }
-    //move ghosts
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        println("View Did Appear")
-        
-        switch alarm.currentState {
-        case Alarm.State.Defend:
-            DefendView.move()
-            println("Defending")
-        case Alarm.State.Play:
-            ghost.updateGhostArray(nil)
-            println("Playing")
-        default:
-            println("Default")
-        }
-        
     }
     
-       
+    
+    //MARK: Toggle Alarm
     @IBAction func alarmToggle(sender: AnyObject) {
         
-        //alarmTime.hidden = !alarmTime.hidden
-        //alarmToggle.selected = !alarmToggle.selected
-        if(!alarm.isSet) {
-            alarmTime.hidden = false
-            alarmToggle.selected = false
-            if let time = alarm.time  {
-                NotificationHelper.handleScheduling(alarm.time!, numOfNotifications: 3, delayInSeconds: 0)
-                alarm.isSet = true
-                alarmTime.text = alarm.dateFormatter.stringFromDate(alarm.time!)
-            }
+        let mainView = self.view as! MainView
+        //if(!mainView.alarm.isSet) {
+        
+        if(!alarm!.isSet) {
+            StateMachine.updateRealmAlarm(time: alarm!.time, isSet: true)
+            
+            alarm = StateMachine.getRealmAlarm()!
+            mainView.alarmTime.hidden = false
+            mainView.toggleAlarm.selected = false
+            
+            NotificationHelper.handleScheduling(alarm!.time, numOfNotifications: 3, delayInSeconds: 0, alarm: alarm!)
+            
+            mainView.alarmTime.text = dateFormatter.stringFromDate(alarm!.time)
+            
         }
         else {
-            alarmTime.hidden = true
-            alarmToggle.selected = true
+            
+            StateMachine.updateRealmAlarm(time: alarm!.time, isSet: false)
+            
+            alarm = StateMachine.getRealmAlarm()!
+            mainView.alarmTime.hidden = true
+            mainView.toggleAlarm.selected = true
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            alarm.isSet = false
+            
         }
+        
     }
     
     // MARK: - Navigation
@@ -115,46 +155,37 @@ class PetViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new View Controller using segue.destinationViewController.
         // Pass the selected object to the new View Controller.
-        
-        /*if (segue.identifier == "Alarm") {
+        println("prepareForSegue")
         
         let alarmViewController = segue.destinationViewController as! AlarmViewController
-        
-        } */
-        /*
-        var contributeViewController: UIViewController = UIViewController()
-        var blurEffect: UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-        var beView: UIVisualEffectView = UIVisualEffectView(effect: blurEffect)
-        beView.frame = self.view.bounds
-        
-        contributeViewController.view.frame = self.view.bounds;
-        contributeViewController.view.backgroundColor = UIColor.clearColor()
-        contributeViewController.view.insertSubview(beView, atIndex: 0)
-        contributeViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        
-        self.presentViewController(contributeViewController, animated: true, completion: nil)
-        */
-        
-        
+        //let mainView = self.view as! MainView
+        //pass alarm to alarmViewController
+        alarmViewController.alarm = alarm
         
     }
     
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         println("unwinding")
-        //update labels
-        if (UIApplication.sharedApplication().scheduledLocalNotifications.count == 0) {
-            alarmToggle.selected = true
-            alarmTime.hidden = true
-            println("no notifications")
-        }
-        else {
-            alarmToggle.selected = false
-            alarmTime.hidden = false
-            alarmTime.text = alarm.dateFormatter.stringFromDate(alarm.time!)
+        
+        let mainView = self.view as! MainView
+        let alarmVC = segue.sourceViewController as! AlarmViewController
+        
+        if (segue.identifier == "Save") {
+            
+            alarm = alarmVC.alarm
+            
+            mainView.toggleAlarm.selected = false
+            mainView.alarmTime.hidden = false
+            
+            mainView.alarmTime.text = dateFormatter.stringFromDate(alarmVC.datePicker.date)
+            
             println("alarm set!")
         }
-        
-        //self.view.setNeedsDisplay()
     }
-    
+    var dateFormatter: NSDateFormatter = {
+        var formatter = NSDateFormatter()
+        formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        
+        return formatter
+        }()
 }

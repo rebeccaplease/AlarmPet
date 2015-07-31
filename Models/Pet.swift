@@ -8,17 +8,15 @@
 
 import Foundation
 import UIKit
-//import RealmSwift
+import RealmSwift
 
-class Pet {
-    class var sharedInstance : Pet {
-        struct Static {
-            static let instance : Pet = Pet()
-        }
-        return Static.instance
-    }
-    var health: Int = 100
-    var affection: Int = 0
-    var position: CGRect = CGRect(x: 250, y: 250, width: 100, height: 100)
+class Pet: Object {
+    dynamic var health: Int = 100
+    dynamic var affection: Int = 0
     
+    dynamic var x: Float  = 250
+    dynamic var y: Float = 250
+    
+    dynamic var width: Int = 100
+    dynamic var height = 100
 }

@@ -9,8 +9,9 @@
 import UIKit
 
 class MainView: UIView {
+    
 
-    @IBOutlet weak var pet: UIImageView!
+    @IBOutlet weak var petImageView: UIImageView!
     
     @IBOutlet weak var setAlarm: UIButton!
     
@@ -18,16 +19,14 @@ class MainView: UIView {
     
     @IBOutlet weak var toggleAlarm: UIButton!
     
-    //var ghostArray:[(ghost: Ghost, imageView: UIImageView, tap: UITapGestureRecognizer)]? = nil
-    
-    @IBAction func toggleAlarm(sender: AnyObject) {
-    }
-    
     func hideMenu() {
         setAlarm.hidden = true
         alarmTime.hidden = true
         toggleAlarm.hidden = true
     }
+
+    //var alarm: Alarm? = nil
     
+
     
 }
