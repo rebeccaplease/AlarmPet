@@ -11,8 +11,7 @@ import RealmSwift
 
 class State: Object {
     
-    dynamic var state:String
-    init(gameState: String) {
-        state = gameState
-    }
+    dynamic var state:String = "Play"
+    dynamic var remainingGhosts: Int = 0
+    
 }

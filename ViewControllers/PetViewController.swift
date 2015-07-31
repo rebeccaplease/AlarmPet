@@ -11,8 +11,8 @@ import UIKit
 
 class PetViewController: UIViewController {
     
-    var pet: Pet? = StateMachine.getRealmPet()
-    var alarm: Alarm? = StateMachine.getRealmAlarm()
+    var pet: Pet?
+    var alarm: Alarm?
     
     var state: StateMachine.State = StateMachine.currentState {
         didSet {
@@ -34,6 +34,9 @@ class PetViewController: UIViewController {
         
         StateMachine.printAllRealmObjects()
         //StateMachine.deleteRealmObjects()
+        
+        pet = StateMachine.getRealmPet()
+        alarm = StateMachine.getRealmAlarm()
         
         super.viewDidLoad()
         
@@ -68,8 +71,10 @@ class PetViewController: UIViewController {
             }
         }
         else {
+            
             mainView.toggleAlarm.selected = true
             mainView.alarmTime.hidden = true
+            alarm = Alarm()
         }
         
         
@@ -167,10 +172,12 @@ class PetViewController: UIViewController {
         if (segue.identifier == "Save") {
             
             alarm = alarmVC.alarm
+            
             mainView.toggleAlarm.selected = false
             mainView.alarmTime.hidden = false
             
-            mainView.alarmTime.text = dateFormatter.stringFromDate(alarm!.time)
+            mainView.alarmTime.text = dateFormatter.stringFromDate(alarmVC.datePicker.date)
+            
             println("alarm set!")
         }
     }

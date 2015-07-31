@@ -141,8 +141,8 @@ class StateMachine {
         var pet = getRealmPet()
         if let pet = pet {
             realm.write{
-                pet.x = Int(x)
-                pet.y = Int(y)
+                pet.x = Float(x)
+                pet.y = Float(y)
             }
         }
     }
