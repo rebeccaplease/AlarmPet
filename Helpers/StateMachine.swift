@@ -82,6 +82,31 @@ class StateMachine {
         }
     }
     
+    //MARK: Realm State
+    
+    static func getRealmState() -> SaveState? {
+        let realm = Realm()
+        let state = realm.objects(SaveState)
+        if state.count > 0 {
+            return state.first
+        }
+        else {
+            return nil
+        }
+    }
+    
+    static func updateRealmState(#gameState: String, numGhosts: Int) {
+        let realm = Realm()
+        var state = getRealmState()
+        if let state = state{
+            realm.write{
+             
+                state.state = gameState
+                state.remainingGhosts = numGhosts
+            }
+        }
+    }
+    
     //MARK: Realm Alarm
     
     static func getRealmAlarm() -> Alarm? {

@@ -75,6 +75,7 @@ class PetViewController: UIViewController {
             mainView.toggleAlarm.selected = true
             mainView.alarmTime.hidden = true
             alarm = Alarm()
+            StateMachine.saveRealmAlarm(alarm!)
         }
         
         
