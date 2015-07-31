@@ -56,6 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        
         println("applicationDidEnterBackground")
     }
     
@@ -91,11 +93,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
         println("applicationWillTerminate")
     }
     
-    //if app is open and notification is recieved, open PetViewController
+    //if app is open and notification is recieved
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        
+        println("didReceiveLocalNotification")
+        
+        application.cancelAllLocalNotifications()
+        
+        StateMachine.checkState()
+        switch StateMachine.currentState {
+        case .Defend:
+            application.cancelAllLocalNotifications()
+            println("Defending")
+            Ghost.createGhosts(self.window!.visibleViewController()!)
+            
+        case .Play:
+            Ghost.updateGhostArray(nil)
+            println("Playing")
+            
+        default:
+            println("Default")
+            
+        }
         
     }
     
@@ -119,23 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             default: //for DEFEND
                 println("defend")
-                /*application.cancelAllLocalNotifications()
-                
-                StateMachine.checkState()
-                switch StateMachine.currentState {
-                case .Defend:
-                    application.cancelAllLocalNotifications()
-                    println("Defending")
-                    Ghost.createGhosts(self.window!.rootViewController!)
-                
-                case .Play:
-                    Ghost.updateGhostArray(nil)
-                    println("Playing")
-                
-                default:
-                    println("Default")
-
-                } */
+        
             }
         }
         completionHandler()

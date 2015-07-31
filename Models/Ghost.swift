@@ -73,7 +73,7 @@ class Ghost: NSObject {
                 
                 
                 println("\(ghostArray!.count)")
-                var delay = NSTimeInterval(index*5)
+                var delay = NSTimeInterval(index*3)
                 
                 NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "move:", userInfo: nil, repeats: false)
                 
