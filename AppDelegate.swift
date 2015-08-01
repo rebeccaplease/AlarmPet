@@ -87,8 +87,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.cancelAllLocalNotifications()
             println("Defending")
             
-            //Ghost.createGhosts(self.window!.rootViewController)
-            Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
+            Ghost.createGhosts(self.window!.visibleViewController()!)
+            //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
         case .Play:
             Ghost.updateGhostArray(nil)
@@ -132,7 +132,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
-            Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
+            Ghost.createGhosts(self.window!.visibleViewController()!)
+            //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
         case .Play:
             Ghost.updateGhostArray(nil)

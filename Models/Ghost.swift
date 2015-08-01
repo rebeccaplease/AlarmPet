@@ -13,7 +13,7 @@ class Ghost: NSObject {
     
     var id: Int
     var dead: Bool
-    static var size: Int = 50
+    static var size: CGFloat = 50
     //static var delay: NSTimeInterval = 10
     static var currentIndex: Int = 0
     static var ghostArrayCount = 10
@@ -35,8 +35,8 @@ class Ghost: NSObject {
         ghostArray = array
     }
     
-    static func createGhosts(vc: UIViewController, ghostCount: Int)  {
-        //let ghost = Ghost.sharedInstance
+    //static func createGhosts(vc: UIViewController, ghostCount: Int)  {
+    static func createGhosts(vc: UIViewController) {
         //if user exits out without defeating all the ghosts
         //var ghostArray = ghost.ghostArray
         
@@ -53,15 +53,18 @@ class Ghost: NSObject {
             
             ghostArray = []
             
-            for index in 0...ghostCount-1{
-            
+            //for index in 0...ghostCount-1{
+            for index in 0...ghostArrayCount-1 {
+                
                 var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")) )]
                 
                 
                 temp[0].imageView.userInteractionEnabled = false
                 temp[0].imageView.hidden = true
                 
-                var xy = CGFloat(index*24)
+                var xy = CGFloat(index*10)
+                
+                
                 var dimensions = CGFloat(50)
                 
                 temp[0].imageView.frame = CGRectMake(xy, xy, dimensions, dimensions)
@@ -79,11 +82,24 @@ class Ghost: NSObject {
                 
             }
         }
-    } 
+    }
+    
     
     //loop through and move a ghost
     static func move(timer: NSTimer) {
-        var position = CGRect(x: 200, y: 200, width: size, height: size)
+        
+        var xandy = StateMachine.getPetPosition()
+        
+        var x = xandy.0 - 10
+        var random: Int = Int(arc4random_uniform(2))
+        if( random < 1) {
+            x -= 150
+        }
+        let y = xandy.1 + 60 + Float(currentIndex * 20)
+        
+        //var position = CGRect(x: CGFloat(x), y: CGFloat(y), width: size, height: size)
+        //var position = CGPoint(x: CGFloat(x), y: CGFloat(y))
+        var position = CGRect(origin: CGPoint(x: CGFloat(x), y: CGFloat(y)), size: CGSize(width: size, height: size))
         
         UIView.animateWithDuration(2.0, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
             //show ghost and move it
@@ -95,6 +111,7 @@ class Ghost: NSObject {
         
         self.currentIndex++
     }
+    
     
     static func detectTap(gesture: UITapGestureRecognizer) -> Int{
         
@@ -133,12 +150,14 @@ class Ghost: NSObject {
                 
                 if ghostArrayCount == 0 {
                     StateMachine.currentState = .Play
+                   // StateMachine.updateRealmStateAndGhosts(gameState: "Play", numGhosts: 0)
                     
                     ghostArray = nil
                     currentIndex = 0
                     ghostArrayCount = 10
                     
                     println("You win!")
+                    
                 }
             }
         }

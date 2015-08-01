@@ -19,6 +19,9 @@ class MainView: UIView {
     
     @IBOutlet weak var toggleAlarm: UIButton!
     
+    @IBOutlet weak var winLabel: UILabel!
+    
+    
     func hideMenu() {
         setAlarm.hidden = true
         alarmTime.hidden = true
@@ -27,6 +30,6 @@ class MainView: UIView {
 
     //var alarm: Alarm? = nil
     
-
+    
     
 }

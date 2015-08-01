@@ -194,10 +194,17 @@
                                     <constraint firstAttribute="width" constant="100" id="ooN-3f-DWp"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You win!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7v-pa-0Gp">
+                                <rect key="frame" x="268" y="120" width="65" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="Z7v-pa-0Gp" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="100" id="0ib-7m-7ke"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="10" id="7ti-bG-Se3"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="5" id="B8Z-cv-wGx"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="8" id="S3W-pc-oGV"/>
@@ -205,12 +212,15 @@
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="v5q-EZ-jC9" secondAttribute="bottom" constant="8" id="WD3-r4-Edq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="10" id="YsO-1C-9Tm"/>
                             <constraint firstAttribute="centerY" secondItem="N3i-po-e5j" secondAttribute="centerY" id="dg9-ST-qR6"/>
+                            <constraint firstAttribute="centerX" secondItem="Z7v-pa-0Gp" secondAttribute="centerX" id="ezJ-W5-OKn"/>
                             <constraint firstAttribute="centerX" secondItem="N3i-po-e5j" secondAttribute="centerX" id="fzJ-D2-9b8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WF0-tT-cZO" secondAttribute="trailing" constant="9" id="hbb-n4-o2V"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="Z2h-hD-wyP" secondAttribute="topMargin" constant="8" id="oUB-FI-xim"/>
+                            <constraint firstAttribute="centerY" secondItem="N3i-po-e5j" secondAttribute="centerY" id="tkY-PR-hOu"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="dg9-ST-qR6"/>
                                 <exclude reference="YsO-1C-9Tm"/>
                                 <exclude reference="oUB-FI-xim"/>
                             </mask>
@@ -220,6 +230,7 @@
                             <outlet property="petImageView" destination="N3i-po-e5j" id="lPJ-hV-2HB"/>
                             <outlet property="setAlarm" destination="v5q-EZ-jC9" id="pob-Er-Hui"/>
                             <outlet property="toggleAlarm" destination="Bfv-kQ-UIg" id="DB3-jg-lAq"/>
+                            <outlet property="winLabel" destination="Z7v-pa-0Gp" id="sOb-Zo-4sr"/>
                             <outletCollection property="gestureRecognizers" destination="vI3-zT-vpg" appends="YES" id="cmS-Wc-GYg"/>
                         </connections>
                     </view>

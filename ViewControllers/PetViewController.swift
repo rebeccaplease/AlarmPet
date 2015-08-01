@@ -18,7 +18,6 @@ class PetViewController: UIViewController {
         didSet {
             switch(state) {
             case .Win:
-                
                 state = .Play
             default:
                 println("default")
@@ -45,11 +44,12 @@ class PetViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        
         if let pet = pet {
             let mainView = self.view as! MainView
             
             var petPosition =  mainView.petImageView.frame.origin
+            println("\(petPosition)")
+            
             StateMachine.updateRealmPet(x: petPosition.x, y: petPosition.y)
         }
         else {
@@ -78,13 +78,15 @@ class PetViewController: UIViewController {
             StateMachine.saveRealmAlarm(alarm!)
         }
         
+        mainView.winLabel.hidden = true
         
         StateMachine.checkState()
         switch StateMachine.currentState {
         case .Defend:
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             println("Defending")
-            Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
+            //Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
+            Ghost.createGhosts(self)
         case .Play:
             Ghost.updateGhostArray(nil)
             println("Playing")
@@ -109,7 +111,8 @@ class PetViewController: UIViewController {
         switch StateMachine.currentState {
         case .Defend:
             println("Defending")
-            Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
+            //Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
+            Ghost.createGhosts(self)
         case .Play:
             Ghost.updateGhostArray(nil)
             println("Playing")

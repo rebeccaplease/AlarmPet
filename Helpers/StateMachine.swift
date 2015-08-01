@@ -13,6 +13,8 @@ import UIKit
 class StateMachine {
     //MARK: State
     
+    
+    
     enum State: String, Printable {
         case Defend = "Defend" //alarm going off
         case Play = "Play"
@@ -25,7 +27,20 @@ class StateMachine {
         }
     }
     
-    static var currentState: State = .Play
+    static var currentState: State = .Play// {
+//        willSet {
+//            switch(currentState) {
+//            case: .Defend
+//                //about to switch to .play
+//            if let g = Ghost.ghostArray {
+//                
+//                }
+//            else {
+//                
+//                }
+//            }
+//        }
+//    }
     
     static func checkState() {
         
@@ -195,5 +210,9 @@ class StateMachine {
                 pet.y = Float(y)
             }
         }
+    }
+    static func getPetPosition() -> (Float, Float) {
+        let pet = getRealmPet()!
+        return (pet.x, pet.y)
     }
 }
