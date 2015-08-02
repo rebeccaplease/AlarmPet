@@ -51,6 +51,10 @@ class StateMachine {
                 println("\(interval)")
                 //if current time is within 30 minutes of alarm time
                 if (interval < 0 && interval > -30*60) {
+                    
+                    var dateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: alarm.dailyWin)
+                    
+                    //if daily win (month, day, and year) is different from current day, then it's the first alarm of the day
                     currentState = .Defend
                    
                 }

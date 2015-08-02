@@ -70,6 +70,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             saveState.remainingGhosts = Ghost.getGhostCount()
             StateMachine.saveRealmState(saveState)
         }
+        
+        Ghost.invalidateTimers()
     }
     
     func applicationWillEnterForeground(application: UIApplication) {

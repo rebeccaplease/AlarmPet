@@ -10,7 +10,9 @@ import Foundation
 import RealmSwift
 
 class Alarm: Object {
+    
     dynamic var time: NSDate = NSDate()
     dynamic var isSet: Bool = false
     
+    dynamic var dailyWin: NSDate = NSDate()
 }

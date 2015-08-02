@@ -23,7 +23,7 @@ class Ghost: NSObject {
         self.dead = false
     }
     
-    static var ghostArray:[ (ghost: Ghost, imageView: UIImageView) ]? = nil
+    static var ghostArray:[ (ghost: Ghost, imageView: UIImageView, timer: NSTimer) ]? = nil
     
     //MARK: Class methods
     
@@ -31,7 +31,7 @@ class Ghost: NSObject {
         return ghostArrayCount
     }
     
-    static func updateGhostArray(array: [ (ghost: Ghost, imageView: UIImageView) ]?) {
+    static func updateGhostArray(array: [ (ghost: Ghost, imageView: UIImageView, timer: NSTimer) ]?) {
         ghostArray = array
     }
     
@@ -56,14 +56,16 @@ class Ghost: NSObject {
             //for index in 0...ghostCount-1{
             for index in 0...ghostArrayCount-1 {
                 
-                var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")) )]
+                var delay = NSTimeInterval(index*3)
                 
+                var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")), timer: NSTimer(timeInterval: delay, target: self, selector: "move:", userInfo: nil, repeats: false) )]
+                
+                NSRunLoop.currentRunLoop().addTimer(temp[0].timer, forMode: NSDefaultRunLoopMode)
                 
                 temp[0].imageView.userInteractionEnabled = false
                 temp[0].imageView.hidden = true
                 
                 var xy = CGFloat(index*10)
-                
                 
                 var dimensions = CGFloat(50)
                 
@@ -71,14 +73,13 @@ class Ghost: NSObject {
                 
                 ghostArray! += temp
                 
-                
                 vc.view.addSubview(ghostArray![index].imageView)
                 
                 
                 println("\(ghostArray!.count)")
-                var delay = NSTimeInterval(index*3)
                 
-                NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "move:", userInfo: nil, repeats: false)
+                
+                //NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "move:", userInfo: nil, repeats: false)
                 
             }
         }
@@ -150,7 +151,7 @@ class Ghost: NSObject {
                 
                 if ghostArrayCount == 0 {
                     StateMachine.currentState = .Play
-                   // StateMachine.updateRealmStateAndGhosts(gameState: "Play", numGhosts: 0)
+                    // StateMachine.updateRealmStateAndGhosts(gameState: "Play", numGhosts: 0)
                     
                     ghostArray = nil
                     currentIndex = 0
@@ -163,4 +164,10 @@ class Ghost: NSObject {
         }
     }
     
+    static func invalidateTimers() {
+        
+        for (index, ghost) in enumerate(ghostArray!) {
+            ghost.timer.invalidate()
+        }
+    }
 }
