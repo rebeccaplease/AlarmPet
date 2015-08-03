@@ -56,7 +56,7 @@ class Ghost: NSObject {
             //for index in 0...ghostCount-1{
             for index in 0...ghostArrayCount-1 {
                 
-                var delay = NSTimeInterval(index*3)
+                var delay = NSTimeInterval(index*2)
                 
                 var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")), timer: NSTimer(timeInterval: delay, target: self, selector: "move:", userInfo: nil, repeats: false) )]
                 
@@ -168,10 +168,11 @@ class Ghost: NSObject {
         }
     }
     
-    static func invalidateTimers() {
+  /*  static func invalidateTimers() {
         
         for (index, ghost) in enumerate(ghostArray!) {
             ghost.timer.invalidate()
         }
     }
+*/
 }

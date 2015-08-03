@@ -70,10 +70,13 @@ class PetViewController: UIViewController {
                 mainView.alarmTime.hidden = true
             }
         }
+            //if no alarm is set yet
         else {
+            //mainView.toggleAlarm.selected = true
             
-            mainView.toggleAlarm.selected = true
+            //hide alarm time and toggle button
             mainView.alarmTime.hidden = true
+            mainView.toggleAlarm.hidden = true
             alarm = Alarm()
             StateMachine.saveRealmAlarm(alarm!)
         }
@@ -187,6 +190,7 @@ class PetViewController: UIViewController {
             
             mainView.toggleAlarm.selected = false
             mainView.alarmTime.hidden = false
+            mainView.toggleAlarm.hidden = false
             
             mainView.alarmTime.text = dateFormatter.stringFromDate(alarmVC.datePicker.date)
             
