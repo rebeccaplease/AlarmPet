@@ -13,16 +13,49 @@ class PetViewController: UIViewController {
     
     var pet: Pet?
     var alarm: Alarm?
+    //MARK: State
     
-    var state: StateMachine.State = StateMachine.currentState {
+    enum State: String, Printable {
+        case Defend = "Defend" //alarm going off
+        case Play = "Play"
+        case Win = "Win"
+        
+        var description : String {
+            get {
+                return self.rawValue
+            }
+        }
+    }
+    
+    var currentState: State = .Play {
+        /* didSet {
+        switch(currentState) {
+        case .Win:
+        currentState = .Play
+        default:
+        println("default")
+        }
+        }
+        */
+        
         didSet {
-            switch(state) {
+            switch(currentState) {
             case .Win:
-                state = .Play
+                displayWinAlert()
+                currentState  = .Play
             default:
                 println("default")
             }
         }
+    }
+    
+    func displayWinAlert() {
+        
+        let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
     }
     
     //MARK: View Loading
@@ -83,8 +116,8 @@ class PetViewController: UIViewController {
         
         mainView.winLabel.hidden = true
         
-        StateMachine.checkState()
-        switch StateMachine.currentState {
+        StateMachine.checkState(&currentState)
+        switch currentState {
         case .Defend:
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             println("Defending")
@@ -97,7 +130,8 @@ class PetViewController: UIViewController {
             println("Default")
         }
         
-        
+        let tap = mainView.gestureRecognizers![0] as! UITapGestureRecognizer
+        tap.addTarget(self, action: "tappedScreen:")
         
         /*
         //bind label and button to Alarm?
@@ -106,12 +140,21 @@ class PetViewController: UIViewController {
         */
     }
     
+    func tappedScreen(recognizer: UITapGestureRecognizer) {
+        let mainView = self.view as! MainView
+        
+        if mainView.winLabel.hidden == false {
+            mainView.winLabel.hidden = true
+        }
+        
+    }
+    
     //called every time view appears
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         println("View Will Appear")
         
-        switch StateMachine.currentState {
+        switch currentState {
         case .Defend:
             println("Defending")
             //Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
@@ -179,14 +222,6 @@ class PetViewController: UIViewController {
         if (segue.identifier == "Save") {
             
             alarm = alarmVC.alarm
-            
-            /*
-            if let a = alarmVC.alarm {
-                self.alarm = alarmVC.alarm
-            }
-            else {
-                alarmVC.alarm = Alarm()
-            }*/
             
             mainView.toggleAlarm.selected = false
             mainView.alarmTime.hidden = false

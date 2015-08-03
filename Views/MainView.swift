@@ -28,6 +28,7 @@ class MainView: UIView {
         toggleAlarm.hidden = true
     }
 
+   
     //var alarm: Alarm? = nil
     
     

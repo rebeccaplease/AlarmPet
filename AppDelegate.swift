@@ -58,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         println("applicationDidEnterBackground")
+        let petVC = self.window!.visibleViewController()! as! PetViewController
         if let state = StateMachine.getRealmState() {
             
             //StateMachine.updateRealmStateAndGhosts(gameState: state.state)
@@ -67,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else {
             var saveState = SaveState()
             
-            saveState.state = StateMachine.currentState.description
+            saveState.state = petVC.currentState.description
             //var remaining = Ghost.getGhostCount()
             //saveState.remainingGhosts = remaining
             //println("\(remaining)")
@@ -84,13 +85,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         println("applicationDidBecomeActive")
         
-        StateMachine.checkState()
-        switch StateMachine.currentState {
+        let petVC = self.window!.visibleViewController()! as! PetViewController
+        StateMachine.checkState(&petVC.currentState)
+        switch petVC.currentState {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
             
-            Ghost.createGhosts(self.window!.visibleViewController()!)
+            Ghost.createGhosts(petVC)
             //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
         case .Play:
@@ -109,6 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         println("applicationWillTerminate")
+        let petVC = self.window!.visibleViewController()! as! PetViewController
         
         if let state = StateMachine.getRealmState() {
             
@@ -119,7 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else {
             var saveState = SaveState()
             
-            saveState.state = StateMachine.currentState.description
+            saveState.state = petVC.currentState.description
             //saveState.remainingGhosts = Ghost.getGhostCount()
             StateMachine.saveRealmState(saveState)
         }
@@ -132,8 +135,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.cancelAllLocalNotifications()
         
-        StateMachine.checkState()
-        switch StateMachine.currentState {
+        let petVC = self.window!.visibleViewController()! as! PetViewController
+        
+        StateMachine.checkState(&petVC.currentState)
+        switch petVC.currentState {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")

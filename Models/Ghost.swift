@@ -56,7 +56,7 @@ class Ghost: NSObject {
             //for index in 0...ghostCount-1{
             for index in 0...ghostArrayCount-1 {
                 
-                var delay = NSTimeInterval(index*2)
+                var delay = NSTimeInterval(index)
                 
                 var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")), timer: NSTimer(timeInterval: delay, target: self, selector: "move:", userInfo: nil, repeats: false) )]
                 
@@ -102,13 +102,12 @@ class Ghost: NSObject {
         //var position = CGPoint(x: CGFloat(x), y: CGFloat(y))
         var position = CGRect(origin: CGPoint(x: CGFloat(x), y: CGFloat(y)), size: CGSize(width: size, height: size))
         
-        UIView.animateWithDuration(2.0, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
             //show ghost and move it
             
             self.ghostArray![self.currentIndex].imageView.hidden = false
             self.ghostArray![self.currentIndex].imageView.userInteractionEnabled = false
             self.ghostArray![self.currentIndex].imageView.frame = position
-            
             
             }, completion: nil)
         
@@ -135,7 +134,7 @@ class Ghost: NSObject {
     
     static func tappedGhost(recognizer: UITapGestureRecognizer) {
         
-        if(StateMachine.currentState == .Defend) {
+        if(StateMachine.getRealmState()!.state == "Defend") {
             var ghostID = detectTap(recognizer)
             
             if ghostID >= 0 {
@@ -152,8 +151,12 @@ class Ghost: NSObject {
                 println("no of ghosts left: \(ghostArrayCount)")
                 
                 if ghostArrayCount == 0 {
-                    StateMachine.currentState = .Play
+                    //StateMachine.currentState = .Play
+                    StateMachine.updateRealmState("Win")
                     // StateMachine.updateRealmStateAndGhosts(gameState: "Play", numGhosts: 0)
+                    
+                    let mainView = ghostArray![ghostID].imageView.superview as! MainView
+                    mainView.winLabel.hidden = false
                     
                     ghostArray = nil
                     currentIndex = 0

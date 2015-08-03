@@ -13,22 +13,20 @@ import UIKit
 class StateMachine {
     //MARK: State
     
-    
-    
-    enum State: String, Printable {
-        case Defend = "Defend" //alarm going off
-        case Play = "Play"
-        case Win = "Win"
-        
-        var description : String {
-            get {
-                return self.rawValue
-            }
-        }
-    }
+//    enum State: String, Printable {
+//        case Defend = "Defend" //alarm going off
+//        case Play = "Play"
+//        case Win = "Win"
+//        
+//        var description : String {
+//            get {
+//                return self.rawValue
+//            }
+//        }
+//    }
     
     //move to petVC
-    static var currentState: State = .Play// {
+    //static var currentState: State = .Play// {
     //        willSet {
     //            switch(currentState) {
     //            case: .Defend
@@ -44,7 +42,7 @@ class StateMachine {
     //    }
     
     
-    static func checkState() {
+    static func checkState(inout currentState: PetViewController.State) {
         
         if let alarm = getRealmAlarm() {
             //returns time difference in seconds (negative if time is earlier than current time)
@@ -81,17 +79,7 @@ class StateMachine {
         println(currentState)
     }
     
-    /*static func displayWinAlert(vc: UIViewController) {
-    
-    let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
-    alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: { action in
-    self.currentState = .Play
-    return
-    }))
-    
-    vc.presentViewController(alertController, animated: true, completion: nil)
-    
-    }*/
+   
     
     static func printAllRealmObjects() {
         let realm = Realm()
