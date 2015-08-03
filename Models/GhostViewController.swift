@@ -50,7 +50,7 @@ class GhostViewController: UIViewController{
             ghostArray = []
             
             //for index in 0...ghostCount-1{
-            for index in 0...ghostArrayCount-1 {
+            for index in 0...ghostArrayCount {
                 
                 var delay = NSTimeInterval(index)
                 
@@ -81,7 +81,7 @@ class GhostViewController: UIViewController{
     
     
     //loop through and move a ghost
-     func move(timer: NSTimer) {
+    func move(timer: NSTimer) {
         
         var sizeRect = UIScreen.mainScreen().applicationFrame
         var x = sizeRect.size.width/2
@@ -111,9 +111,18 @@ class GhostViewController: UIViewController{
             self.ghostArray![self.currentIndex].imageView.userInteractionEnabled = false
             self.ghostArray![self.currentIndex].imageView.frame = position
             
-            }, completion: nil)
-        
-        self.currentIndex++
+            },
+            completion: { action in
+                //attack pet
+                if( self.ghostArray![self.currentIndex].imageView.hidden == false){
+                    var pet = StateMachine.getRealmPet()!
+                    StateMachine.updateRealmPet(pet.health-5)
+                    
+                    self.healthBar.progress -= 0.05
+                }
+                
+                self.currentIndex++
+        })
     }
     
     
@@ -142,10 +151,10 @@ class GhostViewController: UIViewController{
         var ghostID = detectTap(recognizer)
         
         if ghostID >= 0 {
-           
+            
             ghostArray![ghostID].imageView.hidden = true
             //user can no longer tap on ghost
-        
+            
             ghostArray![ghostID].imageView.userInteractionEnabled = false
             
             ghostArrayCount--
@@ -155,7 +164,7 @@ class GhostViewController: UIViewController{
             if ghostArrayCount == 0 {
                 //StateMachine.currentState = .Play
                 StateMachine.updateRealmState("Win")
-           
+                
                 displayWinAlert()
                 
                 ghostArray = nil

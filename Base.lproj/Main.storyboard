@@ -247,6 +247,8 @@
                                     <constraint firstAttribute="width" constant="150" id="MLH-o8-0nT"/>
                                     <constraint firstAttribute="height" constant="2" id="Zjw-ih-9Tm"/>
                                 </constraints>
+                                <color key="progressTintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                         </subviews>
                         <gestureRecognizers/>
