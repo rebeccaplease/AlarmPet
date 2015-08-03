@@ -127,30 +127,30 @@ class PetViewController: UIViewController {
         
         let mainView = self.view as! MainView
         //if(!mainView.alarm.isSet) {
-        
-        if(!alarm!.isSet) {
-            StateMachine.updateRealmAlarm(time: alarm!.time, isSet: true)
-            
-            alarm = StateMachine.getRealmAlarm()!
-            mainView.alarmTime.hidden = false
-            mainView.toggleAlarm.selected = false
-            
-            NotificationHelper.handleScheduling(alarm!.time, numOfNotifications: 3, delayInSeconds: 0, alarm: alarm!)
-            
-            mainView.alarmTime.text = dateFormatter.stringFromDate(alarm!.time)
-            
+        if let alarm = alarm {
+            if(!alarm.isSet) {
+                StateMachine.updateRealmAlarm(time: alarm.time, isSet: true)
+                
+                self.alarm = StateMachine.getRealmAlarm()
+                mainView.alarmTime.hidden = false
+                mainView.toggleAlarm.selected = false
+                
+                NotificationHelper.handleScheduling(alarm.time, numOfNotifications: 3, delayInSeconds: 0, alarm: alarm)
+                
+                mainView.alarmTime.text = dateFormatter.stringFromDate(alarm.time)
+                
+            }
+            else {
+                
+                StateMachine.updateRealmAlarm(time: alarm.time, isSet: false)
+                
+                self.alarm = StateMachine.getRealmAlarm()
+                mainView.alarmTime.hidden = true
+                mainView.toggleAlarm.selected = true
+                UIApplication.sharedApplication().cancelAllLocalNotifications()
+                
+            }
         }
-        else {
-            
-            StateMachine.updateRealmAlarm(time: alarm!.time, isSet: false)
-            
-            alarm = StateMachine.getRealmAlarm()!
-            mainView.alarmTime.hidden = true
-            mainView.toggleAlarm.selected = true
-            UIApplication.sharedApplication().cancelAllLocalNotifications()
-            
-        }
-        
     }
     
     // MARK: - Navigation
@@ -176,6 +176,14 @@ class PetViewController: UIViewController {
         if (segue.identifier == "Save") {
             
             alarm = alarmVC.alarm
+            
+            /*
+            if let a = alarmVC.alarm {
+                self.alarm = alarmVC.alarm
+            }
+            else {
+                alarmVC.alarm = Alarm()
+            }*/
             
             mainView.toggleAlarm.selected = false
             mainView.alarmTime.hidden = false

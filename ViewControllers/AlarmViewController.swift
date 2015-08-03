@@ -28,6 +28,7 @@ class AlarmViewController: UIViewController {
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
             StateMachine.updateRealmAlarm(time: newAlarm.time, isSet: true)
+            StateMachine.updateRealmAlarmDidWin(false)
            //fix this for runtime
             alarm = StateMachine.getRealmAlarm()
         }
@@ -39,6 +40,17 @@ class AlarmViewController: UIViewController {
             alarm = StateMachine.getRealmAlarm()
         }
         
+        /*if !alarm!.dailyWin {
+            if let dailyWinDate = alarm!.dailyWinDate {
+                //StateMachine.updateRealmAlarm(dailyWinDate: same date as alarm , dailyWin: false)
+            }
+            else {
+                
+            }
+        }
+        else {
+            
+        }*/
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }

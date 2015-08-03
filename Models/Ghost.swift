@@ -157,6 +157,8 @@ class Ghost: NSObject {
                     currentIndex = 0
                     ghostArrayCount = 10
                     
+                    StateMachine.updateRealmAlarmDidWin(true)
+                    
                     println("You win!")
                     
                 }

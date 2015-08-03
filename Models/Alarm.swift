@@ -13,6 +13,10 @@ class Alarm: Object {
     
     dynamic var time: NSDate = NSDate()
     dynamic var isSet: Bool = false
+    dynamic var didWin: Bool = false
     
-    dynamic var dailyWin: NSDate = NSDate()
+    //save last daily win date
+   // dynamic var dailyWinDate: NSDate? = nil
+    //if dailyWin is false, don't change the dailyWinDate
+    //dynamic var dailyWin: Bool = false
 }

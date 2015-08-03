@@ -27,36 +27,45 @@ class StateMachine {
         }
     }
     
+    //move to petVC
     static var currentState: State = .Play// {
-//        willSet {
-//            switch(currentState) {
-//            case: .Defend
-//                //about to switch to .play
-//            if let g = Ghost.ghostArray {
-//                
-//                }
-//            else {
-//                
-//                }
-//            }
-//        }
-//    }
+    //        willSet {
+    //            switch(currentState) {
+    //            case: .Defend
+    //                //about to switch to .play
+    //            if let g = Ghost.ghostArray {
+    //
+    //                }
+    //            else {
+    //
+    //                }
+    //            }
+    //        }
+    //    }
+    
     
     static func checkState() {
         
         if let alarm = getRealmAlarm() {
             //returns time difference in seconds (negative if time is earlier than current time)
-            if alarm.isSet == true {
+            //if alarm isSet but has not gone off yet
+            if alarm.isSet && !alarm.didWin {
                 var interval = alarm.time.timeIntervalSinceNow
                 println("\(interval)")
                 //if current time is within 30 minutes of alarm time
                 if (interval < 0 && interval > -30*60) {
                     
-                    var dateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: alarm.dailyWin)
+                    // var dateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: alarm.dailyWin)
+                    //var dateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: alarm.dailyWin, toDate: NSDate(), options: NSCalendarOptions.)
                     
-                    //if daily win (month, day, and year) is different from current day, then it's the first alarm of the day
-                    currentState = .Defend
-                   
+                    //if daily win is different from current day, then it's the first alarm of the day
+                   // if let dailyWinDate = alarm.dailyWin {
+                    //if NSCalendar().isDateInToday(alarm.dailyWinDate?) {
+                        
+                        currentState = .Defend
+                        
+                    //}
+                    //}
                 }
                 else {
                     currentState = .Play
@@ -137,7 +146,7 @@ class StateMachine {
         var state = getRealmState()
         if let state = state{
             realm.write{
-             
+                
                 state.state = gameState
                 state.remainingGhosts = numGhosts
             }
@@ -175,6 +184,15 @@ class StateMachine {
                 if(alarm.isSet != isSet) {
                     alarm.isSet = isSet
                 }
+            }
+        }
+    }
+    static func updateRealmAlarmDidWin(win: Bool){
+         let realm = Realm()
+        var alarm = getRealmAlarm()
+        if let alarm = alarm {
+            realm.write{
+                alarm.didWin = win
             }
         }
     }
