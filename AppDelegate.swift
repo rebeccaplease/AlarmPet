@@ -23,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Notice setSchemaVersion is set to 1, this is always set manually. It must be
         // higher than the previous version (oldSchemaVersion) or an RLMException is thrown
-        setSchemaVersion(2, Realm.defaultPath, { migration, oldSchemaVersion in
+        setSchemaVersion(3, Realm.defaultPath, { migration, oldSchemaVersion in
             // We haven’t migrated anything yet, so oldSchemaVersion == 0
-            if oldSchemaVersion < 2 {
+            if oldSchemaVersion < 3 {
                 // Nothing to do!
                 // Realm will automatically detect new properties and removed properties
                 // And will update the schema on disk automatically
@@ -60,22 +60,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         println("applicationDidEnterBackground")
         if let state = StateMachine.getRealmState() {
             
-            StateMachine.updateRealmStateAndGhosts(gameState: state.state, numGhosts: Ghost.getGhostCount())
-            /*if (state.state == "Defend") {
-                Ghost.invalidateTimers()
-            }*/
+            //StateMachine.updateRealmStateAndGhosts(gameState: state.state)
+            StateMachine.updateRealmState(state.state)
             
         }
         else {
             var saveState = SaveState()
             
             saveState.state = StateMachine.currentState.description
-            var remaining = Ghost.getGhostCount()
-            saveState.remainingGhosts = remaining
-            println("\(remaining)")
+            //var remaining = Ghost.getGhostCount()
+            //saveState.remainingGhosts = remaining
+            //println("\(remaining)")
             StateMachine.saveRealmState(saveState)
         }
-        
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
@@ -115,14 +112,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let state = StateMachine.getRealmState() {
             
-            StateMachine.updateRealmStateAndGhosts(gameState: state.state, numGhosts: Ghost.getGhostCount())
+            //StateMachine.updateRealmStateAndGhosts(gameState: state.state, numGhosts: Ghost.getGhostCount())
+            StateMachine.updateRealmState(state.state)
             
         }
         else {
             var saveState = SaveState()
             
             saveState.state = StateMachine.currentState.description
-            saveState.remainingGhosts = Ghost.getGhostCount()
+            //saveState.remainingGhosts = Ghost.getGhostCount()
             StateMachine.saveRealmState(saveState)
         }
     }

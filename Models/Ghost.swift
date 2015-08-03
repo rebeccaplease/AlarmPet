@@ -108,6 +108,8 @@ class Ghost: NSObject {
             self.ghostArray![self.currentIndex].imageView.hidden = false
             self.ghostArray![self.currentIndex].imageView.userInteractionEnabled = false
             self.ghostArray![self.currentIndex].imageView.frame = position
+            
+            
             }, completion: nil)
         
         self.currentIndex++

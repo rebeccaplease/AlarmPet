@@ -141,7 +141,8 @@ class StateMachine {
             }
         }
     }
-    static func updateRealmStateAndGhosts(#gameState: String, numGhosts: Int) {
+   
+    /*static func updateRealmStateAndGhosts(#gameState: String, numGhosts: Int) {
         let realm = Realm()
         var state = getRealmState()
         if let state = state{
@@ -151,7 +152,7 @@ class StateMachine {
                 state.remainingGhosts = numGhosts
             }
         }
-    }
+    }*/
     
     static func saveRealmState(saveState: SaveState) {
         let realm = Realm()

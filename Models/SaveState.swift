@@ -12,6 +12,6 @@ import RealmSwift
 class SaveState: Object {
     
     dynamic var state:String = "Play"
-    dynamic var remainingGhosts: Int = 0
+    //dynamic var remainingGhosts: Int = 0
     
 }
