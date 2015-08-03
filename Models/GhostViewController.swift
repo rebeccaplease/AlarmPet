@@ -15,7 +15,6 @@ protocol GhostDelegate {
 
 class GhostViewController: UIViewController{
     
-    
     var size: CGFloat = 50
     //static var delay: NSTimeInterval = 10
     var currentIndex: Int = 0
@@ -25,7 +24,6 @@ class GhostViewController: UIViewController{
     
     var ghostArray:[ (ghost: Ghost, imageView: UIImageView, timer: NSTimer) ]? = nil
     
-    
     func getGhostCount() -> Int{
         return ghostArrayCount
     }
@@ -34,10 +32,7 @@ class GhostViewController: UIViewController{
         ghostArray = array
     }
     
-    //static func createGhosts(vc: UIViewController) {
     func createGhosts(){
-        //if user exits out without defeating all the ghosts
-        //var ghostArray = ghost.ghostArray
         
         if var ghostArray = ghostArray {
             return
@@ -78,9 +73,6 @@ class GhostViewController: UIViewController{
                 
                 println("\(ghostArray!.count)")
                 
-                
-                //NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "move:", userInfo: nil, repeats: false)
-                
             }
         }
     }
@@ -88,19 +80,6 @@ class GhostViewController: UIViewController{
     
     //loop through and move a ghost
      func move(timer: NSTimer) {
-        
-        /*var xandy = StateMachine.getPetPosition()
-        
-        var x = xandy.0 - 10
-        var random: Int = Int(arc4random_uniform(2))
-        if( random < 1) {
-        x -= 150
-        }
-        let y = xandy.1 + 60 + Float(currentIndex * 20)
-        */
-        
-        //var position = CGRect(x: CGFloat(x), y: CGFloat(y), width: size, height: size)
-        //var position = CGPoint(x: CGFloat(x), y: CGFloat(y))
         
         var sizeRect = UIScreen.mainScreen().applicationFrame
         var x = sizeRect.size.width/2
@@ -120,7 +99,6 @@ class GhostViewController: UIViewController{
         else {
             y += 50
         }
-        
         
         var position = CGRect(origin: CGPoint(x: CGFloat(x), y: CGFloat(y)), size: CGSize(width: size, height: size))
         
@@ -162,13 +140,11 @@ class GhostViewController: UIViewController{
         var ghostID = detectTap(recognizer)
         
         if ghostID >= 0 {
-            //hide ghost view
-            //recognizer.view?.hidden = true
+           
             ghostArray![ghostID].imageView.hidden = true
             //user can no longer tap on ghost
-            //recognizer.view?.userInteractionEnabled = false
+        
             ghostArray![ghostID].imageView.userInteractionEnabled = false
-            //ghostArray![ghostID].imageView.layer.presentationLayer() = false
             
             ghostArrayCount--
             
@@ -177,10 +153,8 @@ class GhostViewController: UIViewController{
             if ghostArrayCount == 0 {
                 //StateMachine.currentState = .Play
                 StateMachine.updateRealmState("Win")
-                // StateMachine.updateRealmStateAndGhosts(gameState: "Play", numGhosts: 0)
-                
-                //let mainView = ghostArray![ghostID].imageView.superview as! MainView
-                //mainView.winLabel.hidden = false
+           
+                displayWinAlert()
                 
                 ghostArray = nil
                 currentIndex = 0
@@ -193,14 +167,15 @@ class GhostViewController: UIViewController{
             }
         }
     }
-    // }
     
-    /*  static func invalidateTimers() {
-    
-    for (index, ghost) in enumerate(ghostArray!) {
-    ghost.timer.invalidate()
+    func displayWinAlert() {
+        
+        let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
     }
-    }
-    */
+  
 }
 

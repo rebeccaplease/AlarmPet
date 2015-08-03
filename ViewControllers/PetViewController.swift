@@ -45,7 +45,7 @@ class PetViewController: UIViewController {
         didSet {
             switch(currentState) {
             case .Win:
-                displayWinAlert()
+                //displayWinAlert()
                 currentState  = .Play
             default:
                 println("default")
@@ -53,14 +53,7 @@ class PetViewController: UIViewController {
         }
     }
     
-    func displayWinAlert() {
-        
-        let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-        
-    }
+  
     
     //MARK: View Loading
     
@@ -120,7 +113,7 @@ class PetViewController: UIViewController {
             StateMachine.saveRealmAlarm(alarm!)
         }
         
-        mainView.winLabel.hidden = true
+        //mainView.winLabel.hidden = true
         
         StateMachine.checkState(&currentState)
         switch currentState {
@@ -157,15 +150,15 @@ class PetViewController: UIViewController {
         */
     }
     
-    func tappedScreen(recognizer: UITapGestureRecognizer) {
-        
-        let mainView = self.view as! MainView
-        println("tappedScreen")
-        if mainView.winLabel.hidden == false {
-            mainView.winLabel.hidden = true
-        }
-        
-    }
+//    func tappedScreen(recognizer: UITapGestureRecognizer) {
+//        
+//        let mainView = self.view as! MainView
+//        println("tappedScreen")
+//        if mainView.winLabel.hidden == false {
+//            mainView.winLabel.hidden = true
+//        }
+//        
+//    }
     
 //    func createGhosts() {
 //        
@@ -230,13 +223,21 @@ class PetViewController: UIViewController {
         }
     }
     
+    func displayDefendAlert() {
+        
+        let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new View Controller using segue.destinationViewController.
         // Pass the selected object to the new View Controller.
         println("prepareForSegue")
-        if segue.identifier == "" {
+        if segue.identifier == "presentAlarm" {
         let alarmViewController = segue.destinationViewController as! AlarmViewController
         //let mainView = self.view as! MainView
         //pass alarm to alarmViewController

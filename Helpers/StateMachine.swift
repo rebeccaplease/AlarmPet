@@ -43,6 +43,8 @@ class StateMachine {
     
     
     static func checkState(inout currentState: PetViewController.State) {
+        println("checking state")
+        printAllRealmObjects()
         
         if let alarm = getRealmAlarm() {
             //returns time difference in seconds (negative if time is earlier than current time)

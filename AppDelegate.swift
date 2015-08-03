@@ -150,6 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.cancelAllLocalNotifications()
             println("Defending")
             petVC.childViewController!.createGhosts()
+            petVC.displayDefendAlert()
             
             //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
