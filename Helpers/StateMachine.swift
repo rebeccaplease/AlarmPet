@@ -11,36 +11,6 @@ import RealmSwift
 import UIKit
 
 class StateMachine {
-    //MARK: State
-    
-//    enum State: String, Printable {
-//        case Defend = "Defend" //alarm going off
-//        case Play = "Play"
-//        case Win = "Win"
-//        
-//        var description : String {
-//            get {
-//                return self.rawValue
-//            }
-//        }
-//    }
-    
-    //move to petVC
-    //static var currentState: State = .Play// {
-    //        willSet {
-    //            switch(currentState) {
-    //            case: .Defend
-    //                //about to switch to .play
-    //            if let g = Ghost.ghostArray {
-    //
-    //                }
-    //            else {
-    //
-    //                }
-    //            }
-    //        }
-    //    }
-    
     
     static func checkState(inout currentState: PetViewController.State) {
         println("checking state")
@@ -80,9 +50,7 @@ class StateMachine {
         
         println(currentState)
     }
-    
    
-    
     static func printAllRealmObjects() {
         let realm = Realm()
         let obj = realm.objects(Alarm)
@@ -178,6 +146,7 @@ class StateMachine {
             }
         }
     }
+    
     static func updateRealmAlarmDidWin(win: Bool){
         let realm = Realm()
         var alarm = getRealmAlarm()
@@ -224,8 +193,20 @@ class StateMachine {
             }
         }
     }
+    
+    static func updateRealmPet(health: Int) {
+        let realm = Realm()
+        var pet = getRealmPet()
+        if let pet = pet {
+            realm.write{
+               pet.health = health
+            }
+        }
+    }
+    
     static func getPetPosition() -> (Float, Float) {
         let pet = getRealmPet()!
         return (pet.x, pet.y)
     }
+
 }

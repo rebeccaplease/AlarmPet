@@ -241,21 +241,33 @@
                                     <constraint firstAttribute="width" constant="100" id="ooN-3f-DWp"/>
                                 </constraints>
                             </imageView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ciV-7m-bw2">
+                                <rect key="frame" x="225" y="268" width="150" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="MLH-o8-0nT"/>
+                                    <constraint firstAttribute="height" constant="2" id="Zjw-ih-9Tm"/>
+                                </constraints>
+                            </progressView>
                         </subviews>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="N3i-po-e5j" secondAttribute="centerX" id="2rd-Th-nrt"/>
                             <constraint firstAttribute="centerY" secondItem="N3i-po-e5j" secondAttribute="centerY" id="BHQ-4v-h5H"/>
+                            <constraint firstAttribute="centerX" secondItem="ciV-7m-bw2" secondAttribute="centerX" id="DLk-gf-CHj"/>
+                            <constraint firstItem="ciV-7m-bw2" firstAttribute="top" secondItem="N3i-po-e5j" secondAttribute="bottom" constant="8" id="UwK-ct-z64"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="vI3-zT-vpg" appends="YES" id="yUX-PL-R15"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="healthBar" destination="ciV-7m-bw2" id="DK1-pz-yw5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pfn-5V-OQk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="vI3-zT-vpg"/>
             </objects>
-            <point key="canvasLocation" x="1387" y="613"/>
+            <point key="canvasLocation" x="1389" y="606.5"/>
         </scene>
     </scenes>
     <resources>

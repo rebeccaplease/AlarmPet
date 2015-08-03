@@ -9,20 +9,22 @@
 import Foundation
 import UIKit
 
-protocol GhostDelegate {
-    func displayWinAlert()
-}
 
 class GhostViewController: UIViewController{
+    
+    @IBOutlet weak var healthBar: UIProgressView!
     
     var size: CGFloat = 50
     //static var delay: NSTimeInterval = 10
     var currentIndex: Int = 0
     var ghostArrayCount = 10
     
-    var delegate: GhostDelegate?
-    
     var ghostArray:[ (ghost: Ghost, imageView: UIImageView, timer: NSTimer) ]? = nil
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        healthBar.progress = 1.0
+    }
     
     func getGhostCount() -> Int{
         return ghostArrayCount
@@ -176,6 +178,20 @@ class GhostViewController: UIViewController{
         self.presentViewController(alertController, animated: true, completion: nil)
         
     }
-  
+    
+    func updatePetHealth() {
+        //update pet health depending on the current time and alarm time
+        let alarm = StateMachine.getRealmAlarm()
+        let pet = StateMachine.getRealmPet()
+        
+        //difference in seconds between alarm time and when app is opened
+        var difference = alarm!.time.timeIntervalSinceNow
+        var health = Float((1000 + difference)/1000.0)
+        println("health: \(health)")
+        healthBar.progress = health
+        
+        StateMachine.updateRealmPet(Int(health*100))
+        
+    }
 }
 

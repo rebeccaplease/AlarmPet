@@ -92,16 +92,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.cancelAllLocalNotifications()
             println("Defending")
             
-            //Ghost.createGhosts(petVC)
-            
+            petVC.childViewController!.updatePetHealth()
             petVC.childViewController!.createGhosts()
             
-            //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
             //update pet health
             
         case .Play:
-            //Ghost.updateGhostArray(nil)
             
             petVC.childViewController!.updateGhostArray(nil)
             println("Playing")
@@ -142,6 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.cancelAllLocalNotifications()
         
+        // **doesnt work if on alert view controller
         let petVC = self.window!.visibleViewController()! as! PetViewController
         
         StateMachine.checkState(&petVC.currentState)
@@ -151,8 +149,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             println("Defending")
             petVC.childViewController!.createGhosts()
             petVC.displayDefendAlert()
-            
-            //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
             //update pet health
             
