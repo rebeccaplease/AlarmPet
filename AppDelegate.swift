@@ -92,11 +92,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.cancelAllLocalNotifications()
             println("Defending")
             
-            Ghost.createGhosts(petVC)
+            //Ghost.createGhosts(petVC)
+            
+            petVC.childViewController!.createGhosts()
+            
             //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
+            //update pet health
+            
         case .Play:
-            Ghost.updateGhostArray(nil)
+            //Ghost.updateGhostArray(nil)
+            
+            petVC.childViewController!.updateGhostArray(nil)
             println("Playing")
             
         default:
@@ -142,11 +149,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
-            Ghost.createGhosts(self.window!.visibleViewController()!)
+            petVC.childViewController!.createGhosts()
+            
             //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
             
+            //update pet health
+            
         case .Play:
-            Ghost.updateGhostArray(nil)
+            //Ghost.updateGhostArray(nil)
+            
+            petVC.childViewController!.updateGhostArray(nil)
             println("Playing")
             
         default:

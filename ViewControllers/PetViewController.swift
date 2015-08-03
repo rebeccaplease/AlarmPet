@@ -13,7 +13,11 @@ class PetViewController: UIViewController {
     
     var pet: Pet?
     var alarm: Alarm?
+    var childViewController: GhostViewController?
+    //var mainView: MainView?
     //MARK: State
+    
+    var ghostArray:[ (ghost: Ghost, imageView: UIImageView, timer: NSTimer) ]? = nil
     
     enum State: String, Printable {
         case Defend = "Defend" //alarm going off
@@ -80,10 +84,10 @@ class PetViewController: UIViewController {
         if let pet = pet {
             let mainView = self.view as! MainView
             
-            var petPosition =  mainView.petImageView.frame.origin
-            println("\(petPosition)")
+           // var petPosition =  mainView.petImageView.frame.origin
+            //println("\(petPosition)")
             
-            StateMachine.updateRealmPet(x: petPosition.x, y: petPosition.y)
+            //StateMachine.updateRealmPet(x: petPosition.x, y: petPosition.y)
         }
         else {
             pet = Pet()
@@ -92,6 +96,8 @@ class PetViewController: UIViewController {
         
         
         let mainView = self.view as! MainView
+        //mainView = self.view as? MainView
+        //if let mainView = mainView {
         if let alarm = alarm{
             if (alarm.isSet) {
                 mainView.toggleAlarm.selected = false
@@ -122,17 +128,28 @@ class PetViewController: UIViewController {
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             println("Defending")
             //Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
-            Ghost.createGhosts(self)
+            //Ghost.createGhosts(self)
+            childViewController!.createGhosts()
+            
+            //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
+            
+            //update pet health
+            
         case .Play:
-            Ghost.updateGhostArray(nil)
+            //Ghost.updateGhostArray(nil)
+            
+            childViewController!.updateGhostArray(nil)            //Ghost.updateGhostArray(nil)
+            
             println("Playing")
         default:
             println("Default")
         }
         
-        let tap = mainView.gestureRecognizers![0] as! UITapGestureRecognizer
-        tap.addTarget(self, action: "tappedScreen:")
         
+        //let tap = childViewController!.gestureRecognizers![0] as! UITapGestureRecognizer
+        //tap.addTarget(self, action: "tappedScreen:")
+        
+     
         /*
         //bind label and button to Alarm?
         
@@ -141,13 +158,27 @@ class PetViewController: UIViewController {
     }
     
     func tappedScreen(recognizer: UITapGestureRecognizer) {
-        let mainView = self.view as! MainView
         
+        let mainView = self.view as! MainView
+        println("tappedScreen")
         if mainView.winLabel.hidden == false {
             mainView.winLabel.hidden = true
         }
         
     }
+    
+//    func createGhosts() {
+//        
+//        let mainView = self.view as! MainView
+//        Ghost.createGhosts()
+//        for (index, element) in enumerate(Ghost.ghostArray!){
+//            mainView.addSubview(element.imageView)
+//            //ghostArray![index].imageView
+//        }
+//        
+//        Ghost.delegate = self
+//        
+//    }
     
     //called every time view appears
     override func viewWillAppear(animated: Bool) {
@@ -158,9 +189,9 @@ class PetViewController: UIViewController {
         case .Defend:
             println("Defending")
             //Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
-            Ghost.createGhosts(self)
+            //Ghost.createGhosts(self)
         case .Play:
-            Ghost.updateGhostArray(nil)
+            //Ghost.updateGhostArray(nil)
             println("Playing")
         default:
             println("Default")
@@ -205,11 +236,15 @@ class PetViewController: UIViewController {
         // Get the new View Controller using segue.destinationViewController.
         // Pass the selected object to the new View Controller.
         println("prepareForSegue")
-        
+        if segue.identifier == "" {
         let alarmViewController = segue.destinationViewController as! AlarmViewController
         //let mainView = self.view as! MainView
         //pass alarm to alarmViewController
         alarmViewController.alarm = alarm
+        }
+        else if segue.identifier == "showPetAndGhosts" {
+            childViewController = segue.destinationViewController as? GhostViewController
+        }
         
     }
     

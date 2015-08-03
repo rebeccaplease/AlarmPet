@@ -168,7 +168,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfv-kQ-UIg" userLabel="Toggle Alarm">
-                                <rect key="frame" x="532" y="65" width="44" height="44"/>
+                                <rect key="frame" x="352" y="60" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="f7X-kf-GuI"/>
                                     <constraint firstAttribute="height" constant="44" id="w4F-0w-psF"/>
@@ -181,13 +181,6 @@
                                     <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="tqf-Q1-VuV"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pet" translatesAutoresizingMaskIntoConstraints="NO" id="N3i-po-e5j">
-                                <rect key="frame" x="250" y="250" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="bIk-YY-Hhn"/>
-                                    <constraint firstAttribute="width" constant="100" id="ooN-3f-DWp"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You win!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7v-pa-0Gp">
                                 <rect key="frame" x="268" y="120" width="65" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -195,11 +188,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO" userLabel="Alarm Time">
-                                <rect key="frame" x="456" y="80" width="71" height="23"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <rect key="frame" x="256" y="75" width="88" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cY7-Ay-DKb">
+                                <rect key="frame" x="16" y="174" width="568" height="426"/>
+                                <connections>
+                                    <segue destination="WSk-Hf-Vbb" kind="embed" identifier="showPetAndGhosts" id="X0Y-tb-IUQ"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -207,37 +206,41 @@
                             <constraint firstItem="Z7v-pa-0Gp" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="100" id="0ib-7m-7ke"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="10" id="7ti-bG-Se3"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="45" id="B8Z-cv-wGx"/>
-                            <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="45" id="L3r-oH-1lw"/>
+                            <constraint firstItem="cY7-Ay-DKb" firstAttribute="leading" secondItem="Z2h-hD-wyP" secondAttribute="leadingMargin" id="FrK-lT-EKA"/>
+                            <constraint firstAttribute="centerX" secondItem="WF0-tT-cZO" secondAttribute="centerX" id="JP5-Hp-UHn"/>
+                            <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="40" id="L3r-oH-1lw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cY7-Ay-DKb" secondAttribute="trailing" id="O82-6F-VG3"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="leading" secondItem="WF0-tT-cZO" secondAttribute="trailing" constant="5" id="RJO-Dj-FlZ"/>
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="60" id="RkN-uv-sf5"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="8" id="S3W-pc-oGV"/>
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="5" id="T5T-xk-rfP"/>
+                            <constraint firstItem="wkF-8v-V7W" firstAttribute="top" secondItem="cY7-Ay-DKb" secondAttribute="bottom" id="TPl-1f-f0s"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="trailing" secondItem="Z2h-hD-wyP" secondAttribute="trailingMargin" constant="-8" id="Tnd-Be-VoU"/>
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="v5q-EZ-jC9" secondAttribute="bottom" constant="8" id="WD3-r4-Edq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="10" id="YsO-1C-9Tm"/>
-                            <constraint firstAttribute="centerY" secondItem="N3i-po-e5j" secondAttribute="centerY" id="dg9-ST-qR6"/>
                             <constraint firstAttribute="centerX" secondItem="Z7v-pa-0Gp" secondAttribute="centerX" id="ezJ-W5-OKn"/>
-                            <constraint firstAttribute="centerX" secondItem="N3i-po-e5j" secondAttribute="centerX" id="fzJ-D2-9b8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WF0-tT-cZO" secondAttribute="trailing" constant="9" id="hbb-n4-o2V"/>
+                            <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="55" id="jHs-37-AhR"/>
+                            <constraint firstItem="Bfv-kQ-UIg" firstAttribute="leading" secondItem="WF0-tT-cZO" secondAttribute="trailing" constant="8" id="kqA-SN-3ha"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="Z2h-hD-wyP" secondAttribute="topMargin" constant="8" id="oUB-FI-xim"/>
-                            <constraint firstAttribute="centerY" secondItem="N3i-po-e5j" secondAttribute="centerY" id="tkY-PR-hOu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="8" id="wJE-A6-xXS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="188" id="wJE-A6-xXS"/>
+                            <constraint firstItem="cY7-Ay-DKb" firstAttribute="top" secondItem="WF0-tT-cZO" secondAttribute="bottom" constant="70" id="zYK-YU-Lbu"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="dg9-ST-qR6"/>
+                                <exclude reference="RkN-uv-sf5"/>
                                 <exclude reference="T5T-xk-rfP"/>
                                 <exclude reference="WD3-r4-Edq"/>
                                 <exclude reference="hbb-n4-o2V"/>
-                                <exclude reference="7ti-bG-Se3"/>
                                 <exclude reference="B8Z-cv-wGx"/>
+                                <exclude reference="RJO-Dj-FlZ"/>
                                 <exclude reference="YsO-1C-9Tm"/>
                                 <exclude reference="oUB-FI-xim"/>
+                                <exclude reference="7ti-bG-Se3"/>
                             </mask>
                         </variation>
                         <connections>
                             <outlet property="alarmTime" destination="WF0-tT-cZO" id="B7q-lY-Gm7"/>
-                            <outlet property="petImageView" destination="N3i-po-e5j" id="lPJ-hV-2HB"/>
                             <outlet property="setAlarm" destination="v5q-EZ-jC9" id="pob-Er-Hui"/>
                             <outlet property="toggleAlarm" destination="Bfv-kQ-UIg" id="DB3-jg-lAq"/>
                             <outlet property="winLabel" destination="Z7v-pa-0Gp" id="sOb-Zo-4sr"/>
@@ -248,9 +251,62 @@
                     <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VB-5f-Stk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="vI3-zT-vpg"/>
             </objects>
             <point key="canvasLocation" x="616" y="607"/>
+        </scene>
+        <!--Ghost View Controller-->
+        <scene sceneID="pj0-9c-7A5">
+            <objects>
+                <viewController id="WSk-Hf-Vbb" customClass="GhostViewController" customModule="AlarmPet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4jN-49-pLy"/>
+                        <viewControllerLayoutGuide type="bottom" id="2Mh-R8-b7E"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MRv-Xe-lO0">
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="426"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pet" translatesAutoresizingMaskIntoConstraints="NO" id="N3i-po-e5j">
+                                <rect key="frame" x="234" y="163" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="bIk-YY-Hhn"/>
+                                    <constraint firstAttribute="width" constant="100" id="ooN-3f-DWp"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="N3i-po-e5j" secondAttribute="centerX" id="2rd-Th-nrt"/>
+                            <constraint firstAttribute="centerY" secondItem="N3i-po-e5j" secondAttribute="centerY" id="BHQ-4v-h5H"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="vI3-zT-vpg" appends="YES" id="yUX-PL-R15"/>
+                        </connections>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pfn-5V-OQk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="vI3-zT-vpg"/>
+            </objects>
+            <point key="canvasLocation" x="1387" y="613"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="od7-i1-Eav">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="aiW-cb-agW" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9K8-Du-JmZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="tjS-eg-ry0"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="b2f-k0-Hm8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ocb-QE-2ka" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>

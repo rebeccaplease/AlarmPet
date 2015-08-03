@@ -177,7 +177,7 @@ class StateMachine {
         }
     }
     static func updateRealmAlarmDidWin(win: Bool){
-         let realm = Realm()
+        let realm = Realm()
         var alarm = getRealmAlarm()
         if let alarm = alarm {
             realm.write{
