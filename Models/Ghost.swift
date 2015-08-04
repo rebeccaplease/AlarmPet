@@ -13,9 +13,11 @@ class Ghost {
     
     var id: Int
     var dead: Bool
+    //var stoppedMoving: Bool
     
     init(id: Int) {
         self.id = id
         self.dead = false
+      // self.stoppedMoving = false
     }
 }

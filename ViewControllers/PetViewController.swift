@@ -226,7 +226,7 @@ class PetViewController: UIViewController {
     func displayDefendAlert() {
         
         let alertController = UIAlertController(title: "Alert!", message: "Defend your pet from harm!", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.Default, handler: nil))
         
         self.presentViewController(alertController, animated: true, completion: nil)
     }

@@ -13,17 +13,24 @@ import UIKit
 class GhostViewController: UIViewController{
     
     @IBOutlet weak var healthBar: UIProgressView!
+    @IBOutlet weak var petImageView: UIImageView!
+    
+    var pet: Pet?
     
     var size: CGFloat = 50
     //static var delay: NSTimeInterval = 10
     var currentIndex: Int = 0
     var ghostArrayCount = 10
+    var attackIndex = 0
     
     var ghostArray:[ (ghost: Ghost, imageView: UIImageView, timer: NSTimer) ]? = nil
+    var stationary: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         healthBar.progress = 1.0
+        
+        pet = StateMachine.getRealmPet()
     }
     
     func getGhostCount() -> Int{
@@ -33,6 +40,8 @@ class GhostViewController: UIViewController{
     func updateGhostArray(array: [ (ghost: Ghost, imageView: UIImageView, timer: NSTimer) ]?) {
         ghostArray = array
     }
+    
+    
     
     func createGhosts(){
         
@@ -48,24 +57,40 @@ class GhostViewController: UIViewController{
             self.view.addGestureRecognizer(tap)
             
             ghostArray = []
+            //firstAppearance = true
             
             //for index in 0...ghostCount-1{
-            for index in 0...ghostArrayCount {
+            for index in 0...ghostArrayCount-1 {
                 
                 var delay = NSTimeInterval(index)
                 
-                var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")), timer: NSTimer(timeInterval: delay, target: self, selector: "move:", userInfo: nil, repeats: false) )]
+                // var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")), timer: NSTimer(timeInterval: delay, target: self, selector: "move:", userInfo: nil, repeats: false) )]
                 
-                NSRunLoop.currentRunLoop().addTimer(temp[0].timer, forMode: NSDefaultRunLoopMode)
                 
-                temp[0].imageView.userInteractionEnabled = false
-                temp[0].imageView.hidden = true
+                //NSRunLoop.currentRunLoop().addTimer(temp[0].timer, forMode: NSDefaultRunLoopMode)
                 
-                var xy = CGFloat(index*10)
+                var temp = [(ghost: Ghost(id: index), imageView: UIImageView(image: UIImage(named: "Ghost")), timer: NSTimer(timeInterval: 5, target: self, selector: "attack:", userInfo: nil, repeats: true) )]
+                
+                //if ghosts do not move
+                if stationary {
+                    temp[0].imageView.userInteractionEnabled = true
+                    temp[0].imageView.hidden = false
+                }
+                    
+                else {
+                    NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "move:", userInfo: nil, repeats: false)
+                    
+                    temp[0].imageView.userInteractionEnabled = false
+                    temp[0].imageView.hidden = true
+                }
+                
+                //var xy = CGFloat(index*10)
+                var x = self.view.center.x - size - 100
+                var y = self.view.center.y - size - 100
                 
                 var dimensions = CGFloat(50)
                 
-                temp[0].imageView.frame = CGRectMake(xy, xy, dimensions, dimensions)
+                temp[0].imageView.frame = CGRectMake(x, x, dimensions, dimensions)
                 
                 ghostArray! += temp
                 
@@ -75,6 +100,9 @@ class GhostViewController: UIViewController{
                 
                 println("\(ghostArray!.count)")
                 
+                if index > ghostArrayCount/2 {
+                    stationary = true
+                }
             }
         }
     }
@@ -83,9 +111,12 @@ class GhostViewController: UIViewController{
     //loop through and move a ghost
     func move(timer: NSTimer) {
         
-        var sizeRect = UIScreen.mainScreen().applicationFrame
+        /*var sizeRect = UIScreen.mainScreen().applicationFrame
         var x = sizeRect.size.width/2
-        var y = sizeRect.size.height/2
+        var y = sizeRect.size.height/2*/
+        
+        var x = self.view.center.x - size
+        var y = self.view.center.y - size
         
         var random: Int = Int(arc4random_uniform(2))
         if( random < 1) {
@@ -114,17 +145,35 @@ class GhostViewController: UIViewController{
             },
             completion: { action in
                 //attack pet
-                if( self.ghostArray![self.currentIndex].imageView.hidden == false){
-                    var pet = StateMachine.getRealmPet()!
-                    StateMachine.updateRealmPet(pet.health-5)
-                    
-                    self.healthBar.progress -= 0.05
-                }
+                //                for (index, element) in enumerate(self.ghostArray!) {
+                //                    if element.imageView.hidden == false && element.ghost.stoppedMoving {
+                //                        NSRunLoop.currentRunLoop().addTimer(element.timer, forMode: NSDefaultRunLoopMode)
+                //                    }
+                //                }
+                // if( self.ghostArray![self.currentIndex].imageView.hidden == false){
+                //if timer is still valid
                 
-                self.currentIndex++
+                //   NSRunLoop.currentRunLoop().addTimer(self.ghostArray![self.currentIndex].timer, forMode: NSDefaultRunLoopMode)
+                //  }
+                if( self.ghostArray![self.attackIndex].imageView.hidden == false) {
+                    
+                    NSRunLoop.currentRunLoop().addTimer(self.ghostArray![self.attackIndex].timer, forMode: NSDefaultRunLoopMode)
+                    
+                }
+                self.attackIndex++
         })
+        self.currentIndex++
     }
     
+    func attack(timer: NSTimer) {
+        //var pet = StateMachine.getRealmPet()!
+        
+        // StateMachine.updateRealmPet(pet!.health-5)
+        
+       // pet!.health -= 5
+        
+        self.healthBar.setProgress(self.healthBar.progress-0.05, animated: false)
+    }
     
     func detectTap(gesture: UITapGestureRecognizer) -> Int{
         
@@ -157,6 +206,8 @@ class GhostViewController: UIViewController{
             
             ghostArray![ghostID].imageView.userInteractionEnabled = false
             
+            ghostArray![ghostID].timer.invalidate()
+            
             ghostArrayCount--
             
             println("no of ghosts left: \(ghostArrayCount)")
@@ -170,6 +221,8 @@ class GhostViewController: UIViewController{
                 ghostArray = nil
                 currentIndex = 0
                 ghostArrayCount = 10
+                attackIndex = 0
+                stationary = false
                 
                 StateMachine.updateRealmAlarmDidWin(true)
                 
@@ -181,11 +234,36 @@ class GhostViewController: UIViewController{
     
     func displayWinAlert() {
         
-        let alertController = UIAlertController(title: "Congratulations!", message: "You defeated all the ghosts", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: nil))
+        let alertController = UIAlertController(title: "Congratulations!",
+                                                message: "You defeated all the ghosts",
+                                                preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertController.addAction(UIAlertAction(title: "Yay!",
+                                                style: UIAlertActionStyle.Default,
+                                                handler: nil))
         
         self.presentViewController(alertController, animated: true, completion: nil)
         
+    }
+    
+    func displayDeadAlert() {
+        let alertController = UIAlertController(title: "Your pet died!",
+                                                message: "Oh no :(",
+                                                preferredStyle: UIAlertControllerStyle.Alert)
+        
+        
+        alertController.addAction(UIAlertAction(title: "Revive Pet",
+                                                style: UIAlertActionStyle.Default,
+                                                handler: nil))
+
+        
+        /*alertController.addAction(UIAlertAction(title: "Go to Funeral",
+                                                style: UIAlertActionStyle.Default,
+                                    handler: nil)) */
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+
     }
     
     func updatePetHealth() {
@@ -199,8 +277,14 @@ class GhostViewController: UIViewController{
         println("health: \(health)")
         healthBar.progress = health
         
+        if healthBar.progress <= 0 {
+            displayDeadAlert()
+        }
+        
         StateMachine.updateRealmPet(Int(health*100))
         
     }
+    
+    
 }
 

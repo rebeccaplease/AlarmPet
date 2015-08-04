@@ -94,6 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             petVC.childViewController!.updatePetHealth()
             petVC.childViewController!.createGhosts()
+           
             
             
             //update pet health
