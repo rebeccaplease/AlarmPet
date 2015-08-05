@@ -22,8 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        //if launchOptions is not nil (starting from a push notif), then open PetViewControler
-        
+
         println("didFinishLaunchingWithOptions")
         
         // Notice setSchemaVersion is set to 1, this is always set manually. It must be
@@ -40,52 +39,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Realm will automatically perform the migration and opening the Realm will succeed
         // i.e. Realm()
         
+        //application.cancelAllLocalNotifications()
         
-        application.cancelAllLocalNotifications()
+        
         if let launchOptions = launchOptions {
             println("launchOptions")
         }
         else {
-            println("not coming from push")
-            NotificationHelper.registerNotification(application)
+            println("not coming from push notification")
+            
+            NotificationHelper.registerNotification(application) //have user register notifications (add a previous uialert and move somewhere else)
         }
         return true
-    }
-    
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        println("applicationWillResignActive")
-    }
-    
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        
-        println("applicationDidEnterBackground")
-        
-        let petVC = self.window!.visibleViewController()! as! PetViewController
-        
-        if let state = RealmHelper.getRealmState() {
-            
-            //RealmHelper.updateRealmStateAndGhosts(gameState: state.state)
-            RealmHelper.updateRealmState(state.state)
-            
-        }
-        else {
-            var saveState = SaveState()
-            
-            saveState.state = petVC.currentState.description
-            //var remaining = Ghost.getGhostCount()
-            //saveState.remainingGhosts = remaining
-            //println("\(remaining)")
-            RealmHelper.saveRealmState(saveState)
-        }
-    }
-    
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        println("applicationWillEnterForeground")
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
@@ -94,11 +59,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //let petVC = self.window!.visibleViewController()! as! PetViewController
         if let petViewController = petViewController {
-           
+            
         }
         else {
-             self.petViewController = self.window!.visibleViewController()! as? PetViewController
+            self.petViewController = self.window!.visibleViewController()! as? PetViewController
         }
+        
         RealmHelper.checkState(&petViewController!.currentState)
         
         switch petViewController!.currentState {
@@ -108,8 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             petViewController!.childViewController!.updatePetHealth()
             petViewController!.childViewController!.createGhosts()
-            
-            
             
             //update pet health
             
@@ -123,6 +87,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
     }
+
+    
+    func applicationWillResignActive(application: UIApplication) {
+        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        println("applicationWillResignActive")
+    }
+    
+    func applicationDidEnterBackground(application: UIApplication) {
+        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        println("applicationDidEnterBackground")
+        
+        if let state = RealmHelper.getRealmState() {
+            
+            //RealmHelper.updateRealmStateAndGhosts(gameState: state.state)
+            RealmHelper.updateRealmState(state.state)
+            
+        }
+        else {
+            var saveState = SaveState()
+            
+            saveState.state = petViewController!.currentState.description
+      
+            RealmHelper.saveRealmState(saveState)
+        }
+    }
+    
+    func applicationWillEnterForeground(application: UIApplication) {
+        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        println("applicationWillEnterForeground")
+    }
+    
     
     
     func applicationWillTerminate(application: UIApplication) {
@@ -134,7 +132,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let state = RealmHelper.getRealmState() {
             
-            //RealmHelper.updateRealmStateAndGhosts(gameState: state.state, numGhosts: Ghost.getGhostCount())
             RealmHelper.updateRealmState(state.state)
             
         }
@@ -142,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var saveState = SaveState()
             
             saveState.state = petViewController!.currentState.description
-            //saveState.remainingGhosts = Ghost.getGhostCount()
+            
             RealmHelper.saveRealmState(saveState)
         }
     }
@@ -153,9 +150,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         println("didReceiveLocalNotification")
         
         application.cancelAllLocalNotifications()
-        
-        // **doesnt work if on alert view controller or any other view
-        //let petVC = self.window!.visibleViewController()! as! PetViewController
         
         RealmHelper.checkState(&petViewController!.currentState)
         switch petViewController!.currentState {
@@ -169,7 +163,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //update pet health
             
         case .Play:
-            //Ghost.updateGhostArray(nil)
             
             petViewController!.childViewController!.updateGhostArray(nil)
             println("Playing")

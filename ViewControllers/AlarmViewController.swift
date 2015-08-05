@@ -8,16 +8,9 @@
 
 import UIKit
 
-protocol PetVCDelegate {
-    var childViewController: GhostViewController? {get}
-}
-
 class AlarmViewController: UIViewController {
     
-    //var alarm: Alarm? = RealmHelper.getRealmAlarm()
     var alarm: Alarm?
-    
-    var delegate: PetVCDelegate? 
     //MARK: Date functions
     
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -46,7 +39,8 @@ class AlarmViewController: UIViewController {
             alarm = RealmHelper.getRealmAlarm()
         }
         
-        /*if !alarm!.dailyWin {
+        /*
+        if !alarm!.dailyWin {
             if let dailyWinDate = alarm!.dailyWinDate {
                 //RealmHelper.updateRealmAlarm(dailyWinDate: same date as alarm , dailyWin: false)
             }
@@ -61,11 +55,9 @@ class AlarmViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
     @IBAction func cancelUnwindSegue(sender: AnyObject) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
-        
     }
     
     //MARK: View functions

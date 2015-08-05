@@ -9,12 +9,12 @@
 import UIKit
 //import AVFoundation
 
-class PetViewController: UIViewController, PetVCDelegate {
+class PetViewController: UIViewController {
     
     var pet: Pet?
     var alarm: Alarm?
     var childViewController: GhostViewController?
-    //var mainView: MainView?
+    var mainView: MainView?
     //MARK: State
     
     @IBOutlet weak var affectionLabel: UIButton!
@@ -32,15 +32,6 @@ class PetViewController: UIViewController, PetVCDelegate {
     }
     
     var currentState: State = .Play {
-        /* didSet {
-        switch(currentState) {
-        case .Win:
-        currentState = .Play
-        default:
-        println("default")
-        }
-        }
-        */
         
         didSet {
             switch(currentState) {
@@ -53,7 +44,7 @@ class PetViewController: UIViewController, PetVCDelegate {
         }
     }
     
-  
+    
     
     //MARK: View Loading
     
@@ -74,10 +65,11 @@ class PetViewController: UIViewController, PetVCDelegate {
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
+        mainView = self.view as? MainView
         if let pet = pet {
-            let mainView = self.view as! MainView
+            //let mainView = self.view as! MainView
             
-           // var petPosition =  mainView.petImageView.frame.origin
+            // var petPosition =  mainView.petImageView.frame.origin
             //println("\(petPosition)")
             
             //RealmHelper.updateRealmPet(x: petPosition.x, y: petPosition.y)
@@ -87,30 +79,28 @@ class PetViewController: UIViewController, PetVCDelegate {
             RealmHelper.saveRealmPet(pet!)
         }
         
-        
-        let mainView = self.view as! MainView
-        //mainView = self.view as? MainView
-        //if let mainView = mainView {
-        if let alarm = alarm{
-            if (alarm.isSet) {
-                mainView.toggleAlarm.selected = false
-                mainView.alarmTime.hidden = false
-                mainView.alarmTime.text = dateFormatter.stringFromDate(alarm.time)
+        if let mainView = mainView {
+            if let alarm = alarm{
+                if (alarm.isSet) {
+                    mainView.toggleAlarm.selected = false
+                    mainView.alarmTime.hidden = false
+                    mainView.alarmTime.text = dateFormatter.stringFromDate(alarm.time)
+                }
+                else {
+                    mainView.toggleAlarm.selected = true
+                    mainView.alarmTime.hidden = true
+                }
             }
+                //if no alarm is set yet
             else {
-                mainView.toggleAlarm.selected = true
+                //mainView.toggleAlarm.selected = true
+                
+                //hide alarm time and toggle button
                 mainView.alarmTime.hidden = true
+                mainView.toggleAlarm.hidden = true
+                alarm = Alarm()
+                RealmHelper.saveRealmAlarm(alarm!)
             }
-        }
-            //if no alarm is set yet
-        else {
-            //mainView.toggleAlarm.selected = true
-            
-            //hide alarm time and toggle button
-            mainView.alarmTime.hidden = true
-            mainView.toggleAlarm.hidden = true
-            alarm = Alarm()
-            RealmHelper.saveRealmAlarm(alarm!)
         }
         
         //mainView.winLabel.hidden = true
@@ -142,7 +132,7 @@ class PetViewController: UIViewController, PetVCDelegate {
         //let tap = childViewController!.gestureRecognizers![0] as! UITapGestureRecognizer
         //tap.addTarget(self, action: "tappedScreen:")
         
-     
+        
         /*
         //bind label and button to Alarm?
         
@@ -150,28 +140,6 @@ class PetViewController: UIViewController, PetVCDelegate {
         */
     }
     
-//    func tappedScreen(recognizer: UITapGestureRecognizer) {
-//        
-//        let mainView = self.view as! MainView
-//        println("tappedScreen")
-//        if mainView.winLabel.hidden == false {
-//            mainView.winLabel.hidden = true
-//        }
-//        
-//    }
-    
-//    func createGhosts() {
-//        
-//        let mainView = self.view as! MainView
-//        Ghost.createGhosts()
-//        for (index, element) in enumerate(Ghost.ghostArray!){
-//            mainView.addSubview(element.imageView)
-//            //ghostArray![index].imageView
-//        }
-//        
-//        Ghost.delegate = self
-//        
-//    }
     
     //called every time view appears
     override func viewWillAppear(animated: Bool) {
@@ -241,20 +209,18 @@ class PetViewController: UIViewController, PetVCDelegate {
         println("prepareForSegue")
         
         if segue.identifier == "presentAlarm" {
-        let alarmViewController = segue.destinationViewController as! AlarmViewController
-        //let mainView = self.view as! MainView
-        //pass alarm to alarmViewController
-        alarmViewController.alarm = alarm
-        alarmViewController.delegate = self
+            let alarmViewController = segue.destinationViewController as! AlarmViewController
+            
+            //pass alarm to alarmViewController
+            alarmViewController.alarm = alarm
         }
         else if segue.identifier == "showPetAndGhosts" {
             childViewController = segue.destinationViewController as? GhostViewController
             childViewController!.petVC = self
-            //childViewController
+            
         }
         else if segue.identifier == "about" {
-            let aboutVC = segue.destinationViewController as! AboutViewController
-            aboutVC.delegate = self
+            // let aboutVC = segue.destinationViewController as! AboutViewController
         }
     }
     

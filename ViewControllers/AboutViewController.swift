@@ -9,8 +9,6 @@
 import UIKit
 
 class AboutViewController: UIViewController {
-
-    var delegate: PetViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
