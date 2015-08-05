@@ -7,17 +7,21 @@
 //
 
 import Foundation
-
+import UIKit
 
 class Ghost {
     
     var id: Int
     var dead: Bool
     //var stoppedMoving: Bool
+    var imageView: UIImageView
+    var timer: NSTimer
     
-    init(id: Int) {
+    init(id: Int, imageView: UIImageView, timer: NSTimer) {
         self.id = id
         self.dead = false
+        self.imageView = imageView
+        self.timer = timer
       // self.stoppedMoving = false
     }
 }

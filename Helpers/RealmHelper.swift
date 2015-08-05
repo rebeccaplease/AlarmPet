@@ -1,5 +1,5 @@
 //
-//  StateMachine.swift
+//  RealmHelper.swift
 //  AlarmPet
 //
 //  Created by Rebecca Poch on 7/24/15.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import UIKit
 
-class StateMachine {
+class RealmHelper {
     
     static func checkState(inout currentState: PetViewController.State) {
         println("checking state")

@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     //var navController: UINavigationController?
     
-    //let pet: Pet = StateMachine.getRealmPet()!
+    //let pet: Pet = RealmHelper.getRealmPet()!
     
     var petViewController: PetViewController?
     
@@ -66,10 +66,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let petVC = self.window!.visibleViewController()! as! PetViewController
         
-        if let state = StateMachine.getRealmState() {
+        if let state = RealmHelper.getRealmState() {
             
-            //StateMachine.updateRealmStateAndGhosts(gameState: state.state)
-            StateMachine.updateRealmState(state.state)
+            //RealmHelper.updateRealmStateAndGhosts(gameState: state.state)
+            RealmHelper.updateRealmState(state.state)
             
         }
         else {
@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //var remaining = Ghost.getGhostCount()
             //saveState.remainingGhosts = remaining
             //println("\(remaining)")
-            StateMachine.saveRealmState(saveState)
+            RealmHelper.saveRealmState(saveState)
         }
     }
     
@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else {
              self.petViewController = self.window!.visibleViewController()! as? PetViewController
         }
-        StateMachine.checkState(&petViewController!.currentState)
+        RealmHelper.checkState(&petViewController!.currentState)
         
         switch petViewController!.currentState {
         case .Defend:
@@ -132,10 +132,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         println("applicationWillTerminate")
         //let petVC = self.window!.visibleViewController()! as! PetViewController
         
-        if let state = StateMachine.getRealmState() {
+        if let state = RealmHelper.getRealmState() {
             
-            //StateMachine.updateRealmStateAndGhosts(gameState: state.state, numGhosts: Ghost.getGhostCount())
-            StateMachine.updateRealmState(state.state)
+            //RealmHelper.updateRealmStateAndGhosts(gameState: state.state, numGhosts: Ghost.getGhostCount())
+            RealmHelper.updateRealmState(state.state)
             
         }
         else {
@@ -143,7 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             saveState.state = petViewController!.currentState.description
             //saveState.remainingGhosts = Ghost.getGhostCount()
-            StateMachine.saveRealmState(saveState)
+            RealmHelper.saveRealmState(saveState)
         }
     }
     
@@ -157,7 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // **doesnt work if on alert view controller or any other view
         //let petVC = self.window!.visibleViewController()! as! PetViewController
         
-        StateMachine.checkState(&petViewController!.currentState)
+        RealmHelper.checkState(&petViewController!.currentState)
         switch petViewController!.currentState {
         case .Defend:
             application.cancelAllLocalNotifications()
@@ -196,7 +196,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 println("zzzz snoozing")
                 //**load alarm from here
-                if let alarm = StateMachine.getRealmAlarm() {
+                if let alarm = RealmHelper.getRealmAlarm() {
                     NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, alarm: alarm)
                 }
             default: //for DEFEND

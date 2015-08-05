@@ -19,8 +19,6 @@ class PetViewController: UIViewController, PetVCDelegate {
     
     @IBOutlet weak var affectionLabel: UIButton!
     
-    var ghostArray:[ (ghost: Ghost, imageView: UIImageView, timer: NSTimer) ]? = nil
-    
     enum State: String, Printable {
         case Defend = "Defend" //alarm going off
         case Play = "Play"
@@ -63,11 +61,11 @@ class PetViewController: UIViewController, PetVCDelegate {
         
         //print realm objects**
         
-        StateMachine.printAllRealmObjects()
-        //StateMachine.deleteRealmObjects()
+        RealmHelper.printAllRealmObjects()
+        //RealmHelper.deleteRealmObjects()
         
-        pet = StateMachine.getRealmPet()
-        alarm = StateMachine.getRealmAlarm()
+        pet = RealmHelper.getRealmPet()
+        alarm = RealmHelper.getRealmAlarm()
         
         super.viewDidLoad()
         
@@ -82,11 +80,11 @@ class PetViewController: UIViewController, PetVCDelegate {
            // var petPosition =  mainView.petImageView.frame.origin
             //println("\(petPosition)")
             
-            //StateMachine.updateRealmPet(x: petPosition.x, y: petPosition.y)
+            //RealmHelper.updateRealmPet(x: petPosition.x, y: petPosition.y)
         }
         else {
             pet = Pet()
-            StateMachine.saveRealmPet(pet!)
+            RealmHelper.saveRealmPet(pet!)
         }
         
         
@@ -112,12 +110,12 @@ class PetViewController: UIViewController, PetVCDelegate {
             mainView.alarmTime.hidden = true
             mainView.toggleAlarm.hidden = true
             alarm = Alarm()
-            StateMachine.saveRealmAlarm(alarm!)
+            RealmHelper.saveRealmAlarm(alarm!)
         }
         
         //mainView.winLabel.hidden = true
         
-        StateMachine.checkState(&currentState)
+        RealmHelper.checkState(&currentState)
         switch currentState {
         case .Defend:
             UIApplication.sharedApplication().cancelAllLocalNotifications()
@@ -126,7 +124,7 @@ class PetViewController: UIViewController, PetVCDelegate {
             //Ghost.createGhosts(self)
             childViewController!.createGhosts()
             
-            //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: StateMachine.getRealmState()!.remainingGhosts)
+            //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: RealmHelper.getRealmState()!.remainingGhosts)
             
             //update pet health
             
@@ -201,9 +199,9 @@ class PetViewController: UIViewController, PetVCDelegate {
         //if(!mainView.alarm.isSet) {
         if let alarm = alarm {
             if(!alarm.isSet) {
-                StateMachine.updateRealmAlarm(time: alarm.time, isSet: true)
+                RealmHelper.updateRealmAlarm(time: alarm.time, isSet: true)
                 
-                self.alarm = StateMachine.getRealmAlarm()
+                self.alarm = RealmHelper.getRealmAlarm()
                 //mainView.alarmTime.hidden = false
                 mainView.alarmTime.textColor = UIColor.whiteColor()
                 mainView.toggleAlarm.selected = false
@@ -215,9 +213,9 @@ class PetViewController: UIViewController, PetVCDelegate {
             }
             else {
                 
-                StateMachine.updateRealmAlarm(time: alarm.time, isSet: false)
+                RealmHelper.updateRealmAlarm(time: alarm.time, isSet: false)
                 
-                self.alarm = StateMachine.getRealmAlarm()
+                self.alarm = RealmHelper.getRealmAlarm()
                 //mainView.alarmTime.hidden = true
                 mainView.alarmTime.textColor = UIColor.grayColor()
                 mainView.toggleAlarm.selected = true

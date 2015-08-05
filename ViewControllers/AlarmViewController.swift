@@ -14,10 +14,10 @@ protocol PetVCDelegate {
 
 class AlarmViewController: UIViewController {
     
-    //var alarm: Alarm? = StateMachine.getRealmAlarm()
+    //var alarm: Alarm? = RealmHelper.getRealmAlarm()
     var alarm: Alarm?
     
-    var delegate: PetVCDelegate?
+    var delegate: PetVCDelegate? 
     //MARK: Date functions
     
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -33,22 +33,22 @@ class AlarmViewController: UIViewController {
         if let newAlarm = alarm{
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
-            StateMachine.updateRealmAlarm(time: newAlarm.time, isSet: true)
-            StateMachine.updateRealmAlarmDidWin(false)
+            RealmHelper.updateRealmAlarm(time: newAlarm.time, isSet: true)
+            RealmHelper.updateRealmAlarmDidWin(false)
            //fix this for runtime
-            alarm = StateMachine.getRealmAlarm()
+            alarm = RealmHelper.getRealmAlarm()
         }
         else {
             let a = Alarm()
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: a)
-            StateMachine.saveRealmAlarm(a)
-            alarm = StateMachine.getRealmAlarm()
+            RealmHelper.saveRealmAlarm(a)
+            alarm = RealmHelper.getRealmAlarm()
         }
         
         /*if !alarm!.dailyWin {
             if let dailyWinDate = alarm!.dailyWinDate {
-                //StateMachine.updateRealmAlarm(dailyWinDate: same date as alarm , dailyWin: false)
+                //RealmHelper.updateRealmAlarm(dailyWinDate: same date as alarm , dailyWin: false)
             }
             else {
                 
