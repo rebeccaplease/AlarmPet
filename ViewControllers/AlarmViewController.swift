@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol PetVCDelegate {
+    var childViewController: GhostViewController? {get}
+}
+
 class AlarmViewController: UIViewController {
     
     //var alarm: Alarm? = StateMachine.getRealmAlarm()
     var alarm: Alarm?
+    
+    var delegate: PetVCDelegate?
     //MARK: Date functions
     
     @IBOutlet weak var datePicker: UIDatePicker!

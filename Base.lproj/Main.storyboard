@@ -148,13 +148,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5q-EZ-jC9" userLabel="Set Alarm">
-                                <rect key="frame" x="541" y="28" width="35" height="35"/>
+                                <rect key="frame" x="546" y="28" width="30" height="30"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="22" id="4pH-3U-Kdp"/>
-                                    <constraint firstAttribute="width" constant="35" id="IEX-Uc-qef"/>
+                                    <constraint firstAttribute="width" constant="30" id="IEX-Uc-qef"/>
                                     <constraint firstAttribute="height" constant="22" id="ULj-3I-N9o"/>
-                                    <constraint firstAttribute="height" constant="35" id="a1p-In-97w"/>
+                                    <constraint firstAttribute="height" constant="30" id="a1p-In-97w"/>
                                 </constraints>
                                 <state key="normal" image="Clock"/>
                                 <variation key="default">
@@ -168,7 +168,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="9:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO" userLabel="Alarm Time">
-                                <rect key="frame" x="235" y="68" width="130" height="47"/>
+                                <rect key="frame" x="235" y="63" width="130" height="47"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="34"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -180,16 +180,16 @@
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R7x-R4-hf0">
-                                <rect key="frame" x="541" y="83" width="35" height="35"/>
+                                <rect key="frame" x="546" y="78" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="AcI-Rv-uq6"/>
-                                    <constraint firstAttribute="width" constant="35" id="bm7-HS-Nqk"/>
+                                    <constraint firstAttribute="height" constant="30" id="AcI-Rv-uq6"/>
+                                    <constraint firstAttribute="width" constant="30" id="bm7-HS-Nqk"/>
                                 </constraints>
                                 <state key="normal" image="About">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="b2x-SS-RR9" kind="show" id="79o-hP-2BV"/>
+                                    <segue destination="b2x-SS-RR9" kind="show" identifier="about" id="79o-hP-2BV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfv-kQ-UIg" userLabel="Toggle Alarm">
@@ -206,12 +206,20 @@
                                     <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="tqf-Q1-VuV"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oo-Xs-pWp">
+                                <rect key="frame" x="16" y="20" width="128" height="50"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
+                                <state key="normal" title=" Affection" image="Affection">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="R7x-R4-hf0" firstAttribute="top" secondItem="Bfv-kQ-UIg" secondAttribute="bottom" constant="8" id="Acl-vl-5MY"/>
                             <constraint firstItem="R7x-R4-hf0" firstAttribute="top" secondItem="v5q-EZ-jC9" secondAttribute="bottom" constant="20" id="Buz-kZ-WQm"/>
+                            <constraint firstItem="2oo-Xs-pWp" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" id="Epq-Si-PYy"/>
                             <constraint firstItem="cY7-Ay-DKb" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="143" id="J6n-VO-NVe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="R7x-R4-hf0" secondAttribute="trailing" constant="8" id="LjS-PU-9he"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="v5q-EZ-jC9" secondAttribute="bottom" constant="5" id="MQQ-TS-AkE"/>
@@ -221,6 +229,7 @@
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="8" id="Uwa-oa-emN"/>
                             <constraint firstItem="cY7-Ay-DKb" firstAttribute="leading" secondItem="Z2h-hD-wyP" secondAttribute="leading" id="bAB-4J-i7i"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="50" id="cHj-aD-ZBF"/>
+                            <constraint firstItem="2oo-Xs-pWp" firstAttribute="leading" secondItem="Z2h-hD-wyP" secondAttribute="leadingMargin" id="ewQ-Vk-O9c"/>
                             <constraint firstAttribute="trailing" secondItem="cY7-Ay-DKb" secondAttribute="trailing" id="ht3-3v-qyO"/>
                             <constraint firstAttribute="centerX" secondItem="WF0-tT-cZO" secondAttribute="centerX" id="iKb-4I-YYy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="R7x-R4-hf0" secondAttribute="trailing" constant="8" id="jrX-Hz-i4O"/>
@@ -248,15 +257,18 @@
                     </view>
                     <navigationItem key="navigationItem" id="qVf-dA-xQ0"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="affectionLabel" destination="2oo-Xs-pWp" id="Eym-ho-F2k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VB-5f-Stk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="616" y="607"/>
         </scene>
-        <!--View Controller-->
+        <!--About View Controller-->
         <scene sceneID="6k0-qN-faB">
             <objects>
-                <viewController id="b2x-SS-RR9" sceneMemberID="viewController">
+                <viewController id="b2x-SS-RR9" customClass="AboutViewController" customModule="AlarmPet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PyE-uk-MXX"/>
                         <viewControllerLayoutGuide type="bottom" id="g4q-st-KCh"/>
@@ -347,6 +359,7 @@
     </scenes>
     <resources>
         <image name="About" width="50" height="50"/>
+        <image name="Affection" width="50" height="50"/>
         <image name="AlarmOff" width="100" height="100"/>
         <image name="AlarmOn" width="50" height="50"/>
         <image name="Clock" width="50" height="50"/>

@@ -12,14 +12,19 @@ import RealmSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    
     var window: UIWindow?
+    //var navController: UINavigationController?
     
     //let pet: Pet = StateMachine.getRealmPet()!
+    
+    var petViewController: PetViewController?
     
     //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         //if launchOptions is not nil (starting from a push notif), then open PetViewControler
         
+        println("didFinishLaunchingWithOptions")
         
         // Notice setSchemaVersion is set to 1, this is always set manually. It must be
         // higher than the previous version (oldSchemaVersion) or an RLMException is thrown
@@ -58,7 +63,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         println("applicationDidEnterBackground")
+        
         let petVC = self.window!.visibleViewController()! as! PetViewController
+        
         if let state = StateMachine.getRealmState() {
             
             //StateMachine.updateRealmStateAndGhosts(gameState: state.state)
@@ -85,23 +92,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         println("applicationDidBecomeActive")
         
-        let petVC = self.window!.visibleViewController()! as! PetViewController
-        StateMachine.checkState(&petVC.currentState)
-        switch petVC.currentState {
+        //let petVC = self.window!.visibleViewController()! as! PetViewController
+        if let petViewController = petViewController {
+           
+        }
+        else {
+             self.petViewController = self.window!.visibleViewController()! as? PetViewController
+        }
+        StateMachine.checkState(&petViewController!.currentState)
+        
+        switch petViewController!.currentState {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
             
-            petVC.childViewController!.updatePetHealth()
-            petVC.childViewController!.createGhosts()
-           
+            petViewController!.childViewController!.updatePetHealth()
+            petViewController!.childViewController!.createGhosts()
+            
             
             
             //update pet health
             
         case .Play:
             
-            petVC.childViewController!.updateGhostArray(nil)
+            petViewController!.childViewController!.updateGhostArray(nil)
             println("Playing")
             
         default:
@@ -116,7 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         println("applicationWillTerminate")
-        let petVC = self.window!.visibleViewController()! as! PetViewController
+        //let petVC = self.window!.visibleViewController()! as! PetViewController
         
         if let state = StateMachine.getRealmState() {
             
@@ -127,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else {
             var saveState = SaveState()
             
-            saveState.state = petVC.currentState.description
+            saveState.state = petViewController!.currentState.description
             //saveState.remainingGhosts = Ghost.getGhostCount()
             StateMachine.saveRealmState(saveState)
         }
@@ -140,23 +154,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.cancelAllLocalNotifications()
         
-        // **doesnt work if on alert view controller
-        let petVC = self.window!.visibleViewController()! as! PetViewController
+        // **doesnt work if on alert view controller or any other view
+        //let petVC = self.window!.visibleViewController()! as! PetViewController
         
-        StateMachine.checkState(&petVC.currentState)
-        switch petVC.currentState {
+        StateMachine.checkState(&petViewController!.currentState)
+        switch petViewController!.currentState {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
-            petVC.childViewController!.createGhosts()
-            petVC.displayDefendAlert()
+            petViewController!.childViewController!.createGhosts()
+            
+            //petVC.displayDefendAlert()
             
             //update pet health
             
         case .Play:
             //Ghost.updateGhostArray(nil)
             
-            petVC.childViewController!.updateGhostArray(nil)
+            petViewController!.childViewController!.updateGhostArray(nil)
             println("Playing")
             
         default:

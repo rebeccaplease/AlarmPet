@@ -9,13 +9,15 @@
 import UIKit
 //import AVFoundation
 
-class PetViewController: UIViewController {
+class PetViewController: UIViewController, PetVCDelegate {
     
     var pet: Pet?
     var alarm: Alarm?
     var childViewController: GhostViewController?
     //var mainView: MainView?
     //MARK: State
+    
+    @IBOutlet weak var affectionLabel: UIButton!
     
     var ghostArray:[ (ghost: Ghost, imageView: UIImageView, timer: NSTimer) ]? = nil
     
@@ -202,7 +204,8 @@ class PetViewController: UIViewController {
                 StateMachine.updateRealmAlarm(time: alarm.time, isSet: true)
                 
                 self.alarm = StateMachine.getRealmAlarm()
-                mainView.alarmTime.hidden = false
+                //mainView.alarmTime.hidden = false
+                mainView.alarmTime.textColor = UIColor.whiteColor()
                 mainView.toggleAlarm.selected = false
                 
                 NotificationHelper.handleScheduling(alarm.time, numOfNotifications: 3, delayInSeconds: 0, alarm: alarm)
@@ -215,7 +218,8 @@ class PetViewController: UIViewController {
                 StateMachine.updateRealmAlarm(time: alarm.time, isSet: false)
                 
                 self.alarm = StateMachine.getRealmAlarm()
-                mainView.alarmTime.hidden = true
+                //mainView.alarmTime.hidden = true
+                mainView.alarmTime.textColor = UIColor.grayColor()
                 mainView.toggleAlarm.selected = true
                 UIApplication.sharedApplication().cancelAllLocalNotifications()
                 
@@ -237,26 +241,33 @@ class PetViewController: UIViewController {
         // Get the new View Controller using segue.destinationViewController.
         // Pass the selected object to the new View Controller.
         println("prepareForSegue")
+        
         if segue.identifier == "presentAlarm" {
         let alarmViewController = segue.destinationViewController as! AlarmViewController
         //let mainView = self.view as! MainView
         //pass alarm to alarmViewController
         alarmViewController.alarm = alarm
+        alarmViewController.delegate = self
         }
         else if segue.identifier == "showPetAndGhosts" {
             childViewController = segue.destinationViewController as? GhostViewController
+            childViewController!.petVC = self
+            //childViewController
         }
-        
+        else if segue.identifier == "about" {
+            let aboutVC = segue.destinationViewController as! AboutViewController
+            aboutVC.delegate = self
+        }
     }
     
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         println("unwinding")
         
         let mainView = self.view as! MainView
-        let alarmVC = segue.sourceViewController as! AlarmViewController
+        
         
         if (segue.identifier == "Save") {
-            
+            let alarmVC = segue.sourceViewController as! AlarmViewController
             alarm = alarmVC.alarm
             
             mainView.toggleAlarm.selected = false

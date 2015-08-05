@@ -204,6 +204,16 @@ class StateMachine {
         }
     }
     
+    static func updateRealmPet(#affection: Int) {
+        let realm = Realm()
+        var pet = getRealmPet()
+        if let pet = pet {
+            realm.write{
+                pet.affection += affection
+            }
+        }
+    }
+    
     static func getPetPosition() -> (Float, Float) {
         let pet = getRealmPet()!
         return (pet.x, pet.y)
