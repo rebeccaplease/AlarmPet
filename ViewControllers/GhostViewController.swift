@@ -81,15 +81,57 @@ class GhostViewController: UIViewController{
                     timer: NSTimer(timeInterval: 5, target: self, selector: "attack:", userInfo: nil, repeats: true))
                 
                 //var xy = CGFloat(index*10)
-                var x = self.view.center.x - size - 100
-                var y = self.view.center.y - size - 100
+                var x: CGFloat = 0
+                var y: CGFloat = 0
+                
+                
+                
+                if !stationary {
+                    var random: Int = Int(arc4random_uniform(3))
+                    if( random == 1) {
+                        x = 0
+                    }
+                    else if random == 2{
+                        x = self.view.bounds.height
+                    }
+                    else {
+                        x = self.view.bounds.height/2
+                    }
+                    random = Int(arc4random_uniform(3))
+                    if( random == 1) {
+                        y = 0
+                    }
+                    else if random == 2{
+                        y = self.view.bounds.width
+                    }
+                    else {
+                        y = self.view.bounds.width/2
+                    }
+                }
                 
                 //if ghosts do not move
                 if stationary {
                     temp.imageView.userInteractionEnabled = true
                     temp.imageView.hidden = false
                     
-                    x += CGFloat(index * 4)
+                    x = self.view.center.x - size/2
+                    y = self.view.center.y - size
+                    var offset = CGFloat(75)
+                    
+                    var random: Int = Int(arc4random_uniform(4))
+                    if( random == 1) {
+                        x -= offset
+                    }
+                    else if (random == 2){
+                        x += offset
+                    }
+                   
+                   else if( random == 3) {
+                        y -= offset
+                    }
+                    else {
+                        y += offset
+                    }
                     
                 }
                     
@@ -100,9 +142,10 @@ class GhostViewController: UIViewController{
                     temp.imageView.hidden = true
                 }
                 
-                var dimensions = CGFloat(50)
                 
-                temp.imageView.frame = CGRectMake(x, x, dimensions, dimensions)
+                //temp.imageView.frame = CGRectMake(x, y, dimensions, dimensions)
+                
+                temp.imageView.frame = CGRect(x: x, y: y, width: size, height: size)
                 
                 ghostArray!.append(temp)
                 
@@ -126,7 +169,7 @@ class GhostViewController: UIViewController{
         var x = sizeRect.size.width/2
         var y = sizeRect.size.height/2*/
         
-        var x = self.view.center.x - size
+        var x = self.view.center.x - size/2
         var y = self.view.center.y - size
         
         var random: Int = Int(arc4random_uniform(2))
@@ -145,6 +188,8 @@ class GhostViewController: UIViewController{
         }
         
         var position = CGRect(origin: CGPoint(x: CGFloat(x), y: CGFloat(y)), size: CGSize(width: size, height: size))
+        
+        //var position = CGRectMake(x, y, size, size)
         
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
             //show ghost and move it
@@ -247,7 +292,7 @@ class GhostViewController: UIViewController{
                 
                 println("\(petVC!)")
                 
-                petVC!.affectionLabel.setTitle("\(pet!.affection + 5)", forState: UIControlState.Normal)
+                petVC!.affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
                 petVC!.currentState = .Play
                 
                 println("You win!")
@@ -310,7 +355,7 @@ class GhostViewController: UIViewController{
         alertController.addAction(UIAlertAction(title: "Revive Pet",
             style: UIAlertActionStyle.Default,
             handler: {action in
-             
+                
                 self.healthBar.setProgress(1.0, animated: true)
                 self.petVC!.affectionLabel.setTitle("0 :(", forState: UIControlState.Normal)
         }))
