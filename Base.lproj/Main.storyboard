@@ -133,6 +133,26 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="9:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO" userLabel="Alarm Time">
+                                <rect key="frame" x="224" y="60" width="152" height="55"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="40"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfv-kQ-UIg" userLabel="Toggle Alarm">
+                                <rect key="frame" x="181" y="70" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="CO7-kR-YAg"/>
+                                    <constraint firstAttribute="height" constant="35" id="zgG-w1-dY9"/>
+                                </constraints>
+                                <state key="normal" image="AlarmOn">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="AlarmOff"/>
+                                <connections>
+                                    <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="tqf-Q1-VuV"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5q-EZ-jC9" userLabel="Set Alarm">
                                 <rect key="frame" x="541" y="45" width="35" height="35"/>
                                 <gestureRecognizers/>
@@ -154,19 +174,6 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" identifier="presentAlarm" modalPresentationStyle="overCurrentContext" id="17O-VI-bDD"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="9:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WF0-tT-cZO" userLabel="Alarm Time">
-                                <rect key="frame" x="224" y="35" width="152" height="55"/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="40"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cY7-Ay-DKb">
-                                <rect key="frame" x="0.0" y="163" width="600" height="437"/>
-                                <color key="backgroundColor" red="0.29411764705882354" green="0.46666666666666667" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <segue destination="WSk-Hf-Vbb" kind="embed" identifier="showPetAndGhosts" id="X0Y-tb-IUQ"/>
-                                </connections>
-                            </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R7x-R4-hf0">
                                 <rect key="frame" x="541" y="90" width="35" height="35"/>
                                 <constraints>
@@ -181,44 +188,37 @@
                                     <segue destination="b2x-SS-RR9" kind="show" identifier="about" id="79o-hP-2BV"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfv-kQ-UIg" userLabel="Toggle Alarm">
-                                <rect key="frame" x="181" y="45" width="35" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="CO7-kR-YAg"/>
-                                    <constraint firstAttribute="height" constant="35" id="zgG-w1-dY9"/>
-                                </constraints>
-                                <state key="normal" image="AlarmOn">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="selected" image="AlarmOff"/>
-                                <connections>
-                                    <action selector="alarmToggle:" destination="F5s-tL-v0D" eventType="touchUpInside" id="tqf-Q1-VuV"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Set your alarm here -&gt;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EhQ-9k-vd0">
                                 <rect key="frame" x="185" y="46" width="230" height="32"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="23"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cY7-Ay-DKb">
+                                <rect key="frame" x="0.0" y="163" width="600" height="437"/>
+                                <color key="backgroundColor" red="0.29411764705882354" green="0.46666666666666667" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <segue destination="WSk-Hf-Vbb" kind="embed" identifier="showPetAndGhosts" id="X0Y-tb-IUQ"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.29411764705882354" green="0.46666666666666667" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="Z2h-hD-wyP" secondAttribute="topMargin" constant="35" id="1Am-pC-nJ8"/>
+                            <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="40" id="3EJ-sh-u5U"/>
                             <constraint firstItem="R7x-R4-hf0" firstAttribute="top" secondItem="v5q-EZ-jC9" secondAttribute="bottom" constant="10" id="Buz-kZ-WQm"/>
-                            <constraint firstAttribute="centerX" secondItem="EhQ-9k-vd0" secondAttribute="centerX" id="BxF-W4-jjL"/>
+                            <constraint firstAttribute="centerX" secondItem="EhQ-9k-vd0" secondAttribute="centerX" priority="750" id="BxF-W4-jjL"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="centerY" secondItem="WF0-tT-cZO" secondAttribute="centerY" id="E1M-2I-G50"/>
                             <constraint firstItem="cY7-Ay-DKb" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="143" id="J6n-VO-NVe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="R7x-R4-hf0" secondAttribute="trailing" constant="8" id="LjS-PU-9he"/>
+                            <constraint firstItem="v5q-EZ-jC9" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="25" id="PRH-NL-mwN"/>
                             <constraint firstItem="wkF-8v-V7W" firstAttribute="top" secondItem="cY7-Ay-DKb" secondAttribute="bottom" id="TPl-1f-f0s"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="trailing" secondItem="Z2h-hD-wyP" secondAttribute="trailingMargin" constant="-8" id="Tnd-Be-VoU"/>
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="8" id="Uwa-oa-emN"/>
-                            <constraint firstItem="v5q-EZ-jC9" firstAttribute="centerY" secondItem="WF0-tT-cZO" secondAttribute="centerY" id="YQ4-T6-L5i"/>
                             <constraint firstItem="cY7-Ay-DKb" firstAttribute="leading" secondItem="Z2h-hD-wyP" secondAttribute="leading" id="bAB-4J-i7i"/>
-                            <constraint firstItem="EhQ-9k-vd0" firstAttribute="centerY" secondItem="v5q-EZ-jC9" secondAttribute="centerY" constant="-0.5" id="g4F-P1-SVi"/>
                             <constraint firstAttribute="trailing" secondItem="cY7-Ay-DKb" secondAttribute="trailing" id="ht3-3v-qyO"/>
                             <constraint firstAttribute="centerX" secondItem="WF0-tT-cZO" secondAttribute="centerX" id="iKb-4I-YYy"/>
+                            <constraint firstItem="v5q-EZ-jC9" firstAttribute="centerY" secondItem="EhQ-9k-vd0" secondAttribute="centerY" id="yHK-Wb-eUK"/>
                         </constraints>
                         <connections>
                             <outlet property="alarmTime" destination="WF0-tT-cZO" id="B7q-lY-Gm7"/>

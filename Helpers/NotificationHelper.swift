@@ -37,7 +37,7 @@ class NotificationHelper {
         
         RealmHelper.updateRealmAlarm(time: fixedDate, isSet: true)
         
-        for index in 1...numOfNotifications {
+        for index in 0...numOfNotifications {
             //loop and schedule numOfNotifications notifications, 30 seconds apart
             
             scheduleNotification(id: index, alarm: fixedDate)
@@ -58,7 +58,7 @@ class NotificationHelper {
         //when notif will appear
         notification.fireDate = alarm
         notification.timeZone  = NSTimeZone.defaultTimeZone()
-        notification.alertBody = "Virtual pet in danger!"
+        notification.alertBody = "Virtual pet in danger! Health: \(100-id*10)/100"
         notification.alertAction = "open"
         notification.soundName = "ShipBell.wav"
         notification.category = "CATEGORY"

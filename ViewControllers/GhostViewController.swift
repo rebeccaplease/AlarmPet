@@ -23,13 +23,45 @@ class GhostViewController: UIViewController{
     var ghostArrayCount = 10
     var attackIndex = 0
     
-    var petVC: PetViewController?
     
     var ghostArray:[ Ghost ]? = nil
     
     var stationary: Bool = false
     
     @IBOutlet weak var affectionLabel: UIButton!
+    
+    
+    enum State: String, Printable {
+        case Defend = "Defend" //alarm going off
+        case Play = "Play"
+        case Win = "Win"
+        
+        var description : String {
+            get {
+                return self.rawValue
+            }
+        }
+    }
+    
+    var currentState: State = .Play {
+        
+        didSet {
+            switch(currentState) {
+            case .Win:
+                //displayWinAlert()
+                currentState  = .Play
+            case .Defend:
+                
+                NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
+                UIScreen.mainScreen().brightness = 0
+                
+            default:
+                println("default")
+                petImageView.userInteractionEnabled = true
+            }
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +72,11 @@ class GhostViewController: UIViewController{
         petImageView.addGestureRecognizer(swipe)
         
         
+    }
+    
+    func healPet(recognizer: UISwipeGestureRecognizer) {
+        healthBar.progress += 0.05
+        println("healing")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -300,7 +337,7 @@ class GhostViewController: UIViewController{
                
                 
                 affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
-                petVC!.currentState = .Play
+                currentState = .Play
                 
                 println("You win!")
                 
@@ -308,10 +345,7 @@ class GhostViewController: UIViewController{
         }
     }
     
-    func healPet(recognizer: UISwipeGestureRecognizer) {
-        healthBar.progress += 0.05
-        println("healing")
-    }
+    
     
     func updatePetHealth() {
         //update pet health depending on the current time and alarm time

@@ -67,9 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.petViewController = self.window!.visibleViewController()! as? PetViewController
         }
         
-        RealmHelper.checkState(&petViewController!.currentState)
+        RealmHelper.checkState(&petViewController!.childViewController!.currentState)
         
-        switch petViewController!.currentState {
+        switch petViewController!.childViewController!.currentState {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")
@@ -112,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else {
             var saveState = SaveState()
             
-            saveState.state = petViewController!.currentState.description
+            saveState.state = petViewController!.childViewController!.currentState.description
       
             RealmHelper.saveRealmState(saveState)
         }
@@ -140,7 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else {
             var saveState = SaveState()
             
-            saveState.state = petViewController!.currentState.description
+            saveState.state = petViewController!.childViewController!.currentState.description
             
             RealmHelper.saveRealmState(saveState)
         }
@@ -153,8 +153,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.cancelAllLocalNotifications()
         
-        RealmHelper.checkState(&petViewController!.currentState)
-        switch petViewController!.currentState {
+        RealmHelper.checkState(&petViewController!.childViewController!.currentState)
+        switch petViewController!.childViewController!.currentState {
         case .Defend:
             application.cancelAllLocalNotifications()
             println("Defending")

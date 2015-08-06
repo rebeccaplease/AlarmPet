@@ -20,36 +20,6 @@ class PetViewController: UIViewController {
     var brightness: Double = 0
     //MARK: State
 
-    enum State: String, Printable {
-        case Defend = "Defend" //alarm going off
-        case Play = "Play"
-        case Win = "Win"
-        
-        var description : String {
-            get {
-                return self.rawValue
-            }
-        }
-    }
-    
-    var currentState: State = .Play {
-        
-        didSet {
-            switch(currentState) {
-            case .Win:
-                //displayWinAlert()
-                currentState  = .Play
-            case .Defend:
-                
-                NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
-                UIScreen.mainScreen().brightness = 0
-                
-            default:
-                println("default")
-            }
-        }
-        
-    }
     
     func increaseBrightness(timer: NSTimer) {
         brightness += 0.005
@@ -126,8 +96,8 @@ class PetViewController: UIViewController {
         
         //mainView.winLabel.hidden = true
         
-        RealmHelper.checkState(&currentState)
-        switch currentState {
+        RealmHelper.checkState(&childViewController!.currentState)
+        switch childViewController!.currentState {
         case .Defend:
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             println("Defending")
@@ -162,7 +132,7 @@ class PetViewController: UIViewController {
         super.viewWillAppear(animated)
         println("View Will Appear")
         
-        switch currentState {
+        switch childViewController!.currentState {
         case .Defend:
             println("Defending")
             //Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
@@ -232,7 +202,6 @@ class PetViewController: UIViewController {
         }
         else if segue.identifier == "showPetAndGhosts" {
             childViewController = segue.destinationViewController as? GhostViewController
-            childViewController!.petVC = self
             println("\(childViewController)")
             
         }

@@ -12,7 +12,7 @@ import UIKit
 
 class RealmHelper {
     
-    static func checkState(inout currentState: PetViewController.State) {
+    static func checkState(inout currentState: GhostViewController.State) {
         println("checking state")
         printAllRealmObjects()
         
