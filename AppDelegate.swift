@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         println("didFinishLaunchingWithOptions")
         
+        application.setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+        
         // Notice setSchemaVersion is set to 1, this is always set manually. It must be
         // higher than the previous version (oldSchemaVersion) or an RLMException is thrown
         setSchemaVersion(3, Realm.defaultPath, { migration, oldSchemaVersion in
