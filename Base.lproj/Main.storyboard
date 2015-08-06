@@ -181,14 +181,7 @@
                                     <segue destination="b2x-SS-RR9" kind="show" identifier="about" id="79o-hP-2BV"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oo-Xs-pWp">
-                                <rect key="frame" x="236" y="100" width="128" height="50"/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
-                                <state key="normal" title=" Affection" image="Affection">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfv-kQ-UIg" userLabel="Toggle Alarm">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bfv-kQ-UIg" userLabel="Toggle Alarm">
                                 <rect key="frame" x="181" y="45" width="35" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="CO7-kR-YAg"/>
@@ -223,11 +216,9 @@
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="8" id="Uwa-oa-emN"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="centerY" secondItem="WF0-tT-cZO" secondAttribute="centerY" id="YQ4-T6-L5i"/>
                             <constraint firstItem="cY7-Ay-DKb" firstAttribute="leading" secondItem="Z2h-hD-wyP" secondAttribute="leading" id="bAB-4J-i7i"/>
-                            <constraint firstAttribute="centerX" secondItem="2oo-Xs-pWp" secondAttribute="centerX" id="bcz-sP-oYO"/>
                             <constraint firstItem="EhQ-9k-vd0" firstAttribute="centerY" secondItem="v5q-EZ-jC9" secondAttribute="centerY" constant="-0.5" id="g4F-P1-SVi"/>
                             <constraint firstAttribute="trailing" secondItem="cY7-Ay-DKb" secondAttribute="trailing" id="ht3-3v-qyO"/>
                             <constraint firstAttribute="centerX" secondItem="WF0-tT-cZO" secondAttribute="centerX" id="iKb-4I-YYy"/>
-                            <constraint firstItem="2oo-Xs-pWp" firstAttribute="top" secondItem="WF0-tT-cZO" secondAttribute="bottom" constant="10" id="rnu-1Q-Q9t"/>
                         </constraints>
                         <connections>
                             <outlet property="alarmTime" destination="WF0-tT-cZO" id="B7q-lY-Gm7"/>
@@ -239,7 +230,6 @@
                     <navigationItem key="navigationItem" id="qVf-dA-xQ0"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="affectionLabel" destination="2oo-Xs-pWp" id="Eym-ho-F2k"/>
                         <outlet property="instructionLabel" destination="EhQ-9k-vd0" id="oxT-u2-SM8"/>
                     </connections>
                 </viewController>
@@ -259,11 +249,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://icons8.com/license/" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tf7-PW-DTi">
-                                <rect key="frame" x="202" y="285" width="197" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TfR-uG-aeq">
                                 <rect key="frame" x="16" y="20" width="49" height="30"/>
                                 <state key="normal" title="&lt; Back">
@@ -273,12 +258,27 @@
                                     <segue destination="wHL-e8-zZk" kind="unwind" unwindAction="unwindToSegue:" id="hS8-IK-bfI"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZSi-iH-2Iq">
+                                <rect key="frame" x="16" y="58" width="568" height="542"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Icon credits: https://icons8.com/license/">
+                                        <attributes>
+                                            <font key="NSFont" size="18" name="Avenir-Book"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="TfR-uG-aeq" firstAttribute="top" secondItem="PyE-uk-MXX" secondAttribute="bottom" id="6o2-dm-cZe"/>
-                            <constraint firstAttribute="centerX" secondItem="tf7-PW-DTi" secondAttribute="centerX" id="C2h-XR-BiI"/>
-                            <constraint firstAttribute="centerY" secondItem="tf7-PW-DTi" secondAttribute="centerY" id="lvz-Gb-kce"/>
+                            <constraint firstItem="ZSi-iH-2Iq" firstAttribute="top" secondItem="TfR-uG-aeq" secondAttribute="bottom" constant="8" id="7RV-S7-gUn"/>
+                            <constraint firstItem="ZSi-iH-2Iq" firstAttribute="leading" secondItem="luH-5J-vmE" secondAttribute="leadingMargin" id="9wQ-te-ioB"/>
+                            <constraint firstItem="g4q-st-KCh" firstAttribute="top" secondItem="ZSi-iH-2Iq" secondAttribute="bottom" id="J8w-Fq-4Mu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ZSi-iH-2Iq" secondAttribute="trailing" id="KPC-bF-BCs"/>
                             <constraint firstItem="TfR-uG-aeq" firstAttribute="leading" secondItem="luH-5J-vmE" secondAttribute="leadingMargin" id="vTu-ke-aX8"/>
                         </constraints>
                     </view>
@@ -316,6 +316,13 @@
                                 <color key="progressTintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="trackTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oo-Xs-pWp">
+                                <rect key="frame" x="236" y="308" width="128" height="50"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
+                                <state key="normal" title=" Affection" image="Affection">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -324,12 +331,15 @@
                             <constraint firstAttribute="centerY" secondItem="N3i-po-e5j" secondAttribute="centerY" constant="20" id="BHQ-4v-h5H"/>
                             <constraint firstAttribute="centerX" secondItem="ciV-7m-bw2" secondAttribute="centerX" id="DLk-gf-CHj"/>
                             <constraint firstItem="ciV-7m-bw2" firstAttribute="top" secondItem="N3i-po-e5j" secondAttribute="bottom" constant="8" id="UwK-ct-z64"/>
+                            <constraint firstItem="2oo-Xs-pWp" firstAttribute="top" secondItem="N3i-po-e5j" secondAttribute="bottom" constant="34" id="ggE-c6-KDl"/>
+                            <constraint firstAttribute="centerX" secondItem="2oo-Xs-pWp" secondAttribute="centerX" id="zhD-VN-OwQ"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="vI3-zT-vpg" appends="YES" id="yUX-PL-R15"/>
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="affectionLabel" destination="2oo-Xs-pWp" id="XuV-6J-NBv"/>
                         <outlet property="healthBar" destination="ciV-7m-bw2" id="DK1-pz-yw5"/>
                         <outlet property="petImageView" destination="N3i-po-e5j" id="HiS-UB-NBp"/>
                     </connections>

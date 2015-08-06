@@ -19,9 +19,7 @@ class PetViewController: UIViewController {
     @IBOutlet weak var instructionLabel: UILabel!
     var brightness: Double = 0
     //MARK: State
-    
-    @IBOutlet weak var affectionLabel: UIButton!
-    
+
     enum State: String, Printable {
         case Defend = "Defend" //alarm going off
         case Play = "Play"
@@ -100,13 +98,16 @@ class PetViewController: UIViewController {
             if let alarm = alarm{
                 if (alarm.isSet) {
                     mainView.toggleAlarm.selected = false
-                    mainView.alarmTime.hidden = false
-                    mainView.alarmTime.text = dateFormatter.stringFromDate(alarm.time)
+                    
+                    mainView.alarmTime.textColor = UIColor.whiteColor()
                 }
                 else {
                     mainView.toggleAlarm.selected = true
-                    mainView.alarmTime.hidden = true
+                    
+                    mainView.alarmTime.textColor = UIColor.grayColor()
                 }
+                mainView.alarmTime.hidden = false
+                mainView.alarmTime.text = dateFormatter.stringFromDate(alarm.time)
                 instructionLabel.hidden = true
             }
                 //if no alarm is set yet
@@ -120,7 +121,7 @@ class PetViewController: UIViewController {
                 RealmHelper.saveRealmAlarm(alarm!)
                 instructionLabel.hidden = false
             }
-            affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
+            
         }
         
         //mainView.winLabel.hidden = true
@@ -131,7 +132,7 @@ class PetViewController: UIViewController {
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             println("Defending")
             childViewController!.createGhosts()
-         
+            
             //update pet health
             
         case .Play:

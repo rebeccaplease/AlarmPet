@@ -29,6 +29,8 @@ class GhostViewController: UIViewController{
     
     var stationary: Bool = false
     
+    @IBOutlet weak var affectionLabel: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         healthBar.progress = 1.0
@@ -44,6 +46,7 @@ class GhostViewController: UIViewController{
         super.viewWillAppear(animated)
         
         pet = RealmHelper.getRealmPet()
+        affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
     }
     
     func getGhostCount() -> Int{
@@ -229,9 +232,11 @@ class GhostViewController: UIViewController{
         
         // pet!.health -= 5
         
-        self.healthBar.setProgress(self.healthBar.progress-0.02, animated: false)
+        self.healthBar.setProgress(self.healthBar.progress-0.04, animated: false)
         if healthBar.progress <= 0 {
             displayDeadAlert()
+            
+            RealmHelper.resetPet()
         }
         
         println("attack!: \(dateFormatter.stringFromDate(NSDate()))")
@@ -292,9 +297,9 @@ class GhostViewController: UIViewController{
                 
                 RealmHelper.updateRealmPet(affection: 5)
                 
-                println("\(petVC!)")
+               
                 
-                petVC!.affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
+                affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
                 petVC!.currentState = .Play
                 
                 println("You win!")
@@ -359,7 +364,9 @@ class GhostViewController: UIViewController{
             handler: {action in
                 
                 self.healthBar.setProgress(1.0, animated: true)
-                self.petVC!.affectionLabel.setTitle("0 :(", forState: UIControlState.Normal)
+                self.affectionLabel.setTitle("0 :(", forState: UIControlState.Normal)
+                
+                
         }))
         
         
