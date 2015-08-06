@@ -125,8 +125,8 @@ class GhostViewController: UIViewController{
                     else if (random == 2){
                         x += offset
                     }
-                   
-                   else if( random == 3) {
+                        
+                    else if( random == 3) {
                         y -= offset
                     }
                     else {
@@ -201,20 +201,22 @@ class GhostViewController: UIViewController{
             },
             completion: { action in
                 //attack pet
-                var ghost = self.ghostArray![self.attackIndex]
-                if( ghost.imageView.hidden == false) {
-                    
-                    
-                    println("fire date: \(self.dateFormatter.stringFromDate(ghost.timer.fireDate))")
-                    ghost.timer.fireDate = NSDate()
-                    NSRunLoop.currentRunLoop().addTimer(ghost.timer, forMode: NSDefaultRunLoopMode)
-                    println("fire date after: \(self.dateFormatter.stringFromDate(ghost.timer.fireDate))")
-                    
-                    println("attack index: \(self.attackIndex)")
-                    println("time: \(self.dateFormatter.stringFromDate(NSDate()))")
-                    
+                if let ghostArray = self.ghostArray {
+                    var ghost = self.ghostArray![self.attackIndex]
+                    if( ghost.imageView.hidden == false) {
+                        
+                        
+                        println("fire date: \(self.dateFormatter.stringFromDate(ghost.timer.fireDate))")
+                        ghost.timer.fireDate = NSDate()
+                        NSRunLoop.currentRunLoop().addTimer(ghost.timer, forMode: NSDefaultRunLoopMode)
+                        println("fire date after: \(self.dateFormatter.stringFromDate(ghost.timer.fireDate))")
+                        
+                        println("attack index: \(self.attackIndex)")
+                        println("time: \(self.dateFormatter.stringFromDate(NSDate()))")
+                        
+                    }
+                    self.attackIndex++
                 }
-                self.attackIndex++
         })
         self.currentIndex++
     }

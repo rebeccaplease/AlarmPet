@@ -43,7 +43,8 @@ class PetViewController: UIViewController {
                 currentState  = .Play
             case .Defend:
                 
-                NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
+                NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
+                UIScreen.mainScreen().brightness = 0
                 
             default:
                 println("default")
@@ -53,7 +54,7 @@ class PetViewController: UIViewController {
     }
     
     func increaseBrightness(timer: NSTimer) {
-        brightness += 0.05
+        brightness += 0.005
         UIScreen.mainScreen().brightness = CGFloat(brightness)
         if brightness >= 1.0 {
             timer.invalidate()
