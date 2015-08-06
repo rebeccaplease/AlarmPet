@@ -57,7 +57,7 @@ class GhostViewController: UIViewController{
                 
                 NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
                 UIScreen.mainScreen().brightness = 0
-                petImageView.userInteractionEnabled = true
+                petImageView.userInteractionEnabled = false
             default:
                 println("default")
                 petImageView.userInteractionEnabled = true
@@ -92,7 +92,7 @@ class GhostViewController: UIViewController{
     func healPet(recognizer: UIPanGestureRecognizer) {
         var velocity = recognizer.velocityInView(self.view)
         if velocity.x > 0 || velocity.y > 0 {
-            healthBar.progress += 0.0001
+            healthBar.progress += 0.001
             println("healing")
         }
     }
@@ -145,6 +145,7 @@ class GhostViewController: UIViewController{
                 
                 
                 if !stationary {
+                    
                     var random: Int = Int(arc4random_uniform(3))
                     if( random == 1) {
                         x = 0
@@ -165,6 +166,8 @@ class GhostViewController: UIViewController{
                     else {
                         y = self.view.bounds.width/2
                     }
+
+                    
                 }
                 
                 //if ghosts do not move
@@ -175,7 +178,7 @@ class GhostViewController: UIViewController{
                     x = self.view.center.x - size/2
                     y = self.view.center.y - size
                     var offset = CGFloat(75)
-                    
+                    /*
                     var random: Int = Int(arc4random_uniform(4))
                     if( random == 1) {
                         x -= offset
@@ -190,7 +193,20 @@ class GhostViewController: UIViewController{
                     else {
                         y += offset
                     }
-                    
+                    */
+                   
+                    if index == 7 {
+                        x -= offset
+                    }
+                    else if index == 8 {
+                        x += offset
+                    }
+                    else if index == 9 {
+                        y -= offset
+                    }
+                    else if index == 10 {
+                        y += offset
+                    }
                 }
                     
                 else {
@@ -212,9 +228,14 @@ class GhostViewController: UIViewController{
                 println("\(ghostArray!.count)")
                 
                 //draw stationary ghosts
-                if index > ghostArrayCount/2 {
+                /*if index >ghostArrayCount/2 {
                     stationary = true
                 }
+                */
+                if index == 6 {
+                    stationary = true
+                }
+                
             }
         }
     }
@@ -223,14 +244,10 @@ class GhostViewController: UIViewController{
     //after a delay, show ghost and move it
     func move(timer: NSTimer) {
         
-        /*var sizeRect = UIScreen.mainScreen().applicationFrame
-        var x = sizeRect.size.width/2
-        var y = sizeRect.size.height/2*/
-        
         var x = self.view.center.x - size/2
         var y = self.view.center.y - size
         
-        var random: Int = Int(arc4random_uniform(2))
+        /*var random: Int = Int(arc4random_uniform(2))
         if( random < 1) {
             x -= 50
         }
@@ -243,11 +260,40 @@ class GhostViewController: UIViewController{
         }
         else {
             y += 50
+        }*/
+        
+        if currentIndex == 0 {
+            x -= 50
+            y -= 50
         }
+        else if currentIndex == 1 {
+            x -= 50
+            y += 50
+        }
+        else if currentIndex == 2 {
+            x += 50
+            y -= 50
+        }
+        else if currentIndex == 3 {
+            x += 50
+            y += 50
+        }
+        else if currentIndex == 4 {
+            x += 75
+            y += 75
+        }
+        else if currentIndex == 5 {
+            x -= 75
+            y += 75
+        }
+        else if currentIndex == 6 {
+            x -= 75
+            y -= 75
+        }
+        
         
         var position = CGRect(origin: CGPoint(x: CGFloat(x), y: CGFloat(y)), size: CGSize(width: size, height: size))
         
-        //var position = CGRectMake(x, y, size, size)
         
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
             //show ghost and move it
