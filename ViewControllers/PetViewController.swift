@@ -15,6 +15,9 @@ class PetViewController: UIViewController {
     var alarm: Alarm?
     var childViewController: GhostViewController?
     var mainView: MainView?
+    
+    @IBOutlet weak var instructionLabel: UILabel!
+    var brightness: Double = 0
     //MARK: State
     
     @IBOutlet weak var affectionLabel: UIButton!
@@ -38,12 +41,24 @@ class PetViewController: UIViewController {
             case .Win:
                 //displayWinAlert()
                 currentState  = .Play
+            case .Defend:
+                
+                NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
+                
             default:
                 println("default")
             }
         }
+        
     }
     
+    func increaseBrightness(timer: NSTimer) {
+        brightness += 0.05
+        UIScreen.mainScreen().brightness = CGFloat(brightness)
+        if brightness >= 1.0 {
+            timer.invalidate()
+        }
+    }
     
     
     //MARK: View Loading
@@ -77,6 +92,7 @@ class PetViewController: UIViewController {
         else {
             pet = Pet()
             RealmHelper.saveRealmPet(pet!)
+            
         }
         
         if let mainView = mainView {
@@ -90,6 +106,7 @@ class PetViewController: UIViewController {
                     mainView.toggleAlarm.selected = true
                     mainView.alarmTime.hidden = true
                 }
+                instructionLabel.hidden = true
             }
                 //if no alarm is set yet
             else {
@@ -100,7 +117,9 @@ class PetViewController: UIViewController {
                 mainView.toggleAlarm.hidden = true
                 alarm = Alarm()
                 RealmHelper.saveRealmAlarm(alarm!)
+                instructionLabel.hidden = false
             }
+            affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
         }
         
         //mainView.winLabel.hidden = true
@@ -110,18 +129,13 @@ class PetViewController: UIViewController {
         case .Defend:
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             println("Defending")
-            //Ghost.createGhosts(self, ghostCount: Ghost.getGhostCount())
-            //Ghost.createGhosts(self)
             childViewController!.createGhosts()
-            
-            //Ghost.createGhosts(self.window!.visibleViewController()!, ghostCount: RealmHelper.getRealmState()!.remainingGhosts)
-            
+         
             //update pet health
             
         case .Play:
-            //Ghost.updateGhostArray(nil)
             
-            childViewController!.updateGhostArray(nil)            //Ghost.updateGhostArray(nil)
+            childViewController!.updateGhostArray(nil)
             
             println("Playing")
         default:
@@ -217,6 +231,7 @@ class PetViewController: UIViewController {
         else if segue.identifier == "showPetAndGhosts" {
             childViewController = segue.destinationViewController as? GhostViewController
             childViewController!.petVC = self
+            println("\(childViewController)")
             
         }
         else if segue.identifier == "about" {
@@ -233,6 +248,8 @@ class PetViewController: UIViewController {
         if (segue.identifier == "Save") {
             let alarmVC = segue.sourceViewController as! AlarmViewController
             alarm = alarmVC.alarm
+            
+            instructionLabel.hidden = true
             
             mainView.toggleAlarm.selected = false
             mainView.alarmTime.hidden = false

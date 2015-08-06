@@ -22,6 +22,7 @@ class GhostViewController: UIViewController{
     var currentIndex: Int = 0
     var ghostArrayCount = 10
     var attackIndex = 0
+    
     var petVC: PetViewController?
     
     var ghostArray:[ Ghost ]? = nil
@@ -35,6 +36,12 @@ class GhostViewController: UIViewController{
         let swipe = UISwipeGestureRecognizer()
         swipe.addTarget(self, action: "healPet:")
         petImageView.addGestureRecognizer(swipe)
+        
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         pet = RealmHelper.getRealmPet()
     }
@@ -98,7 +105,7 @@ class GhostViewController: UIViewController{
                 temp.imageView.frame = CGRectMake(x, x, dimensions, dimensions)
                 
                 ghostArray!.append(temp)
-              
+                
                 self.view.addSubview(ghostArray![index].imageView)
                 
                 println("\(ghostArray!.count)")
@@ -183,7 +190,7 @@ class GhostViewController: UIViewController{
         println("attack!: \(dateFormatter.stringFromDate(NSDate()))")
     }
     
-   
+    
     //MARK: Gesture Recognizer Methods
     func detectTap(gesture: UITapGestureRecognizer) -> Int{
         
@@ -224,7 +231,7 @@ class GhostViewController: UIViewController{
             
             if ghostArrayCount == 0 {
                 //RealmHelper.currentState = .Play
-                RealmHelper.updateRealmState("Win")
+                RealmHelper.updateRealmState("Play")
                 
                 displayWinAlert()
                 
@@ -238,8 +245,10 @@ class GhostViewController: UIViewController{
                 
                 RealmHelper.updateRealmPet(affection: 5)
                 
-                petVC!.affectionLabel.setTitle("\(pet!.affection + 5)", forState: UIControlState.Normal)
+                println("\(petVC!)")
                 
+                petVC!.affectionLabel.setTitle("\(pet!.affection + 5)", forState: UIControlState.Normal)
+                petVC!.currentState = .Play
                 
                 println("You win!")
                 
@@ -265,9 +274,16 @@ class GhostViewController: UIViewController{
         
         if healthBar.progress <= 0 {
             displayDeadAlert()
+            
+            //show dead pet image
+            //update in realm
+            RealmHelper.resetPet()
+            //remove ghosts (have them carry off pet?)
+            
         }
-        
-        RealmHelper.updateRealmPet(Int(health*100))
+        else {
+            RealmHelper.updateRealmPet(Int(health*100))
+        }
     }
     
     //MARK: Alerts
@@ -293,7 +309,11 @@ class GhostViewController: UIViewController{
         
         alertController.addAction(UIAlertAction(title: "Revive Pet",
             style: UIAlertActionStyle.Default,
-            handler: nil))
+            handler: {action in
+             
+                self.healthBar.setProgress(1.0, animated: true)
+                self.petVC!.affectionLabel.setTitle("0 :(", forState: UIControlState.Normal)
+        }))
         
         
         /*alertController.addAction(UIAlertAction(title: "Go to Funeral",

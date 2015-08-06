@@ -21,14 +21,14 @@ class AlarmViewController: UIViewController {
         //set default seconds to zero
         //if time is before today, set to next day
         //on and off alarms
-       
+        
         println("saveButtonPressed")
         if let newAlarm = alarm{
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
             RealmHelper.updateRealmAlarm(time: newAlarm.time, isSet: true)
             RealmHelper.updateRealmAlarmDidWin(false)
-           //fix this for runtime
+            //fix this for runtime
             alarm = RealmHelper.getRealmAlarm()
         }
         else {
@@ -38,19 +38,6 @@ class AlarmViewController: UIViewController {
             RealmHelper.saveRealmAlarm(a)
             alarm = RealmHelper.getRealmAlarm()
         }
-        
-        /*
-        if !alarm!.dailyWin {
-            if let dailyWinDate = alarm!.dailyWinDate {
-                //RealmHelper.updateRealmAlarm(dailyWinDate: same date as alarm , dailyWin: false)
-            }
-            else {
-                
-            }
-        }
-        else {
-            
-        }*/
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -64,14 +51,17 @@ class AlarmViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         println("viewDidLoadAlarm")
-        // Do any additional setup after loading the view, typically from a nib.
         //set to display times
         datePicker.datePickerMode = UIDatePickerMode.Time
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         let currentDate = NSDate()
         //default to current time
         datePicker.date = currentDate
-        
-        // navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     override func didReceiveMemoryWarning() {

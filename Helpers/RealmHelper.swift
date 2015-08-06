@@ -218,5 +218,17 @@ class RealmHelper {
         let pet = getRealmPet()!
         return (pet.x, pet.y)
     }
-
+    
+    static func resetPet() {
+        let realm = Realm()
+        var pet = getRealmPet()
+        if let pet = pet {
+            realm.write{
+                
+                pet.health = 100
+                pet.affection = 0
+                
+            }
+        }
+    }
 }
