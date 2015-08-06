@@ -17,18 +17,6 @@ class PetViewController: UIViewController {
     var mainView: MainView?
     
     @IBOutlet weak var instructionLabel: UILabel!
-    var brightness: Double = 0
-    //MARK: State
-
-    
-    func increaseBrightness(timer: NSTimer) {
-        brightness += 0.005
-        UIScreen.mainScreen().brightness = CGFloat(brightness)
-        if brightness >= 1.0 {
-            timer.invalidate()
-        }
-    }
-    
     
     //MARK: View Loading
     

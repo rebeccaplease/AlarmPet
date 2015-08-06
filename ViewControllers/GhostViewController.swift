@@ -28,6 +28,9 @@ class GhostViewController: UIViewController{
     
     var stationary: Bool = false
     
+    var brightness: Double = 0
+    
+    
     @IBOutlet weak var affectionLabel: UIButton!
     
     
@@ -52,9 +55,9 @@ class GhostViewController: UIViewController{
                 currentState  = .Play
             case .Defend:
                 
-                NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
+                NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
                 UIScreen.mainScreen().brightness = 0
-                
+                petImageView.userInteractionEnabled = true
             default:
                 println("default")
                 petImageView.userInteractionEnabled = true
@@ -63,20 +66,35 @@ class GhostViewController: UIViewController{
         
     }
     
+    func increaseBrightness(timer: NSTimer) {
+        brightness += 0.0025
+        UIScreen.mainScreen().brightness = CGFloat(brightness)
+        if brightness >= 1.0 {
+            timer.invalidate()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         healthBar.progress = 1.0
         
-        let swipe = UISwipeGestureRecognizer()
+        /*let swipe = UISwipeGestureRecognizer()
         swipe.addTarget(self, action: "healPet:")
+        swipe.direction = .Left | .Right | .Up | .Down
         petImageView.addGestureRecognizer(swipe)
+        */
         
-        
+        let pan = UIPanGestureRecognizer()
+        pan.addTarget(self, action: "healPet:")
+        petImageView.addGestureRecognizer(pan)
     }
     
-    func healPet(recognizer: UISwipeGestureRecognizer) {
-        healthBar.progress += 0.05
-        println("healing")
+    func healPet(recognizer: UIPanGestureRecognizer) {
+        var velocity = recognizer.velocityInView(self.view)
+        if velocity.x > 0 || velocity.y > 0 {
+            healthBar.progress += 0.0001
+            println("healing")
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -334,7 +352,7 @@ class GhostViewController: UIViewController{
                 
                 RealmHelper.updateRealmPet(affection: 5)
                 
-               
+                
                 
                 affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
                 currentState = .Play
@@ -376,7 +394,7 @@ class GhostViewController: UIViewController{
     func displayWinAlert() {
         
         let alertController = UIAlertController(title: "Congratulations!",
-            message: "You defeated all the ghosts",
+            message: "You defeated all the ghosts. Affection +5",
             preferredStyle: UIAlertControllerStyle.Alert)
         
         alertController.addAction(UIAlertAction(title: "Yay!",
