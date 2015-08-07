@@ -18,6 +18,7 @@ class PetViewController: UIViewController {
     
     @IBOutlet weak var instructionLabel: UILabel!
     
+    @IBOutlet weak var aboutButton: UIButton!
     //MARK: View Loading
     
     override func viewDidLoad() {
@@ -187,13 +188,24 @@ class PetViewController: UIViewController {
             
             //pass alarm to alarmViewController
             alarmViewController.alarm = alarm
+            
+            mainView!.setAlarm.hidden = true
+            
+            instructionLabel.hidden = true
+            
+            aboutButton.hidden = true
         }
         else if segue.identifier == "showPetAndGhosts" {
             childViewController = segue.destinationViewController as? GhostViewController
             println("\(childViewController)")
             
+            
+            
         }
         else if segue.identifier == "about" {
+            
+
+            
             // let aboutVC = segue.destinationViewController as! AboutViewController
         }
     }
@@ -201,8 +213,9 @@ class PetViewController: UIViewController {
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         println("unwinding")
         
-        let mainView = self.view as! MainView
-        
+        mainView!.setAlarm.hidden = false
+        aboutButton.hidden = false
+
         
         if (segue.identifier == "Save") {
             let alarmVC = segue.sourceViewController as! AlarmViewController
@@ -210,11 +223,12 @@ class PetViewController: UIViewController {
             
             instructionLabel.hidden = true
             
-            mainView.toggleAlarm.selected = false
-            mainView.alarmTime.hidden = false
-            mainView.toggleAlarm.hidden = false
             
-            mainView.alarmTime.text = dateFormatter.stringFromDate(alarmVC.datePicker.date)
+            mainView!.toggleAlarm.selected = false
+            mainView!.alarmTime.hidden = false
+            mainView!.toggleAlarm.hidden = false
+            
+            mainView!.alarmTime.text = dateFormatter.stringFromDate(alarmVC.datePicker.date)
             
             println("alarm set!")
         }

@@ -8,10 +8,15 @@
 
 import UIKit
 
-class AlarmViewController: UIViewController {
+
+class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     var alarm: Alarm?
+    
+    var pickerData: [String] = ["ShipBell", "test1", "test2"]
     //MARK: Date functions
+    
+    @IBOutlet weak var soundPicker: UIPickerView!
     
     @IBOutlet weak var datePicker: UIDatePicker!
     
@@ -22,10 +27,12 @@ class AlarmViewController: UIViewController {
         //if time is before today, set to next day
         //on and off alarms
         
+        var sound = pickerData![soundPicker.selectedRowInComponent(0)]
+        
         println("saveButtonPressed")
         if let newAlarm = alarm{
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: newAlarm)
+            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, soundName: sound)
             RealmHelper.updateRealmAlarm(time: newAlarm.time, isSet: true)
             RealmHelper.updateRealmAlarmDidWin(false)
             //fix this for runtime
@@ -34,7 +41,7 @@ class AlarmViewController: UIViewController {
         else {
             let a = Alarm()
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, alarm: a)
+            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, soundName: sound)
             RealmHelper.saveRealmAlarm(a)
             alarm = RealmHelper.getRealmAlarm()
         }
@@ -54,6 +61,9 @@ class AlarmViewController: UIViewController {
         //set to display times
         datePicker.datePickerMode = UIDatePickerMode.Time
         
+        
+        self.soundPicker.delegate = self
+        self.soundPicker.dataSource = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -68,5 +78,25 @@ class AlarmViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
 }
 
+extension AlarmViewController: UIPickerViewDelegate {
+    
+}
+
+extension AlarmViewController: UIPickerViewDataSource {
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData!.count
+    }
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        return pickerData![row]
+    }
+    
+}

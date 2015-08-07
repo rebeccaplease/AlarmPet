@@ -16,11 +16,5 @@ class MainView: UIView {
     
     @IBOutlet weak var toggleAlarm: UIButton!
   
-    
-    func hideMenu() {
-        setAlarm.hidden = true
-        alarmTime.hidden = true
-        toggleAlarm.hidden = true
-    }
-    
+
 }

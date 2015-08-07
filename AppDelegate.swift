@@ -14,10 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     var window: UIWindow?
-    //var navController: UINavigationController?
-    
-    //let pet: Pet = RealmHelper.getRealmPet()!
-    
     var petViewController: PetViewController?
     
     //when app is closed/in background, check for launch from push notification

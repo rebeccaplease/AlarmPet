@@ -12,7 +12,7 @@ import UIKit
 class NotificationHelper {
     
     //zero seconds and schedule number of notifications
-    static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int, alarm: Alarm) {
+    static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int, soundName: String) {
         
         var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: dateToFix)
         
@@ -40,7 +40,7 @@ class NotificationHelper {
         for index in 0...numOfNotifications {
             //loop and schedule numOfNotifications notifications, 30 seconds apart
             
-            scheduleNotification(id: index, alarm: fixedDate)
+            scheduleNotification(id: index, alarm: fixedDate, soundName: soundName)
             
             dateComponents.second += 30
             fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
@@ -49,7 +49,7 @@ class NotificationHelper {
     }
     
     //schedule one notification with ID and alarm time
-    static func scheduleNotification(#id: Int, alarm: NSDate){
+    static func scheduleNotification(#id: Int, alarm: NSDate, soundName: String){
         
         println(alarm)
         
@@ -60,7 +60,7 @@ class NotificationHelper {
         notification.timeZone  = NSTimeZone.defaultTimeZone()
         notification.alertBody = "Virtual pet in danger! Health: \(100-id*10)/100"
         notification.alertAction = "open"
-        notification.soundName = "ShipBell.wav"
+        notification.soundName = "\(soundName).wav"
         notification.category = "CATEGORY"
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
