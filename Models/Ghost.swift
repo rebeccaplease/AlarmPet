@@ -17,7 +17,7 @@ class Ghost {
     var imageView: UIImageView
     var timer: NSTimer
     var animation = ["Ghost.png"]
-    var animationImages: [UIImage] = []
+    var animationImages: [UIImage] = [] 
     
     init(id: Int, imageView: UIImageView, timer: NSTimer) {
         self.id = id

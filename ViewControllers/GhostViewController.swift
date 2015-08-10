@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import AVFoundation
 
 class GhostViewController: UIViewController{
     
@@ -30,6 +30,7 @@ class GhostViewController: UIViewController{
     
     var brightness: Double = 0
     
+    var soundFileObject: SystemSoundID = 0
     
     @IBOutlet weak var affectionLabel: UIButton!
     
@@ -59,7 +60,6 @@ class GhostViewController: UIViewController{
             case .Defend:
                 
                 NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
-                //UIScreen.mainScreen().brightness = 0
                 petImageView.userInteractionEnabled = false
                 
                 surpriseLabel.hidden = false
@@ -166,7 +166,7 @@ class GhostViewController: UIViewController{
                     else {
                         y = self.view.bounds.width/2
                     }
-
+                    
                     
                 }
                 
@@ -181,20 +181,20 @@ class GhostViewController: UIViewController{
                     /*
                     var random: Int = Int(arc4random_uniform(4))
                     if( random == 1) {
-                        x -= offset
+                    x -= offset
                     }
                     else if (random == 2){
-                        x += offset
+                    x += offset
                     }
-                        
+                    
                     else if( random == 3) {
-                        y -= offset
+                    y -= offset
                     }
                     else {
-                        y += offset
+                    y += offset
                     }
                     */
-                   
+                    
                     if index == 7 {
                         x -= offset
                     }
@@ -229,7 +229,7 @@ class GhostViewController: UIViewController{
                 
                 //draw stationary ghosts
                 /*if index >ghostArrayCount/2 {
-                    stationary = true
+                stationary = true
                 }
                 */
                 if index == 6 {
@@ -249,17 +249,17 @@ class GhostViewController: UIViewController{
         
         /*var random: Int = Int(arc4random_uniform(2))
         if( random < 1) {
-            x -= 50
+        x -= 50
         }
         else {
-            x += 50
+        x += 50
         }
         random = Int(arc4random_uniform(2))
         if( random < 1) {
-            y -= 50
+        y -= 50
         }
         else {
-            y += 50
+        y += 50
         }*/
         
         if currentIndex == 0 {
@@ -317,8 +317,9 @@ class GhostViewController: UIViewController{
                         
                         println("attack index: \(self.attackIndex)")
                         println("time: \(self.dateFormatter.stringFromDate(NSDate()))")
-                    
+                        
                         ghost.imageView.startAnimating()
+                        
                     }
                     self.attackIndex++
                 }
@@ -333,6 +334,16 @@ class GhostViewController: UIViewController{
         // RealmHelper.updateRealmPet(pet!.health-5)
         
         // pet!.health -= 5
+        
+        
+        // var path: String = NSBundle.mainBundle().pathForResource("attack.mp3", ofType: AVFileTypeMPEGLayer3)!
+        //var pathURL: NSURL = NSURL(fileURLWithPath: path)!
+        
+        let pathURL: NSURL = NSBundle.mainBundle().URLForResource("attack", withExtension: "wav")!
+        AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObject)
+        
+        AudioServicesPlaySystemSound(soundFileObject)
+        
         
         self.healthBar.setProgress(self.healthBar.progress-0.04, animated: false)
         if healthBar.progress <= 0 {
@@ -399,7 +410,7 @@ class GhostViewController: UIViewController{
                 
                 RealmHelper.updateRealmPet(affection: 5)
                 
-                
+                AudioServicesDisposeSystemSoundID(self.soundFileObject)
                 
                 affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
                 currentState = .Play
@@ -448,8 +459,18 @@ class GhostViewController: UIViewController{
             style: UIAlertActionStyle.Default,
             handler: nil))
         
-        self.presentViewController(alertController, animated: true, completion: nil)
-        
+        self.presentViewController(alertController, animated: true, completion: {action in
+            
+            var soundFileObjectApplause: SystemSoundID = 0
+            
+            let pathURL: NSURL = NSBundle.mainBundle().URLForResource("applause", withExtension: "wav")!
+            AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObjectApplause)
+            
+            AudioServicesPlaySystemSound(soundFileObjectApplause)
+            
+            AudioServicesDisposeSystemSoundID(soundFileObjectApplause)
+
+        })
     }
     
     func displayDeadAlert() {
@@ -475,6 +496,15 @@ class GhostViewController: UIViewController{
         
         self.presentViewController(alertController, animated: true, completion: {action in
             self.cancelTimers()
+            
+            var soundFileObjectBoo: SystemSoundID = 0
+            
+            let pathURL: NSURL = NSBundle.mainBundle().URLForResource("boo", withExtension: "wav")!
+            AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObjectBoo)
+            
+            AudioServicesPlaySystemSound(soundFileObjectBoo)
+            
+            AudioServicesDisposeSystemSoundID(soundFileObjectBoo)
         })
     }
     
