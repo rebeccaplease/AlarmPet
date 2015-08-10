@@ -16,12 +16,23 @@ class Ghost {
     //var stoppedMoving: Bool
     var imageView: UIImageView
     var timer: NSTimer
+    var animation = ["Ghost.png"]
+    var animationImages: [UIImage] = []
     
     init(id: Int, imageView: UIImageView, timer: NSTimer) {
         self.id = id
         self.dead = false
+        
         self.imageView = imageView
+        
+        for element in animation {
+            animationImages.append(UIImage(named: element)!)
+        }
+        
+        self.imageView.animationImages = animationImages
+        self.imageView.animationDuration = 0.5
+        
         self.timer = timer
-      // self.stoppedMoving = false
+        
     }
 }

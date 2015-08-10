@@ -311,7 +311,8 @@ class GhostViewController: UIViewController{
                         
                         println("attack index: \(self.attackIndex)")
                         println("time: \(self.dateFormatter.stringFromDate(NSDate()))")
-                        
+                    
+                        ghost.imageView.startAnimating()
                     }
                     self.attackIndex++
                 }

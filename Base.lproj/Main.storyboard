@@ -127,7 +127,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="Pick an alarm sound:">
                                         <attributes>
-                                            <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="17" name="Avenir-Book"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -349,14 +349,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pet" translatesAutoresizingMaskIntoConstraints="NO" id="N3i-po-e5j">
-                                <rect key="frame" x="225" y="124" width="150" height="150"/>
+                                <rect key="frame" x="213" y="111" width="175" height="175"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="bIk-YY-Hhn"/>
-                                    <constraint firstAttribute="width" constant="150" id="ooN-3f-DWp"/>
+                                    <constraint firstAttribute="height" constant="175" id="bIk-YY-Hhn"/>
+                                    <constraint firstAttribute="width" constant="175" id="ooN-3f-DWp"/>
                                 </constraints>
                             </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ciV-7m-bw2">
-                                <rect key="frame" x="240" y="282" width="120" height="4"/>
+                                <rect key="frame" x="240" y="294" width="120" height="4"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="MLH-o8-0nT"/>
                                     <constraint firstAttribute="height" constant="4" id="Zjw-ih-9Tm"/>
@@ -365,12 +365,18 @@
                                 <color key="trackTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oo-Xs-pWp">
-                                <rect key="frame" x="236" y="308" width="128" height="50"/>
+                                <rect key="frame" x="236" y="320" width="128" height="50"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                                 <state key="normal" title=" Affection" image="Affection">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="!!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKF-id-zmo">
+                                <rect key="frame" x="293" y="95" width="15" height="24"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -378,7 +384,9 @@
                             <constraint firstAttribute="centerX" secondItem="N3i-po-e5j" secondAttribute="centerX" id="2rd-Th-nrt"/>
                             <constraint firstAttribute="centerY" secondItem="N3i-po-e5j" secondAttribute="centerY" constant="20" id="BHQ-4v-h5H"/>
                             <constraint firstAttribute="centerX" secondItem="ciV-7m-bw2" secondAttribute="centerX" id="DLk-gf-CHj"/>
+                            <constraint firstAttribute="centerX" secondItem="iKF-id-zmo" secondAttribute="centerX" id="H1C-Hb-cjd"/>
                             <constraint firstItem="ciV-7m-bw2" firstAttribute="top" secondItem="N3i-po-e5j" secondAttribute="bottom" constant="8" id="UwK-ct-z64"/>
+                            <constraint firstItem="N3i-po-e5j" firstAttribute="top" secondItem="iKF-id-zmo" secondAttribute="bottom" constant="-8" id="gYR-PW-cf4"/>
                             <constraint firstItem="2oo-Xs-pWp" firstAttribute="top" secondItem="N3i-po-e5j" secondAttribute="bottom" constant="34" id="ggE-c6-KDl"/>
                             <constraint firstAttribute="centerX" secondItem="2oo-Xs-pWp" secondAttribute="centerX" id="zhD-VN-OwQ"/>
                         </constraints>

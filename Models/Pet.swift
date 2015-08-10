@@ -19,4 +19,6 @@ class Pet: Object {
     
     dynamic var width: Int = 100
     dynamic var height = 100
+    //list of animated images?
+    //dynamic var images: List<NSData> = List<NSData>()
 }

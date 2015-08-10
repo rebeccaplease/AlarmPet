@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import AVFoundation
+import AVFoundation
 
 class PetViewController: UIViewController {
     
@@ -106,13 +106,10 @@ class PetViewController: UIViewController {
         
         //let tap = childViewController!.gestureRecognizers![0] as! UITapGestureRecognizer
         //tap.addTarget(self, action: "tappedScreen:")
-        
-        
-        /*
-        //bind label and button to Alarm?
-        
-        // AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
-        */
+
+       //silenced by ringer switch and lock screen
+       AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategorySoloAmbient, error: nil)
+      
     }
     
     
