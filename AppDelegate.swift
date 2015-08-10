@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //when app is closed/in background, check for launch from push notification
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
+        
         println("didFinishLaunchingWithOptions")
         
         application.setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
     }
-
+    
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -109,7 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var saveState = SaveState()
             
             saveState.state = petViewController!.childViewController!.currentState.description
-      
+            
             RealmHelper.saveRealmState(saveState)
         }
     }
@@ -180,6 +180,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let identifier = identifier {
             switch identifier {
             case "SNOOZE":
+                
+                
                 //dismiss upcoming local notifications
                 //create another set of notifications
                 //play them in 2 minutes from the current time
@@ -188,7 +190,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 println("zzzz snoozing")
                 //**load alarm from here
                 if let alarm = RealmHelper.getRealmAlarm() {
-                    NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, alarm: alarm)
+                    
+                    if let sound = NSUserDefaults.standardUserDefaults().stringForKey("defaultSound") {
+                        NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, soundName: sound)
+                    }
+                    else {
+                        NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, soundName: "ShipBell")
+                    }
                 }
             default: //for DEFEND
                 println("defend")

@@ -56,7 +56,7 @@ class GhostViewController: UIViewController{
             case .Defend:
                 
                 NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
-                UIScreen.mainScreen().brightness = 0
+                //UIScreen.mainScreen().brightness = 0
                 petImageView.userInteractionEnabled = false
             default:
                 println("default")
@@ -77,12 +77,6 @@ class GhostViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         healthBar.progress = 1.0
-        
-        /*let swipe = UISwipeGestureRecognizer()
-        swipe.addTarget(self, action: "healPet:")
-        swipe.direction = .Left | .Right | .Up | .Down
-        petImageView.addGestureRecognizer(swipe)
-        */
         
         let pan = UIPanGestureRecognizer()
         pan.addTarget(self, action: "healPet:")

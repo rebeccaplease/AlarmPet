@@ -27,7 +27,10 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         //if time is before today, set to next day
         //on and off alarms
         
-        var sound = pickerData![soundPicker.selectedRowInComponent(0)]
+        var sound = pickerData[soundPicker.selectedRowInComponent(0)]
+        
+        //set default vaule for sound preferences
+        NSUserDefaults.standardUserDefaults().setObject(sound, forKey: "defaultSound")
         
         println("saveButtonPressed")
         if let newAlarm = alarm{
@@ -93,10 +96,10 @@ extension AlarmViewController: UIPickerViewDataSource {
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData!.count
+        return pickerData.count
     }
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        return pickerData![row]
+        return pickerData[row]
     }
     
 }

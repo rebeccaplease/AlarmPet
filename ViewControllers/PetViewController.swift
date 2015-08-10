@@ -149,7 +149,7 @@ class PetViewController: UIViewController {
                 mainView.alarmTime.textColor = UIColor.whiteColor()
                 mainView.toggleAlarm.selected = false
                 
-                NotificationHelper.handleScheduling(alarm.time, numOfNotifications: 3, delayInSeconds: 0, alarm: alarm)
+                NotificationHelper.handleScheduling(alarm.time, numOfNotifications: 3, delayInSeconds: 0, soundName: "ShipBell")
                 
                 mainView.alarmTime.text = dateFormatter.stringFromDate(alarm.time)
                 
