@@ -398,6 +398,7 @@
                         <outlet property="affectionLabel" destination="2oo-Xs-pWp" id="XuV-6J-NBv"/>
                         <outlet property="healthBar" destination="ciV-7m-bw2" id="DK1-pz-yw5"/>
                         <outlet property="petImageView" destination="N3i-po-e5j" id="HiS-UB-NBp"/>
+                        <outlet property="surpriseLabel" destination="iKF-id-zmo" id="aGA-YT-Z5d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pfn-5V-OQk" userLabel="First Responder" sceneMemberID="firstResponder"/>

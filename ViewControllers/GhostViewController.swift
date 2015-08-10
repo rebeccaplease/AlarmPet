@@ -33,6 +33,7 @@ class GhostViewController: UIViewController{
     
     @IBOutlet weak var affectionLabel: UIButton!
     
+    @IBOutlet weak var surpriseLabel: UILabel!
     
     enum State: String, Printable {
         case Defend = "Defend" //alarm going off
@@ -52,15 +53,20 @@ class GhostViewController: UIViewController{
             switch(currentState) {
             case .Win:
                 //displayWinAlert()
+                surpriseLabel.hidden = true
                 currentState  = .Play
+                
             case .Defend:
                 
                 NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
                 //UIScreen.mainScreen().brightness = 0
                 petImageView.userInteractionEnabled = false
+                
+                surpriseLabel.hidden = false
             default:
                 println("default")
                 petImageView.userInteractionEnabled = true
+                surpriseLabel.hidden = true
             }
         }
         
