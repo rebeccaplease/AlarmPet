@@ -27,10 +27,12 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         //if time is before today, set to next day
         //on and off alarms
         
+        var soundNumber = soundPicker.selectedRowInComponent(0)
         var sound = pickerData[soundPicker.selectedRowInComponent(0)]
         
         //set default vaule for sound preferences
         NSUserDefaults.standardUserDefaults().setObject(sound, forKey: "defaultSound")
+        NSUserDefaults.standardUserDefaults().setObject(soundNumber, forKey: "defaultSoundNumber")
         
         println("saveButtonPressed")
         if let newAlarm = alarm{
@@ -76,6 +78,9 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         //default to current time
         datePicker.date = currentDate
         
+        //returns zero if none saved
+        var soundNumber = NSUserDefaults.standardUserDefaults().integerForKey("defaultSoundNumber")
+            soundPicker.selectRow(soundNumber, inComponent: 0, animated: false)
     }
     
     override func didReceiveMemoryWarning() {
