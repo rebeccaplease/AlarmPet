@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 
 class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -14,6 +15,9 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     var alarm: Alarm?
     
     var pickerData: [String] = ["ShipBell", "funky", "test2"]
+    
+    var soundFileObjectPreview: SystemSoundID = 0
+    
     //MARK: Date functions
     
     @IBOutlet weak var soundPicker: UIPickerView!
@@ -21,6 +25,16 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     @IBOutlet weak var datePicker: UIDatePicker!
     
     @IBOutlet weak var saveButton: UIButton!
+    
+    @IBAction func previewSound(sender: AnyObject) {
+        
+        var sound = pickerData[soundPicker.selectedRowInComponent(0)]
+        
+        let pathURL: NSURL = NSBundle.mainBundle().URLForResource(sound, withExtension: "wav")!
+        AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObjectPreview)
+        
+        AudioServicesPlaySystemSound(soundFileObjectPreview)
+    }
     
     @IBAction func saveButtonPressed(sender: AnyObject) {
         //set default seconds to zero
@@ -51,6 +65,8 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             alarm = RealmHelper.getRealmAlarm()
         }
         
+        AudioServicesDisposeSystemSoundID(soundFileObjectPreview)
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -80,7 +96,7 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
         //returns zero if none saved
         var soundNumber = NSUserDefaults.standardUserDefaults().integerForKey("defaultSoundNumber")
-            soundPicker.selectRow(soundNumber, inComponent: 0, animated: false)
+        soundPicker.selectRow(soundNumber, inComponent: 0, animated: false)
     }
     
     override func didReceiveMemoryWarning() {

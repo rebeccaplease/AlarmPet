@@ -28,7 +28,7 @@ class GhostViewController: UIViewController{
     
     var stationary: Bool = false
     
-    var brightness: Double = 0
+    var brightness: CGFloat = UIScreen.mainScreen().brightness
     
     var soundFileObject: SystemSoundID = 0
     
@@ -75,12 +75,11 @@ class GhostViewController: UIViewController{
                 surpriseLabel.hidden = true
             }
         }
-        
     }
     
     func increaseBrightness(timer: NSTimer) {
         brightness += 0.0025
-        UIScreen.mainScreen().brightness = CGFloat(brightness)
+        UIScreen.mainScreen().brightness = brightness
         if brightness >= 1.0 {
             timer.invalidate()
         }
