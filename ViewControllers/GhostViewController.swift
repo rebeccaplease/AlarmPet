@@ -38,6 +38,8 @@ class GhostViewController: UIViewController{
     
     var currentTime: NSDate = NSDate()
     
+    var soundFileObjectApplause: SystemSoundID = 0
+    
     @IBOutlet weak var affectionLabel: UIButton!
     
     @IBOutlet weak var surpriseLabel: UILabel!
@@ -69,10 +71,13 @@ class GhostViewController: UIViewController{
                 petImageView.userInteractionEnabled = false
                 
                 surpriseLabel.hidden = false
+                
             default:
                 println("default")
                 petImageView.userInteractionEnabled = true
                 surpriseLabel.hidden = true
+                
+                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
             }
         }
     }
@@ -209,22 +214,6 @@ class GhostViewController: UIViewController{
                     x = self.view.center.x - size/2
                     y = self.view.center.y - size
                     var offset = CGFloat(75)
-                    /*
-                    var random: Int = Int(arc4random_uniform(4))
-                    if( random == 1) {
-                    x -= offset
-                    }
-                    else if (random == 2){
-                    x += offset
-                    }
-                    
-                    else if( random == 3) {
-                    y -= offset
-                    }
-                    else {
-                    y += offset
-                    }
-                    */
                     
                     if index == 7 {
                         x -= offset
@@ -238,17 +227,19 @@ class GhostViewController: UIViewController{
                     else if index == 10 {
                         y += offset
                     }
+                
+                    temp.timer.fireDate = NSDate().dateByAddingTimeInterval(delay)
+                    
+                    NSRunLoop.currentRunLoop().addTimer(temp.timer, forMode: NSDefaultRunLoopMode)
                 }
                     
                 else {
+                    
                     NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "move:", userInfo: nil, repeats: false)
                     
                     temp.imageView.userInteractionEnabled = false
                     temp.imageView.hidden = true
                 }
-                
-                
-                //temp.imageView.frame = CGRectMake(x, y, dimensions, dimensions)
                 
                 temp.imageView.frame = CGRect(x: x, y: y, width: size, height: size)
                 
@@ -277,21 +268,6 @@ class GhostViewController: UIViewController{
         
         var x = self.view.center.x - size/2
         var y = self.view.center.y - size
-        
-        /*var random: Int = Int(arc4random_uniform(2))
-        if( random < 1) {
-        x -= 50
-        }
-        else {
-        x += 50
-        }
-        random = Int(arc4random_uniform(2))
-        if( random < 1) {
-        y -= 50
-        }
-        else {
-        y += 50
-        }*/
         
         if currentIndex == 0 {
             x -= 50
@@ -426,7 +402,8 @@ class GhostViewController: UIViewController{
                 //RealmHelper.currentState = .Play
                 RealmHelper.updateRealmState("Play")
                 
-                displayWinAlert()
+                //displayWinAlert()
+                winAlert()
                 
                 ghostArray = nil
                 currentIndex = 0
@@ -477,6 +454,36 @@ class GhostViewController: UIViewController{
     }
     
     //MARK: Alerts
+    
+    func winAlert() {
+        
+        
+        let pathURL: NSURL = NSBundle.mainBundle().URLForResource("applause", withExtension: "wav")!
+        AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObjectApplause)
+        
+        AudioServicesPlaySystemSound(soundFileObjectApplause)
+        
+        
+        var alertView = JSSAlertView().show(self,
+            title: "Congratulations!",
+            text: "You defeated all the ghosts. \n Affection +5",
+            buttonText: "Yay!",
+            color: UIColorFromHex(0x9b59b6,
+            alpha: 1)
+        )
+        
+        alertView.addAction(completionCallback)
+        alertView.setTitleFont("Avenir-Book") // Title font
+        alertView.setTextFont("Avenir-Book") // Alert body text font
+        alertView.setButtonFont("Avenir-Book") // Button text font
+        alertView.setTextTheme(.Light) // can be .Light or .Dark
+        
+    }
+    
+    func completionCallback() {
+        AudioServicesDisposeSystemSoundID(soundFileObjectApplause)
+    }
+    
     func displayWinAlert() {
         
         var soundFileObjectApplause: SystemSoundID = 0
@@ -505,6 +512,7 @@ class GhostViewController: UIViewController{
             
         })
     }
+
     
     func displayDeadAlert() {
         

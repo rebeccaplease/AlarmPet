@@ -10,10 +10,14 @@ import UIKit
 
 class AboutViewController: UIViewController {
     
+    @IBOutlet weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        textView.text = "Make School \nIcon credits: https://icons8.com/license/ \nSounds made in GarageBand\nSpecial thanks to:"
+        
     }
 
     override func didReceiveMemoryWarning() {

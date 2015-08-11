@@ -28,6 +28,7 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     @IBAction func previewSound(sender: AnyObject) {
         
+        AudioServicesDisposeSystemSoundID(soundFileObjectPreview)
         var sound = pickerData[soundPicker.selectedRowInComponent(0)]
         
         let pathURL: NSURL = NSBundle.mainBundle().URLForResource(sound, withExtension: "wav")!
