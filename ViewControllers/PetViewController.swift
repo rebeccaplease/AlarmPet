@@ -226,6 +226,7 @@ class PetViewController: UIViewController {
             mainView!.toggleAlarm.hidden = false
             
             mainView!.alarmTime.text = dateFormatter.stringFromDate(alarmVC.datePicker.date)
+            mainView!.alarmTime.textColor = UIColor.whiteColor()
             
             println("alarm set!")
         }

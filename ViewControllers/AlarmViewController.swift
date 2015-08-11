@@ -13,7 +13,7 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     var alarm: Alarm?
     
-    var pickerData: [String] = ["ShipBell", "test1", "test2"]
+    var pickerData: [String] = ["ShipBell", "funky", "test2"]
     //MARK: Date functions
     
     @IBOutlet weak var soundPicker: UIPickerView!
@@ -75,6 +75,7 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         let currentDate = NSDate()
         //default to current time
         datePicker.date = currentDate
+        
     }
     
     override func didReceiveMemoryWarning() {

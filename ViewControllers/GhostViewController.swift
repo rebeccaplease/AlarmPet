@@ -32,6 +32,12 @@ class GhostViewController: UIViewController{
     
     var soundFileObject: SystemSoundID = 0
     
+    let healPathURL: NSURL = NSBundle.mainBundle().URLForResource("heal", withExtension: "wav")!
+    
+    var soundFileObjectHeal: SystemSoundID = 0
+    
+    var currentTime: NSDate = NSDate()
+    
     @IBOutlet weak var affectionLabel: UIButton!
     
     @IBOutlet weak var surpriseLabel: UILabel!
@@ -90,12 +96,38 @@ class GhostViewController: UIViewController{
     }
     
     func healPet(recognizer: UIPanGestureRecognizer) {
+        
+        
+        //create sound ID
+        if recognizer.state == UIGestureRecognizerState.Began {
+            AudioServicesCreateSystemSoundID(healPathURL as CFURL, &soundFileObjectHeal)
+            AudioServicesPlaySystemSound(soundFileObjectHeal)
+            currentTime = NSDate()
+        }
+        
+        //moving finger
         var velocity = recognizer.velocityInView(self.view)
         if velocity.x > 0 || velocity.y > 0 {
             healthBar.progress += 0.001
             println("healing")
+            
+            println("\(currentTime.timeIntervalSinceNow)")
+            //check within  8 seconds of last sound
+            if currentTime.timeIntervalSinceNow < -8 {
+                AudioServicesPlaySystemSound(soundFileObjectHeal)
+                currentTime = NSDate()
+                println("heal sound")
+            }
+        }
+        
+        //stop playing sound
+        if recognizer.state == UIGestureRecognizerState.Ended {
+            
+            AudioServicesDisposeSystemSoundID(soundFileObjectHeal)
         }
     }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -336,10 +368,7 @@ class GhostViewController: UIViewController{
         // pet!.health -= 5
         
         
-        // var path: String = NSBundle.mainBundle().pathForResource("attack.mp3", ofType: AVFileTypeMPEGLayer3)!
-        //var pathURL: NSURL = NSURL(fileURLWithPath: path)!
-        
-        let pathURL: NSURL = NSBundle.mainBundle().URLForResource("attack", withExtension: "wav")!
+        let pathURL: NSURL = NSBundle.mainBundle().URLForResource("attack2", withExtension: "wav")!
         AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObject)
         
         AudioServicesPlaySystemSound(soundFileObject)
@@ -451,29 +480,37 @@ class GhostViewController: UIViewController{
     //MARK: Alerts
     func displayWinAlert() {
         
+        var soundFileObjectApplause: SystemSoundID = 0
+        
         let alertController = UIAlertController(title: "Congratulations!",
-            message: "You defeated all the ghosts. Affection +5",
+            message: "You defeated all the ghosts. \n Affection +5",
             preferredStyle: UIAlertControllerStyle.Alert)
         
         alertController.addAction(UIAlertAction(title: "Yay!",
             style: UIAlertActionStyle.Default,
-            handler: nil))
+            handler: {action in
+                
+                AudioServicesDisposeSystemSoundID(soundFileObjectApplause)
+        }))
         
         self.presentViewController(alertController, animated: true, completion: {action in
             
-            var soundFileObjectApplause: SystemSoundID = 0
+            
             
             let pathURL: NSURL = NSBundle.mainBundle().URLForResource("applause", withExtension: "wav")!
             AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObjectApplause)
             
             AudioServicesPlaySystemSound(soundFileObjectApplause)
             
-            AudioServicesDisposeSystemSoundID(soundFileObjectApplause)
-
+            
+            
         })
     }
     
     func displayDeadAlert() {
+        
+        var soundFileObjectBoo: SystemSoundID = 0
+        
         let alertController = UIAlertController(title: "Your pet died!",
             message: "Oh no :(",
             preferredStyle: UIAlertControllerStyle.Alert)
@@ -486,7 +523,7 @@ class GhostViewController: UIViewController{
                 self.healthBar.setProgress(1.0, animated: true)
                 self.affectionLabel.setTitle("0 :(", forState: UIControlState.Normal)
                 
-                
+                AudioServicesDisposeSystemSoundID(soundFileObjectBoo)
         }))
         
         
@@ -497,14 +534,13 @@ class GhostViewController: UIViewController{
         self.presentViewController(alertController, animated: true, completion: {action in
             self.cancelTimers()
             
-            var soundFileObjectBoo: SystemSoundID = 0
             
             let pathURL: NSURL = NSBundle.mainBundle().URLForResource("boo", withExtension: "wav")!
             AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObjectBoo)
             
             AudioServicesPlaySystemSound(soundFileObjectBoo)
             
-            AudioServicesDisposeSystemSoundID(soundFileObjectBoo)
+            
         })
     }
     
