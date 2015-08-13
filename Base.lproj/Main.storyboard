@@ -267,7 +267,7 @@
                         <constraints>
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="55" id="3EJ-sh-u5U"/>
                             <constraint firstItem="R7x-R4-hf0" firstAttribute="top" secondItem="v5q-EZ-jC9" secondAttribute="bottom" constant="10" id="Buz-kZ-WQm"/>
-                            <constraint firstAttribute="centerX" secondItem="EhQ-9k-vd0" secondAttribute="centerX" priority="750" id="BxF-W4-jjL"/>
+                            <constraint firstAttribute="centerX" secondItem="EhQ-9k-vd0" secondAttribute="centerX" priority="250" id="BxF-W4-jjL"/>
                             <constraint firstItem="Bfv-kQ-UIg" firstAttribute="centerY" secondItem="WF0-tT-cZO" secondAttribute="centerY" id="E1M-2I-G50"/>
                             <constraint firstItem="cY7-Ay-DKb" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="143" id="J6n-VO-NVe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="R7x-R4-hf0" secondAttribute="trailing" constant="8" id="LjS-PU-9he"/>

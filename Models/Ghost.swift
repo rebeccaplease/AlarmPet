@@ -13,10 +13,11 @@ class Ghost {
     
     var id: Int
     var dead: Bool
-    //var stoppedMoving: Bool
+    
     var imageView: UIImageView
     var timer: NSTimer
     var animation = ["Ghost.png"]
+    
     var animationImages: [UIImage] = [] 
     
     init(id: Int, imageView: UIImageView, timer: NSTimer) {
@@ -26,6 +27,7 @@ class Ghost {
         self.imageView = imageView
         
         for element in animation {
+            //create UIImage from string name
             animationImages.append(UIImage(named: element)!)
         }
         

@@ -69,8 +69,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.cancelAllLocalNotifications()
             println("Defending")
             
+            self.window!.visibleViewController()!.displayDefendAlert()
             petViewController!.childViewController!.updatePetHealth()
             petViewController!.childViewController!.createGhosts()
+            
             
             //update pet health
             
@@ -247,13 +249,12 @@ extension UIViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
         */
         
-        var alertView = JSSAlertView().show(self,
+        var alertView = JSSAlertView().danger(self,
             
             title: "Defend your pet from harm!",
             text: "",
-            buttonText: "Let's go",
-            color: UIColorFromHex(0x9b59b6,
-                alpha: 1)
+            buttonText: "Let's go"
+            
         )
         
         alertView.addAction(completionCallbackSegue)
@@ -266,7 +267,11 @@ extension UIViewController {
     
     func completionCallbackSegue() {
         
+        if let vc = self as? PetViewController{
+            
+        }
+        else {
         self.navigationController?.popToRootViewControllerAnimated(false)
-        
+        }
     }
 }

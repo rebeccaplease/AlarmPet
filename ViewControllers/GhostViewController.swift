@@ -108,15 +108,17 @@ class GhostViewController: UIViewController{
         //moving finger
         var velocity = recognizer.velocityInView(self.view)
         if velocity.x > 0 || velocity.y > 0 {
-            healthBar.progress += 0.001
-            println("healing")
-            
-            println("\(currentTime.timeIntervalSinceNow)")
-            //check within  8 seconds of last sound
-            if currentTime.timeIntervalSinceNow < -8 {
-                AudioServicesPlaySystemSound(soundFileObjectHeal)
-                currentTime = NSDate()
-                println("heal sound")
+            if healthBar.progress >= 1{
+                healthBar.progress += 0.001
+                println("healing")
+                
+                println("\(currentTime.timeIntervalSinceNow)")
+                //check within  8 seconds of last sound
+                if currentTime.timeIntervalSinceNow < -8 {
+                    AudioServicesPlaySystemSound(soundFileObjectHeal)
+                    currentTime = NSDate()
+                    println("heal sound")
+                }
             }
         }
         
@@ -223,7 +225,7 @@ class GhostViewController: UIViewController{
                     else if index == 10 {
                         y += offset
                     }
-                
+                    
                     temp.timer.fireDate = NSDate().dateByAddingTimeInterval(delay)
                     
                     NSRunLoop.currentRunLoop().addTimer(temp.timer, forMode: NSDefaultRunLoopMode)
@@ -471,7 +473,7 @@ class GhostViewController: UIViewController{
             text: "You defeated all the ghosts. \n Affection +5",
             buttonText: "Yay!",
             color: UIColorFromHex(0x9b59b6,
-            alpha: 1)
+                alpha: 1)
         )
         
         alertView.addAction(completionCallbackWin)
@@ -500,7 +502,7 @@ class GhostViewController: UIViewController{
             text: "Oh no :(",
             buttonText: "Revive Pet"
             //color: UIColorFromHex(0x9b59b6,
-              //  alpha: 1)
+            //  alpha: 1)
             
         )
         
@@ -509,7 +511,7 @@ class GhostViewController: UIViewController{
         alertView.setTextFont("Avenir-Book") // Alert body text font
         alertView.setButtonFont("Avenir-Book") // Button text font
         alertView.setTextTheme(.Light) // can be .Light or .Dark
-    
+        
     }
     
     func completionCallbackLose() {
@@ -548,7 +550,7 @@ class GhostViewController: UIViewController{
             
         })
     }
-
+    
     
     func displayDeadAlert() {
         
