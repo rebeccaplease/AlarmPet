@@ -155,7 +155,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             println("Defending")
             petViewController!.childViewController!.createGhosts()
             
-        
+            self.window!.visibleViewController()!.displayDefendAlert()
+            //petViewController!.displayDefendAlert()
+            
+            
         case .Play:
             
             petViewController!.childViewController!.updateGhostArray(nil)
@@ -231,5 +234,39 @@ extension UIWindow {
                 return vc;
             }
         }
+    }
+}
+
+extension UIViewController {
+    
+    func displayDefendAlert() {
+        
+        /* let alertController = UIAlertController(title: "Alert!", message: "Defend your pet from harm!", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.Default, handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        */
+        
+        var alertView = JSSAlertView().show(self,
+            
+            title: "Defend your pet from harm!",
+            text: "",
+            buttonText: "Let's go",
+            color: UIColorFromHex(0x9b59b6,
+                alpha: 1)
+        )
+        
+        alertView.addAction(completionCallbackSegue)
+        alertView.setTitleFont("Avenir-Book") // Title font
+        alertView.setTextFont("Avenir-Book") // Alert body text font
+        alertView.setButtonFont("Avenir-Book") // Button text font
+        alertView.setTextTheme(.Light) // can be .Light or .Dark
+        
+    }
+    
+    func completionCallbackSegue() {
+        
+        self.navigationController?.popToRootViewControllerAnimated(false)
+        
     }
 }

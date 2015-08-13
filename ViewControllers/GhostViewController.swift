@@ -466,6 +466,7 @@ class GhostViewController: UIViewController{
         
         
         var alertView = JSSAlertView().show(self,
+            
             title: "Congratulations!",
             text: "You defeated all the ghosts. \n Affection +5",
             buttonText: "Yay!",
