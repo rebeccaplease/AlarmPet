@@ -16,7 +16,7 @@ class AboutViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        textView.text = "Make School \nIcon credits: https://icons8.com/license/ \nSounds made in GarageBand\nSpecial thanks to:"
+        textView.text = "Make School \nIcon credits: https://icons8.com/license/ \nSounds made in GarageBand\nSpecial thanks to: \n Adam Reis \n Olivia Ross \n Febria \n Eric Kim \n Thuc Tran, and \nDeer"
         
     }
 

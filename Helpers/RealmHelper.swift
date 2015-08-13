@@ -12,6 +12,14 @@ import UIKit
 
 class RealmHelper {
     
+    /**
+    Check conditions and set the current state of the app.
+    If the current time is withing 30 minutes of the alarm time and the alarm is set, put the app in .Defend mode to draw ghosts.
+    
+    :param: currentState    Current state of the app, saved in the GhostViewController
+
+    */
+    
     static func checkState(inout currentState: GhostViewController.State) {
         println("checking state")
         printAllRealmObjects()
@@ -100,18 +108,6 @@ class RealmHelper {
         }
     }
    
-    /*static func updateRealmStateAndGhosts(#gameState: String, numGhosts: Int) {
-        let realm = Realm()
-        var state = getRealmState()
-        if let state = state{
-            realm.write{
-                
-                state.state = gameState
-                state.remainingGhosts = numGhosts
-            }
-        }
-    }*/
-    
     static func saveRealmState(saveState: SaveState) {
         let realm = Realm()
         realm.write {
@@ -182,6 +178,7 @@ class RealmHelper {
             realm.add(pet)
         }
     }
+    
     //health, affection, etc
     static func updateRealmPet(#x: CGFloat,y: CGFloat) {
         let realm = Realm()

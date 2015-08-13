@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else {
             println("not coming from push notification")
             
-            NotificationHelper.registerNotification(application) //have user register notifications (add a previous uialert and move somewhere else)
+            NotificationHelper.registerNotification() //have user register notifications (add a previous uialert and move somewhere else)
         }
         return true
     }
@@ -55,7 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         println("applicationDidBecomeActive")
         
-        //let petVC = self.window!.visibleViewController()! as! PetViewController
         if let petViewController = petViewController {
             
         }
@@ -156,10 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             println("Defending")
             petViewController!.childViewController!.createGhosts()
             
-            //petVC.displayDefendAlert()
-            
-            //update pet health
-            
+        
         case .Play:
             
             petViewController!.childViewController!.updateGhostArray(nil)

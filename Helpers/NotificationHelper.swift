@@ -10,8 +10,16 @@ import Foundation
 import UIKit
 
 class NotificationHelper {
+
+    /**
+    Schedules 'numOfNotifications' notifications, 30 seconds apart. If the time is earlier than today, then set it for the next day
     
-    //zero seconds and schedule number of notifications
+    :param: dateToFix           The time to schedule the alarm. Zeroes the seconds if delayInSeconds is 0.
+    :param: numOfNotifications  The number of notifications to schedule.
+    :param: delayInSeconds      Delay in seconds to schedule the next alarm set. (for snoozing)
+    :param: soundName           Name of alarm sound to play.
+    */
+    
     static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int, soundName: String) {
         
         var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: dateToFix)
@@ -45,10 +53,16 @@ class NotificationHelper {
             dateComponents.second += 30
             fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         }
-        //return saveAlarmTime
     }
     
-    //schedule one notification with ID and alarm time
+    
+    /**
+    Schedule one notification with ID and alarm time
+    
+    :param: id          ID number of alarm.  Used to calculate pet health to display.
+    :param: alarm       The time to schedule the notification.
+    :param: soundName   Name of alarm sound to play.
+    */
     static func scheduleNotification(#id: Int, alarm: NSDate, soundName: String){
         
         println(alarm)
@@ -66,8 +80,12 @@ class NotificationHelper {
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
-    //set up custom notification buttons and register user settings permission (if first launch)
-    static func registerNotification(application: UIApplication) {
+    
+    /**
+    Set up custom notification buttons and register user settings permission for first launch
+
+    */
+    static func registerNotification() {
         
         let openAction = UIMutableUserNotificationAction()
         openAction.identifier = "DEFEND" // the unique identifier for this action
@@ -91,17 +109,15 @@ class NotificationHelper {
         optionsCategory.setActions([snoozeAction, openAction], forContext: UIUserNotificationActionContext.Default) // UIUserNotificationActionContext.Default (4 actions max)
         optionsCategory.setActions([snoozeAction, openAction], forContext: UIUserNotificationActionContext.Minimal) // UIUserNotificationActionContext.Minimal - for when space is limited (2 actions max)
         
-        
         var categories = Set(arrayLiteral: optionsCategory)
         
-        //register for local notifications. ask for user permission (move later)
         var requestedTypes: UIUserNotificationType = UIUserNotificationType.Badge |
             UIUserNotificationType.Alert |
             UIUserNotificationType.Sound
         
         var settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: requestedTypes, categories: categories )
         
-        application.registerUserNotificationSettings(settings)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         
     }
 }

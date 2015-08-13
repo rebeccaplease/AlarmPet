@@ -23,22 +23,18 @@ class GhostViewController: UIViewController{
     var ghostArrayCount = 10
     var attackIndex = 0
     
-    
     var ghostArray:[ Ghost ]? = nil
     
     var stationary: Bool = false
     
     var brightness: CGFloat = UIScreen.mainScreen().brightness
-    
-    var soundFileObject: SystemSoundID = 0
-    
-    let healPathURL: NSURL = NSBundle.mainBundle().URLForResource("heal", withExtension: "wav")!
-    
-    var soundFileObjectHeal: SystemSoundID = 0
-    
     var currentTime: NSDate = NSDate()
     
+    var soundFileObject: SystemSoundID = 0
+    let healPathURL: NSURL = NSBundle.mainBundle().URLForResource("heal", withExtension: "wav")!
+    var soundFileObjectHeal: SystemSoundID = 0
     var soundFileObjectApplause: SystemSoundID = 0
+    var soundFileObjectBoo: SystemSoundID = 0
     
     @IBOutlet weak var affectionLabel: UIButton!
     
@@ -351,7 +347,8 @@ class GhostViewController: UIViewController{
         
         self.healthBar.setProgress(self.healthBar.progress-0.04, animated: false)
         if healthBar.progress <= 0 {
-            displayDeadAlert()
+            cancelTimers()
+            deadAlert()
             
             RealmHelper.resetPet()
         }
@@ -440,7 +437,7 @@ class GhostViewController: UIViewController{
         healthBar.progress = health
         
         if healthBar.progress <= 0 {
-            displayDeadAlert()
+            deadAlert()
             
             //show dead pet image
             //update in realm
@@ -454,6 +451,10 @@ class GhostViewController: UIViewController{
     }
     
     //MARK: Alerts
+    /**
+    Uses JSSAlertView from Jay Stakelon / https://github.com/stakes
+    
+    */
     
     func winAlert() {
         
@@ -472,7 +473,7 @@ class GhostViewController: UIViewController{
             alpha: 1)
         )
         
-        alertView.addAction(completionCallback)
+        alertView.addAction(completionCallbackWin)
         alertView.setTitleFont("Avenir-Book") // Title font
         alertView.setTextFont("Avenir-Book") // Alert body text font
         alertView.setButtonFont("Avenir-Book") // Button text font
@@ -480,9 +481,43 @@ class GhostViewController: UIViewController{
         
     }
     
-    func completionCallback() {
+    func completionCallbackWin() {
+        
         AudioServicesDisposeSystemSoundID(soundFileObjectApplause)
     }
+    
+    func deadAlert() {
+        
+        let pathURL: NSURL = NSBundle.mainBundle().URLForResource("applause", withExtension: "wav")!
+        AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObjectBoo)
+        
+        AudioServicesPlaySystemSound(soundFileObjectBoo)
+        
+        
+        var alertView = JSSAlertView().warning(self,
+            title: "Your pet died!",
+            text: "Oh no :(",
+            buttonText: "Revive Pet"
+            //color: UIColorFromHex(0x9b59b6,
+              //  alpha: 1)
+            
+        )
+        
+        alertView.addAction(completionCallbackLose)
+        alertView.setTitleFont("Avenir-Book") // Title font
+        alertView.setTextFont("Avenir-Book") // Alert body text font
+        alertView.setButtonFont("Avenir-Book") // Button text font
+        alertView.setTextTheme(.Light) // can be .Light or .Dark
+    
+    }
+    
+    func completionCallbackLose() {
+        self.healthBar.setProgress(1.0, animated: true)
+        self.affectionLabel.setTitle("0 :(", forState: UIControlState.Normal)
+        
+        AudioServicesDisposeSystemSoundID(soundFileObjectBoo)
+    }
+    
     
     func displayWinAlert() {
         
