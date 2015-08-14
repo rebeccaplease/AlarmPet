@@ -14,7 +14,7 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     var alarm: Alarm?
     
-    var pickerData: [String] = ["ShipBell", "funky", "test2"]
+    var pickerData: [String] = ["ship bell", "funky", "alarm", "bubbles"]
     
     var soundFileObjectPreview: SystemSoundID = 0
     
@@ -25,6 +25,37 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     @IBOutlet weak var datePicker: UIDatePicker!
     
     @IBOutlet weak var saveButton: UIButton!
+    
+    @IBAction func testButton(sender: AnyObject) {
+        
+        var soundNumber = soundPicker.selectedRowInComponent(0)
+        var sound = pickerData[soundPicker.selectedRowInComponent(0)]
+        
+        //set default vaule for sound preferences
+        NSUserDefaults.standardUserDefaults().setObject(sound, forKey: "defaultSound")
+        NSUserDefaults.standardUserDefaults().setObject(soundNumber, forKey: "defaultSoundNumber")
+        
+        println("testButtonPressed")
+        if let newAlarm = alarm{
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 10, soundName: sound, offsetDay: false)
+            RealmHelper.updateRealmAlarm(time: newAlarm.time, isSet: true)
+            RealmHelper.updateRealmAlarmDidWin(false)
+            //fix this for runtime
+            alarm = RealmHelper.getRealmAlarm()
+        }
+        else {
+            let a = Alarm()
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 10, soundName: sound, offsetDay: false)
+            RealmHelper.saveRealmAlarm(a)
+            alarm = RealmHelper.getRealmAlarm()
+        }
+        
+        AudioServicesDisposeSystemSoundID(soundFileObjectPreview)
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     @IBAction func previewSound(sender: AnyObject) {
         
@@ -52,7 +83,7 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         println("saveButtonPressed")
         if let newAlarm = alarm{
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, soundName: sound)
+            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, soundName: sound, offsetDay: true)
             RealmHelper.updateRealmAlarm(time: newAlarm.time, isSet: true)
             RealmHelper.updateRealmAlarmDidWin(false)
             //fix this for runtime
@@ -61,7 +92,7 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         else {
             let a = Alarm()
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, soundName: sound)
+            NotificationHelper.handleScheduling(datePicker.date, numOfNotifications: 3, delayInSeconds: 0, soundName: sound, offsetDay: true)
             RealmHelper.saveRealmAlarm(a)
             alarm = RealmHelper.getRealmAlarm()
         }

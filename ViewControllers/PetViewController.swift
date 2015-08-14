@@ -22,16 +22,17 @@ class PetViewController: UIViewController {
     //MARK: View Loading
     
     override func viewDidLoad() {
-        
-        //print realm objects**
+
+        //print realm objects
         
         RealmHelper.printAllRealmObjects()
-        //RealmHelper.deleteRealmObjects()
         
         pet = RealmHelper.getRealmPet()
         alarm = RealmHelper.getRealmAlarm()
         
         super.viewDidLoad()
+        
+        
         
         println("View Did Load")
         // Do any additional setup after loading the view.
@@ -99,6 +100,8 @@ class PetViewController: UIViewController {
             childViewController!.updateGhostArray(nil)
             
             println("Playing")
+            
+            
         default:
             println("Default")
         }
@@ -146,7 +149,7 @@ class PetViewController: UIViewController {
                 mainView.alarmTime.textColor = UIColor.whiteColor()
                 mainView.toggleAlarm.selected = false
                 
-                NotificationHelper.handleScheduling(alarm.time, numOfNotifications: 3, delayInSeconds: 0, soundName: "ShipBell")
+                NotificationHelper.handleScheduling(alarm.time, numOfNotifications: 3, delayInSeconds: 0, soundName: "ShipBell", offsetDay: true)
                 
                 mainView.alarmTime.text = dateFormatter.stringFromDate(alarm.time)
                 
@@ -179,11 +182,11 @@ class PetViewController: UIViewController {
             //pass alarm to alarmViewController
             alarmViewController.alarm = alarm
             
-            mainView!.setAlarm.hidden = true
+            //mainView!.setAlarm.hidden = true
             
             instructionLabel.hidden = true
             
-            aboutButton.hidden = true
+            //aboutButton.hidden = true
         }
         else if segue.identifier == "showPetAndGhosts" {
             childViewController = segue.destinationViewController as? GhostViewController
@@ -212,7 +215,6 @@ class PetViewController: UIViewController {
             alarm = alarmVC.alarm
             
             instructionLabel.hidden = true
-            
             
             mainView!.toggleAlarm.selected = false
             mainView!.alarmTime.hidden = false

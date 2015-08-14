@@ -62,19 +62,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.petViewController = self.window!.visibleViewController()! as? PetViewController
         }
         
+        var previousState = petViewController!.childViewController!.currentState
         RealmHelper.checkState(&petViewController!.childViewController!.currentState)
         
         switch petViewController!.childViewController!.currentState {
         case .Defend:
-            application.cancelAllLocalNotifications()
-            println("Defending")
-            
-            self.window!.visibleViewController()!.displayDefendAlert()
-            petViewController!.childViewController!.updatePetHealth()
-            petViewController!.childViewController!.createGhosts()
-            
-            
-            //update pet health
+            //if changing from .Play to .Defend for the first time
+            if previousState != petViewController!.childViewController!.currentState {
+                application.cancelAllLocalNotifications()
+                println("Defending")
+                
+                
+                self.window!.visibleViewController()!.displayDefendAlert()
+                
+                
+                petViewController!.childViewController!.updatePetHealth()
+                petViewController!.childViewController!.createGhosts()
+            }
             
         case .Play:
             
@@ -91,14 +95,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        println("applicationWillResignActive")
-    }
-    
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        println("applicationDidEnterBackground")
+        println("applicationWillResignActive")
         
         if let state = RealmHelper.getRealmState() {
             
@@ -113,6 +111,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             RealmHelper.saveRealmState(saveState)
         }
+        
+    }
+    
+    func applicationDidEnterBackground(application: UIApplication) {
+        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        println("applicationDidEnterBackground")
+        
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
@@ -182,21 +189,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch identifier {
             case "SNOOZE":
                 
-                
                 //dismiss upcoming local notifications
                 //create another set of notifications
                 //play them in 2 minutes from the current time
                 application.cancelAllLocalNotifications()
-                
+            
                 println("zzzz snoozing")
                 //**load alarm from here
                 if let alarm = RealmHelper.getRealmAlarm() {
                     
                     if let sound = NSUserDefaults.standardUserDefaults().stringForKey("defaultSound") {
-                        NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, soundName: sound)
+                        NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, soundName: sound, offsetDay: false)
                     }
                     else {
-                        NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, soundName: "ShipBell")
+                        NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 120, soundName: "ship bell", offsetDay: false)
                     }
                 }
             default: //for DEFEND
@@ -249,7 +255,7 @@ extension UIViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
         */
         
-        var alertView = JSSAlertView().danger(self,
+        var alertView = JSSAlertView().warning(self,
             
             title: "Defend your pet from harm!",
             text: "",
@@ -271,7 +277,7 @@ extension UIViewController {
             
         }
         else {
-        self.navigationController?.popToRootViewControllerAnimated(false)
+            self.navigationController?.popToRootViewControllerAnimated(false)
         }
     }
 }

@@ -63,23 +63,28 @@ class GhostViewController: UIViewController{
                 
             case .Defend:
                 
-                NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
+                NSTimer.scheduledTimerWithTimeInterval(0.025, target: self, selector: "increaseBrightness:", userInfo: nil, repeats: true)
                 petImageView.userInteractionEnabled = false
                 
                 surpriseLabel.hidden = false
                 
-            default:
-                println("default")
+                petImageView.image = UIImage(named: "Pet-Hurt")
+                
+            case .Play:
+                println("PLAY")
                 petImageView.userInteractionEnabled = true
                 surpriseLabel.hidden = true
                 
                 UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                 self.petImageView.image = UIImage(named: "Pet")
+            default:
+                println("default")
             }
         }
     }
     
     func increaseBrightness(timer: NSTimer) {
-        brightness += 0.0025
+        brightness += 0.0001
         UIScreen.mainScreen().brightness = brightness
         if brightness >= 1.0 {
             timer.invalidate()
@@ -97,18 +102,18 @@ class GhostViewController: UIViewController{
     
     func healPet(recognizer: UIPanGestureRecognizer) {
         
-        
-        //create sound ID
-        if recognizer.state == UIGestureRecognizerState.Began {
-            AudioServicesCreateSystemSoundID(healPathURL as CFURL, &soundFileObjectHeal)
-            AudioServicesPlaySystemSound(soundFileObjectHeal)
-            currentTime = NSDate()
-        }
-        
-        //moving finger
-        var velocity = recognizer.velocityInView(self.view)
-        if velocity.x > 0 || velocity.y > 0 {
-            if healthBar.progress >= 1{
+        if healthBar.progress < 1{
+            //create sound ID
+            if recognizer.state == UIGestureRecognizerState.Began {
+                AudioServicesCreateSystemSoundID(healPathURL as CFURL, &soundFileObjectHeal)
+                AudioServicesPlaySystemSound(soundFileObjectHeal)
+                currentTime = NSDate()
+            }
+            
+            //moving finger
+            var velocity = recognizer.velocityInView(self.view)
+            if velocity.x > 0 || velocity.y > 0 {
+                
                 healthBar.progress += 0.001
                 println("healing")
                 
@@ -118,14 +123,15 @@ class GhostViewController: UIViewController{
                     AudioServicesPlaySystemSound(soundFileObjectHeal)
                     currentTime = NSDate()
                     println("heal sound")
+                    
                 }
             }
-        }
-        
-        //stop playing sound
-        if recognizer.state == UIGestureRecognizerState.Ended {
             
-            AudioServicesDisposeSystemSoundID(soundFileObjectHeal)
+            //stop playing sound
+            if recognizer.state == UIGestureRecognizerState.Ended {
+                
+                AudioServicesDisposeSystemSoundID(soundFileObjectHeal)
+            }
         }
     }
     
@@ -356,6 +362,18 @@ class GhostViewController: UIViewController{
         }
         
         println("attack!: \(dateFormatter.stringFromDate(NSDate()))")
+        
+        
+        /*UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
+            
+            self.petImageView.image = UIImage(named: "Pet-Hurt")
+            println("hurt")
+            },
+            completion: { action in
+                self.petImageView.image = UIImage(named: "Pet")
+                println("ok")
+        })
+        */
     }
     
     
@@ -417,6 +435,7 @@ class GhostViewController: UIViewController{
                 AudioServicesDisposeSystemSoundID(self.soundFileObject)
                 
                 affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
+                
                 currentState = .Play
                 
                 println("You win!")
@@ -497,7 +516,7 @@ class GhostViewController: UIViewController{
         AudioServicesPlaySystemSound(soundFileObjectBoo)
         
         
-        var alertView = JSSAlertView().warning(self,
+        var alertView = JSSAlertView().danger(self,
             title: "Your pet died!",
             text: "Oh no :(",
             buttonText: "Revive Pet"

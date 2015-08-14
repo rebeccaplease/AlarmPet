@@ -14,30 +14,39 @@ class NotificationHelper {
     /**
     Schedules 'numOfNotifications' notifications, 30 seconds apart. If the time is earlier than today, then set it for the next day
     
-    :param: dateToFix           The time to schedule the alarm. Zeroes the seconds if delayInSeconds is 0.
+    :param: dateToFix           The time to schedule the alarm.
     :param: numOfNotifications  The number of notifications to schedule.
     :param: delayInSeconds      Delay in seconds to schedule the next alarm set. (for snoozing)
     :param: soundName           Name of alarm sound to play.
+    :param: offsetDay           Zeroes the seconds if true.  If time for today already passed, set for the next day.
     */
     
-    static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int, soundName: String) {
+    static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int, soundName: String, offsetDay: Bool) {
         
-        var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: dateToFix)
+        var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond, fromDate: dateToFix)
         
         //check current day and time. if the time today already passed, set alarm for next day
         //if snoozing, then don't set for next day
         
-        if delayInSeconds == 0 {
+       
+        if offsetDay{
             let currentTime = NSDate()
             if currentTime.isEqualToDate(currentTime.laterDate(dateToFix)) {
                 dateComponents.day += 1
                 println("Set for next day")
             }
+            //normally zero. if snoozing = some value
+            
+            dateComponents.second = delayInSeconds
+        }
+        else {
+            let seconds = dateComponents.second
+            println("\(seconds)")
+            
+            dateComponents.second += delayInSeconds
         }
         
         
-        //normally zero. if snoozing = some value
-        dateComponents.second = delayInSeconds
         
         var fixedDate: NSDate! = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
         
