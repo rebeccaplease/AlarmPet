@@ -225,6 +225,21 @@ class PetViewController: UIViewController {
             
             println("alarm set!")
         }
+        else if (segue.identifier == "Test") {
+            let alarmVC = segue.sourceViewController as! AlarmViewController
+            alarm = alarmVC.alarm
+            
+            instructionLabel.hidden = true
+            
+            mainView!.toggleAlarm.selected = false
+            mainView!.alarmTime.hidden = false
+            mainView!.toggleAlarm.hidden = false
+            
+            mainView!.alarmTime.text = dateFormatter.stringFromDate(alarmVC.datePicker.date)
+            mainView!.alarmTime.textColor = UIColor.whiteColor()
+            
+            println("alarm set!")
+        }
     }
     var dateFormatter: NSDateFormatter = {
         var formatter = NSDateFormatter()

@@ -128,7 +128,7 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
         //returns zero if none saved
         var soundNumber = NSUserDefaults.standardUserDefaults().integerForKey("defaultSoundNumber")
-        soundPicker.selectRow(soundNumber, inComponent: 0, animated: false)
+        //soundPicker.selectRow(soundNumber, inComponent: 0, animated: false)
     }
     
     override func didReceiveMemoryWarning() {
@@ -154,6 +154,25 @@ extension AlarmViewController: UIPickerViewDataSource {
     }
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         return pickerData[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
+        
+        var label = view as? UILabel
+        
+        if (label == nil)
+        {
+           label = UILabel()
+            
+            label?.textColor = UIColor.whiteColor()
+            label?.font = UIFont(name: "Avenir-Book", size: CGFloat(18))
+     
+            label?.textAlignment = NSTextAlignment.Center
+        }
+        
+        label?.text = pickerData[row]
+        
+        return label!
     }
     
 }

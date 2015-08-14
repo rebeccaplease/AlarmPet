@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import AVFoundation
 class NotificationHelper {
 
     /**
@@ -84,9 +84,12 @@ class NotificationHelper {
         notification.alertBody = "Virtual pet in danger! Health: \(100-id*10)/100"
         notification.alertAction = "open"
         notification.soundName = "\(soundName).wav"
+        //AudioServicesPlaySystemSound(1322)
+        //notification.soundName
         notification.category = "CATEGORY"
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
     }
     
     

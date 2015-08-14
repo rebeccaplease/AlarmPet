@@ -53,13 +53,19 @@ class GhostViewController: UIViewController{
     }
     
     var currentState: State = .Play {
+        willSet {
+            switch(currentState) {
+                
+            case .Play:
+                surpriseLabel.hidden = true
+                
+            default:
+                println("default")
+            }
+        }
         
         didSet {
             switch(currentState) {
-            case .Win:
-                //displayWinAlert()
-                surpriseLabel.hidden = true
-                currentState  = .Play
                 
             case .Defend:
                 
@@ -76,7 +82,8 @@ class GhostViewController: UIViewController{
                 surpriseLabel.hidden = true
                 
                 UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-                 self.petImageView.image = UIImage(named: "Pet")
+                self.petImageView.image = UIImage(named: "Pet")
+                
             default:
                 println("default")
             }
@@ -365,13 +372,13 @@ class GhostViewController: UIViewController{
         
         
         /*UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
-            
-            self.petImageView.image = UIImage(named: "Pet-Hurt")
-            println("hurt")
-            },
-            completion: { action in
-                self.petImageView.image = UIImage(named: "Pet")
-                println("ok")
+        
+        self.petImageView.image = UIImage(named: "Pet-Hurt")
+        println("hurt")
+        },
+        completion: { action in
+        self.petImageView.image = UIImage(named: "Pet")
+        println("ok")
         })
         */
     }
@@ -510,7 +517,7 @@ class GhostViewController: UIViewController{
     
     func deadAlert() {
         
-        let pathURL: NSURL = NSBundle.mainBundle().URLForResource("applause", withExtension: "wav")!
+        let pathURL: NSURL = NSBundle.mainBundle().URLForResource("boo", withExtension: "wav")!
         AudioServicesCreateSystemSoundID(pathURL as CFURL, &soundFileObjectBoo)
         
         AudioServicesPlaySystemSound(soundFileObjectBoo)
