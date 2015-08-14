@@ -16,6 +16,10 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     var pickerData: [String] = ["ship bell", "funky", "alarm", "bubbles"]
     
+   /* var hourData: [String]
+    var minuteData: [String]
+    var ampm: [String] = ["AM", "PM"]*/
+    
     var soundFileObjectPreview: SystemSoundID = 0
     
     //MARK: Date functions
@@ -152,9 +156,10 @@ extension AlarmViewController: UIPickerViewDataSource {
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerData.count
     }
+    /*
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         return pickerData[row]
-    }
+    }*/
     
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
         

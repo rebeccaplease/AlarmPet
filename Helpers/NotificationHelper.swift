@@ -23,6 +23,8 @@ class NotificationHelper {
     
     static func handleScheduling(dateToFix: NSDate, numOfNotifications: Int, delayInSeconds: Int, soundName: String, offsetDay: Bool) {
         
+        NSUserDefaults.standardUserDefaults().setInteger(0, forKey: "snoozes")
+        
         var dateComponents: NSDateComponents = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond, fromDate: dateToFix)
         
         //check current day and time. if the time today already passed, set alarm for next day
@@ -54,10 +56,12 @@ class NotificationHelper {
         
         RealmHelper.updateRealmAlarm(time: fixedDate, isSet: true)
         
-        for index in 0...numOfNotifications {
+        for index in 1...numOfNotifications {
             //loop and schedule numOfNotifications notifications, 30 seconds apart
+            var snoozes = NSUserDefaults.standardUserDefaults().integerForKey("snoozes")
             
-            scheduleNotification(id: index, alarm: fixedDate, soundName: soundName)
+            //continuous loop with snoozes
+            scheduleNotification(id: numOfNotifications*snoozes+index, alarm: fixedDate, soundName: soundName)
             
             dateComponents.second += 30
             fixedDate = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
@@ -81,7 +85,7 @@ class NotificationHelper {
         //when notif will appear
         notification.fireDate = alarm
         notification.timeZone  = NSTimeZone.defaultTimeZone()
-        notification.alertBody = "Virtual pet in danger! Health: \(100-id*10)/100"
+        notification.alertBody = "Virtual pet in danger! Health: \(100-(id-1)*10)/100"
         notification.alertAction = "open"
         notification.soundName = "\(soundName).wav"
         //AudioServicesPlaySystemSound(1322)

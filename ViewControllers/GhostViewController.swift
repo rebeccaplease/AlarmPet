@@ -326,15 +326,11 @@ class GhostViewController: UIViewController{
                 if let ghostArray = self.ghostArray {
                     var ghost = self.ghostArray![self.attackIndex]
                     if( ghost.imageView.hidden == false) {
-                        
-                        
-                        println("fire date: \(self.dateFormatter.stringFromDate(ghost.timer.fireDate))")
+                    
                         ghost.timer.fireDate = NSDate()
                         NSRunLoop.currentRunLoop().addTimer(ghost.timer, forMode: NSDefaultRunLoopMode)
-                        println("fire date after: \(self.dateFormatter.stringFromDate(ghost.timer.fireDate))")
                         
                         println("attack index: \(self.attackIndex)")
-                        println("time: \(self.dateFormatter.stringFromDate(NSDate()))")
                         
                         ghost.imageView.startAnimating()
                         
@@ -370,18 +366,16 @@ class GhostViewController: UIViewController{
         
         println("attack!: \(dateFormatter.stringFromDate(NSDate()))")
         
-        
-        /*UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
-        
         self.petImageView.image = UIImage(named: "Pet-Hurt")
-        println("hurt")
-        },
-        completion: { action in
-        self.petImageView.image = UIImage(named: "Pet")
-        println("ok")
-        })
-        */
+        
+        NSTimer.scheduledTimerWithTimeInterval(0.35, target: self, selector: "revertImage:", userInfo: nil, repeats: false)
+        
     }
+    
+    func revertImage(timer: NSTimer) {
+        self.petImageView.image = UIImage(named: "Pet")
+    }
+    
     
     
     //MARK: Gesture Recognizer Methods

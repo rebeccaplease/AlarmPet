@@ -193,6 +193,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 //create another set of notifications
                 //play them in 2 minutes from the current time
                 application.cancelAllLocalNotifications()
+                
+                var numSnoozes = NSUserDefaults.standardUserDefaults().integerForKey("snoozes")
+                
+                NSUserDefaults.standardUserDefaults().setInteger(numSnoozes + 1, forKey: "snoozes")
             
                 println("zzzz snoozing")
                 //**load alarm from here
