@@ -121,10 +121,12 @@ class GhostViewController: UIViewController{
             var velocity = recognizer.velocityInView(self.view)
             if velocity.x > 0 || velocity.y > 0 {
                 
-                healthBar.progress += 0.001
-                println("healing")
+                self.petImageView.image = UIImage(named: "Pet-Happy")
                 
-                println("\(currentTime.timeIntervalSinceNow)")
+                healthBar.progress += 0.001
+                //println("healing")
+                
+                //println("\(currentTime.timeIntervalSinceNow)")
                 //check within  8 seconds of last sound
                 if currentTime.timeIntervalSinceNow < -8 {
                     AudioServicesPlaySystemSound(soundFileObjectHeal)
@@ -134,11 +136,12 @@ class GhostViewController: UIViewController{
                 }
             }
             
-            //stop playing sound
-            if recognizer.state == UIGestureRecognizerState.Ended {
-                
-                AudioServicesDisposeSystemSoundID(soundFileObjectHeal)
-            }
+        }
+        //stop playing sound
+        if recognizer.state == UIGestureRecognizerState.Ended {
+            
+            AudioServicesDisposeSystemSoundID(soundFileObjectHeal)
+            self.petImageView.image = UIImage(named: "Pet")
         }
     }
     
@@ -162,6 +165,7 @@ class GhostViewController: UIViewController{
     //draw ghosts
     func createGhosts(){
         
+        
         //if there are already ghosts in the ghostArray
         if var ghostArray = ghostArray {
             return
@@ -170,8 +174,14 @@ class GhostViewController: UIViewController{
         else {
             
             let tap = self.view.gestureRecognizers![0] as! UITapGestureRecognizer
+            let swipe = self.view.gestureRecognizers![1] as! UIPanGestureRecognizer
+            
+            
             tap.addTarget(self, action: "tappedGhost:")
             self.view.addGestureRecognizer(tap)
+            
+            swipe.addTarget(self, action: "swipedGhost:")
+            self.view.addGestureRecognizer(swipe)
             
             ghostArray = []
             
@@ -181,15 +191,22 @@ class GhostViewController: UIViewController{
                 
                 //NSRunLoop.currentRunLoop().addTimer(temp[0].timer, forMode: NSDefaultRunLoopMode)
                 
-                var temp = Ghost(id: index,
-                    imageView: UIImageView(image: UIImage(named: "Ghost")),
-                    timer: NSTimer(timeInterval: 5, target: self, selector: "attack:", userInfo: nil, repeats: true))
                 
-                //var xy = CGFloat(index*10)
+                var random = arc4random_uniform(2)
+                var weakness: String = ""
+                if random == 0 {
+                    weakness = "Tap"
+                }
+                else {
+                    weakness = "Swipe"
+                }
+                
+                var temp = Ghost(id: index,
+                    timer: NSTimer(timeInterval: 5, target: self, selector: "attack:", userInfo: nil, repeats: true),
+                    weakness: weakness)
+                
                 var x: CGFloat = 0
                 var y: CGFloat = 0
-                
-                
                 
                 if !stationary {
                     
@@ -198,20 +215,20 @@ class GhostViewController: UIViewController{
                         x = 0
                     }
                     else if random == 2{
-                        x = self.view.bounds.height
+                        x = self.view.bounds.width - size
                     }
                     else {
-                        x = self.view.bounds.height/2
+                        x = self.view.bounds.width/2
                     }
                     random = Int(arc4random_uniform(3))
                     if( random == 1) {
                         y = 0
                     }
                     else if random == 2{
-                        y = self.view.bounds.width
+                        y = self.view.bounds.height - size
                     }
                     else {
-                        y = self.view.bounds.width/2
+                        y = self.view.bounds.height/2
                     }
                     
                     
@@ -222,8 +239,10 @@ class GhostViewController: UIViewController{
                     temp.imageView.userInteractionEnabled = true
                     temp.imageView.hidden = false
                     
-                    x = self.view.center.x - size/2
-                    y = self.view.center.y - size
+                    //x = self.view.center.x - size/2
+                    //y = self.view.center.y - size
+                    x = self.view.bounds.width/2 - size/2
+                    y = self.view.bounds.height/2 - size
                     var offset = CGFloat(75)
                     
                     if index == 7 {
@@ -239,9 +258,11 @@ class GhostViewController: UIViewController{
                         y += offset
                     }
                     
-                    temp.timer.fireDate = NSDate().dateByAddingTimeInterval(delay)
+                    temp.timer.fireDate = NSDate().dateByAddingTimeInterval(delay/2)
                     
                     NSRunLoop.currentRunLoop().addTimer(temp.timer, forMode: NSDefaultRunLoopMode)
+                    
+                    NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "move:", userInfo: nil, repeats: false)
                 }
                     
                 else {
@@ -312,13 +333,17 @@ class GhostViewController: UIViewController{
         
         var position = CGRect(origin: CGPoint(x: CGFloat(x), y: CGFloat(y)), size: CGSize(width: size, height: size))
         
-        
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
             //show ghost and move it
             
-            self.ghostArray![self.currentIndex].imageView.hidden = false
-            self.ghostArray![self.currentIndex].imageView.userInteractionEnabled = false
+            //stationary case
+            
+            if self.currentIndex < 7 {
+                self.ghostArray![self.currentIndex].imageView.hidden = false
+                self.ghostArray![self.currentIndex].imageView.userInteractionEnabled = false
+            }
             self.ghostArray![self.currentIndex].imageView.frame = position
+            
             
             },
             completion: { action in
@@ -326,11 +351,11 @@ class GhostViewController: UIViewController{
                 if let ghostArray = self.ghostArray {
                     var ghost = self.ghostArray![self.attackIndex]
                     if( ghost.imageView.hidden == false) {
-                    
+                        
                         ghost.timer.fireDate = NSDate()
                         NSRunLoop.currentRunLoop().addTimer(ghost.timer, forMode: NSDefaultRunLoopMode)
                         
-                        println("attack index: \(self.attackIndex)")
+                        //println("attack index: \(self.attackIndex)")
                         
                         ghost.imageView.startAnimating()
                         
@@ -338,7 +363,13 @@ class GhostViewController: UIViewController{
                     self.attackIndex++
                 }
         })
+        
+        
         self.currentIndex++
+    }
+    func moveStationary(timer: NSTimer) {
+        var x = self.view.center.x - size/2
+        var y = self.view.center.y - size
     }
     
     //when ghost stops moving (animation completes)
@@ -364,7 +395,7 @@ class GhostViewController: UIViewController{
             RealmHelper.resetPet()
         }
         
-        println("attack!: \(dateFormatter.stringFromDate(NSDate()))")
+        //println("attack!: \(dateFormatter.stringFromDate(NSDate()))")
         
         self.petImageView.image = UIImage(named: "Pet-Hurt")
         
@@ -383,13 +414,15 @@ class GhostViewController: UIViewController{
         
         if let ghostArray = ghostArray {
             for (index, ghost) in enumerate(ghostArray) {
-                var tapLocation = gesture.locationInView(ghost.imageView.superview)
-                if ghost.imageView.hidden == false {
-                    if ghost.imageView.layer.presentationLayer().frame.contains(tapLocation) {
-                        if(!ghost.dead) {
-                            //println("id: \(ghost.id)")
-                            ghost.dead = true
-                            return ghost.id
+                if ghost.weakness == "Tap" {
+                    var tapLocation = gesture.locationInView(ghost.imageView.superview)
+                    if ghost.imageView.hidden == false {
+                        if ghost.imageView.layer.presentationLayer().frame.contains(tapLocation) {
+                            if(!ghost.dead) {
+                                //println("id: \(ghost.id)")
+                                ghost.dead = true
+                                return ghost.id
+                            }
                         }
                     }
                 }
@@ -400,7 +433,6 @@ class GhostViewController: UIViewController{
     
     func tappedGhost(recognizer: UITapGestureRecognizer) {
         
-        // if(RealmHelper.getRealmState()!.state == "Defend") {
         var ghostID = detectTap(recognizer)
         
         if ghostID >= 0 {
@@ -411,6 +443,8 @@ class GhostViewController: UIViewController{
             ghostArray![ghostID].imageView.userInteractionEnabled = false
             
             ghostArray![ghostID].timer.invalidate()
+            
+            println("ghostID: \(ghostID)")
             
             ghostArrayCount--
             
@@ -445,6 +479,75 @@ class GhostViewController: UIViewController{
         }
     }
     
+    func swipedGhost(recognizer: UIPanGestureRecognizer) {
+        
+        var ghostID = detectSwipe(recognizer)
+        
+        if ghostID >= 0 {
+            
+            ghostArray![ghostID].imageView.hidden = true
+            //user can no longer tap on ghost
+            
+            ghostArray![ghostID].imageView.userInteractionEnabled = false
+            
+            ghostArray![ghostID].timer.invalidate()
+            
+            println("ghostID: \(ghostID)")
+            
+            ghostArrayCount--
+            
+            println("no of ghosts left: \(ghostArrayCount)")
+            
+            if ghostArrayCount == 0 {
+                //RealmHelper.currentState = .Play
+                RealmHelper.updateRealmState("Play")
+                
+                //displayWinAlert()
+                winAlert()
+                
+                ghostArray = nil
+                currentIndex = 0
+                ghostArrayCount = 10
+                attackIndex = 0
+                stationary = false
+                
+                RealmHelper.updateRealmAlarmDidWin(true)
+                
+                RealmHelper.updateRealmPet(affection: 5)
+                
+                AudioServicesDisposeSystemSoundID(self.soundFileObject)
+                
+                affectionLabel.setTitle("\(pet!.affection)", forState: UIControlState.Normal)
+                
+                currentState = .Play
+                
+                println("You win!")
+                
+            }
+        }
+        
+    }
+    
+    func detectSwipe(gesture: UIPanGestureRecognizer) -> Int{
+        
+        if let ghostArray = ghostArray {
+            for (index, ghost) in enumerate(ghostArray) {
+                if ghost.weakness == "Swipe" {
+                    var tapLocation = gesture.locationInView(ghost.imageView.superview)
+                    if ghost.imageView.hidden == false {
+                        if ghost.imageView.layer.presentationLayer().frame.contains(tapLocation) {
+                            if(!ghost.dead) {
+                                //println("id: \(ghost.id)")
+                                ghost.dead = true
+                                return ghost.id
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return -1
+    }
     
     
     func updatePetHealth() {

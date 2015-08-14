@@ -275,7 +275,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Set your alarm here -&gt;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EhQ-9k-vd0">
-                                <rect key="frame" x="185" y="46" width="230" height="32"/>
+                                <rect key="frame" x="296" y="46" width="230" height="32"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="23"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -298,6 +298,7 @@
                             <constraint firstItem="cY7-Ay-DKb" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="143" id="J6n-VO-NVe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="R7x-R4-hf0" secondAttribute="trailing" constant="8" id="LjS-PU-9he"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="top" secondItem="SwH-tS-pBK" secondAttribute="bottom" constant="25" id="PRH-NL-mwN"/>
+                            <constraint firstItem="v5q-EZ-jC9" firstAttribute="leading" secondItem="EhQ-9k-vd0" secondAttribute="trailing" constant="15" id="QEZ-Un-BTl"/>
                             <constraint firstItem="wkF-8v-V7W" firstAttribute="top" secondItem="cY7-Ay-DKb" secondAttribute="bottom" id="TPl-1f-f0s"/>
                             <constraint firstItem="v5q-EZ-jC9" firstAttribute="trailing" secondItem="Z2h-hD-wyP" secondAttribute="trailingMargin" constant="-8" id="Tnd-Be-VoU"/>
                             <constraint firstItem="WF0-tT-cZO" firstAttribute="leading" secondItem="Bfv-kQ-UIg" secondAttribute="trailing" constant="8" id="Uwa-oa-emN"/>
@@ -436,6 +437,7 @@
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="vI3-zT-vpg" appends="YES" id="yUX-PL-R15"/>
+                            <outletCollection property="gestureRecognizers" destination="AaV-BX-F9c" appends="YES" id="qma-j9-0CF"/>
                         </connections>
                     </view>
                     <connections>
@@ -447,6 +449,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pfn-5V-OQk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="vI3-zT-vpg"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="AaV-BX-F9c"/>
             </objects>
             <point key="canvasLocation" x="1389" y="606.5"/>
         </scene>

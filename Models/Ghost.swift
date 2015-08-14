@@ -16,22 +16,27 @@ class Ghost {
     
     var imageView: UIImageView
     var timer: NSTimer
-    var animation = ["Ghost.png"]
     
-    var animationImages: [UIImage] = [] 
+    var animationImages: [UIImage] = []
     
-    init(id: Int, imageView: UIImageView, timer: NSTimer) {
+    var weakness: String = ""
+    
+    init(id: Int, timer: NSTimer, weakness: String) {
         self.id = id
         self.dead = false
         
-        self.imageView = imageView
+        var name: String = "Ghost-\(weakness)"
+    
+        self.imageView = UIImageView(image: UIImage(named: name))
         
-        for element in animation {
-            //create UIImage from string name
-            animationImages.append(UIImage(named: element)!)
-        }
+        self.weakness = weakness
         
-        self.imageView.animationImages = animationImages
+        //for index in 0...10 {
+            
+          //  animationImages.append(UIImage(named: "\(name)-\(index)")!)
+       // }
+        
+        //self.imageView.animationImages = animationImages
         self.imageView.animationDuration = 0.5
         
         self.timer = timer

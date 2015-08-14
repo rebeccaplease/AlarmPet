@@ -134,6 +134,12 @@ class PetViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        println("viewDidAppear")
+    }
+    
+    
     
     //MARK: Toggle Alarm
     @IBAction func alarmToggle(sender: AnyObject) {

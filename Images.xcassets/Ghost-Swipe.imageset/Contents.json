@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "ghost2.png"
+      "filename" : "ghost2-swipe.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "ghost2-1.png"
+      "filename" : "ghost2-swipe-1.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "ghost2-2.png"
+      "filename" : "ghost2-swipe-2.png"
     }
   ],
   "info" : {
