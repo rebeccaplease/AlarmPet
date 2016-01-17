@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "44A8DCA1ACFD0BE0E5211C3966DDA520C7FD4627",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "CA86CDE6EAC135C02952350417DA9BFB70B8995B" : 0,
+    "44A8DCA1ACFD0BE0E5211C3966DDA520C7FD4627" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "AC23E9DB-F381-40B6-98A3-2C8FB050E6EA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "CA86CDE6EAC135C02952350417DA9BFB70B8995B" : "AlarmPetAlarmPet",
+    "44A8DCA1ACFD0BE0E5211C3966DDA520C7FD4627" : "AlarmPet"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "AlarmPet",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "AlarmPet.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rebeccaplease\/AlarmPet.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "44A8DCA1ACFD0BE0E5211C3966DDA520C7FD4627"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rebeccaplease\/AlarmPet.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CA86CDE6EAC135C02952350417DA9BFB70B8995B"
+    }
+  ]
+}
