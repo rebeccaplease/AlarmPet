@@ -262,7 +262,7 @@ extension UIViewController {
         var alertView = JSSAlertView().warning(self,
             
             title: "Defend your pet from harm!",
-            text: "",
+            text: "Tap on circle marks. Swipe on Xs",
             buttonText: "Let's go"
             
         )

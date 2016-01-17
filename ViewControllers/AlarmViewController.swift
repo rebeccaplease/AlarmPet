@@ -51,7 +51,7 @@ class AlarmViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         else {
             let a = Alarm()
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 10, soundName: sound, offsetDay: false)
+            NotificationHelper.handleScheduling(NSDate(), numOfNotifications: 3, delayInSeconds: 7, soundName: sound, offsetDay: false)
             RealmHelper.saveRealmAlarm(a)
             alarm = RealmHelper.getRealmAlarm()
         }

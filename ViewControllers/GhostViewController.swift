@@ -28,16 +28,19 @@ class GhostViewController: UIViewController{
     var stationary: Bool = false
     
     var brightness: CGFloat = UIScreen.mainScreen().brightness
+   
     var currentTime: NSDate = NSDate()
     
+    //MARK: Sound objects and urls
     var soundFileObject: SystemSoundID = 0
     let healPathURL: NSURL = NSBundle.mainBundle().URLForResource("heal", withExtension: "wav")!
     var soundFileObjectHeal: SystemSoundID = 0
     var soundFileObjectApplause: SystemSoundID = 0
     var soundFileObjectBoo: SystemSoundID = 0
     
+    //display affection points
     @IBOutlet weak var affectionLabel: UIButton!
-    
+    //delete?
     @IBOutlet weak var surpriseLabel: UILabel!
     
     enum State: String, Printable {
@@ -91,7 +94,7 @@ class GhostViewController: UIViewController{
     }
     
     func increaseBrightness(timer: NSTimer) {
-        brightness += 0.0001
+        brightness += 0.00005
         UIScreen.mainScreen().brightness = brightness
         if brightness >= 1.0 {
             timer.invalidate()
@@ -123,7 +126,7 @@ class GhostViewController: UIViewController{
                 
                 self.petImageView.image = UIImage(named: "Pet-Happy")
                 
-                healthBar.progress += 0.001
+                healthBar.progress += 0.003
                 //println("healing")
                 
                 //println("\(currentTime.timeIntervalSinceNow)")
@@ -145,7 +148,11 @@ class GhostViewController: UIViewController{
         }
     }
     
-    
+    /**
+    Before view appears, load pet from Realm and update affection label
+     
+    :param: animated    bool, true for animated
+    */
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -262,7 +269,7 @@ class GhostViewController: UIViewController{
                     
                     NSRunLoop.currentRunLoop().addTimer(temp.timer, forMode: NSDefaultRunLoopMode)
                     
-                    NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "move:", userInfo: nil, repeats: false)
+                    //NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "move:", userInfo: nil, repeats: false)
                 }
                     
                 else {
@@ -387,7 +394,7 @@ class GhostViewController: UIViewController{
         AudioServicesPlaySystemSound(soundFileObject)
         
         
-        self.healthBar.setProgress(self.healthBar.progress-0.04, animated: false)
+        self.healthBar.setProgress(self.healthBar.progress-0.02, animated: false)
         if healthBar.progress <= 0 {
             cancelTimers()
             deadAlert()
@@ -593,7 +600,7 @@ class GhostViewController: UIViewController{
         var alertView = JSSAlertView().show(self,
             
             title: "Congratulations!",
-            text: "You defeated all the ghosts. \n Affection +5",
+            text: "You defeated all the ghosts. \n Affection +5 \n Pet your buddy to heal",
             buttonText: "Yay!",
             color: UIColorFromHex(0x9b59b6,
                 alpha: 1)

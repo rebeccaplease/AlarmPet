@@ -16,7 +16,7 @@ class AboutViewController: UIViewController {
         
         textView.userInteractionEnabled = false
         textView.textColor = UIColorFromHex(0x140C60, alpha: 1.0)
-        textView.text = "Make School \nIcon credits: https://icons8.com/license/ \nSounds made in GarageBand\nSpecial thanks to: \n Adam Reis \n Olivia Ross \n Febria Roosita \n Thuc Tran, and \nDeer"
+        textView.text = "Make School \n\n Icon credits: https://icons8.com/license/ \nSounds made in GarageBand\nSpecial thanks to: \n Adam Reis \n Olivia Ross \n Febria Roosita \n Thuc Tran, and \n Deer"
         
     }
 
