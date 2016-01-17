@@ -12,8 +12,6 @@
 	<dict>
 		<key>44A8DCA1ACFD0BE0E5211C3966DDA520C7FD4627</key>
 		<string>https://github.com/rebeccaplease/AlarmPet.git</string>
-		<key>CA86CDE6EAC135C02952350417DA9BFB70B8995B</key>
-		<string>https://github.com/rebeccaplease/AlarmPet.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>AlarmPet.xcodeproj</string>
@@ -21,8 +19,6 @@
 	<dict>
 		<key>44A8DCA1ACFD0BE0E5211C3966DDA520C7FD4627</key>
 		<string>../..</string>
-		<key>CA86CDE6EAC135C02952350417DA9BFB70B8995B</key>
-		<string>../..AlarmPet</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/rebeccaplease/AlarmPet.git</string>
@@ -39,14 +35,6 @@
 			<string>44A8DCA1ACFD0BE0E5211C3966DDA520C7FD4627</string>
 			<key>IDESourceControlWCCName</key>
 			<string>AlarmPet</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>CA86CDE6EAC135C02952350417DA9BFB70B8995B</string>
-			<key>IDESourceControlWCCName</key>
-			<string>AlarmPetAlarmPet</string>
 		</dict>
 	</array>
 </dict>
